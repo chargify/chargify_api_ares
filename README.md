@@ -24,7 +24,7 @@ It allows you to interface with the Chargify API using simple ActiveRecord-like 
     
     subscription.cancel
 
-See the `examples` directory for more usage examples.
+See the `samples` directory for more usage examples.
 
 
 ### Installation
@@ -69,7 +69,7 @@ Now you'll have access to classes the interact with the Chargify API, such as:
 `Chargify::Customer`  
 `Chargifiy::Subscription`
 
-Check out the examples in the `examples` directory.  If you're not familiar with how ActiveResource works,
+Check out the examples in the `samples` directory.  If you're not familiar with how ActiveResource works,
 you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
 
 
