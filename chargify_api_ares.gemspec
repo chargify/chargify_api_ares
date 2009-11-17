@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION",
+     "chargify_api_ares.gemspec",
      "lib/chargify_api_ares.rb",
      "samples/customers.rb",
      "samples/products.rb",
