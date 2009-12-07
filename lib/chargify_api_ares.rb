@@ -20,7 +20,7 @@ module Chargify
   ARES_VERSIONS = ['2.3.4', '2.3.5']
 end
 require 'active_resource/version'
-unless Chargify::ARES_VERSION.includes?(ActiveResource::VERSION::STRING)
+unless Chargify::ARES_VERSION.include?(ActiveResource::VERSION::STRING)
   abort <<-ERROR
     ActiveResource version #{Chargify::ARES_VERSION} is required.
   ERROR
