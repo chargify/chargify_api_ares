@@ -46,7 +46,7 @@ $ gem install chargify_api_ares
 
 ### Requirements
 
-This library requires ActiveResource version 2.3.4.
+This library requires ActiveResource version 2.3.4 or 2.3.5.
 
 $ gem install activeresource
 
@@ -77,3 +77,4 @@ you may be interested in some [ActiveResource Documentation](http://apidock.com/
 ### Contributors
 
 * Michael Klett (Grasshopper Labs and Chargify)
+* The Lab Rats @ Phase Two Labs

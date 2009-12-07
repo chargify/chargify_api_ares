@@ -1,11 +1,11 @@
 # Chargify API Wrapper using ActiveResource.
 #
 begin
-  require 'activeresource'
+  require 'active_resource'
 rescue LoadError
   begin
     require 'rubygems'
-    require 'activeresource'
+    require 'active_resource'
   rescue LoadError
     abort <<-ERROR
 The 'activeresource' library could not be loaded. If you have RubyGems 
@@ -17,10 +17,10 @@ end
 
 # Version check
 module Chargify
-  ARES_VERSION = '2.3.4'
+  ARES_VERSIONS = ['2.3.4', '2.3.5']
 end
 require 'active_resource/version'
-unless ActiveResource::VERSION::STRING == Chargify::ARES_VERSION
+unless Chargify::ARES_VERSION.includes?(ActiveResource::VERSION::STRING)
   abort <<-ERROR
     ActiveResource version #{Chargify::ARES_VERSION} is required.
   ERROR
