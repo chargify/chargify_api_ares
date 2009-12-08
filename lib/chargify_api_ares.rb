@@ -76,7 +76,7 @@ module Chargify
   
   class Customer < Base
     def self.find_by_reference(reference)
-      find(:all, :params => {:reference => reference})
+      get(:lookup, :reference => reference)
     end
   end
   
