@@ -20,29 +20,28 @@ module Chargify
   ARES_VERSIONS = ['2.3.4', '2.3.5']
 end
 require 'active_resource/version'
-unless Chargify::ARES_VERSION.include?(ActiveResource::VERSION::STRING)
+unless Chargify::ARES_VERSIONS.include?(ActiveResource::VERSION::STRING)
   abort <<-ERROR
-    ActiveResource version #{Chargify::ARES_VERSION} is required.
+    ActiveResource version #{Chargify::ARES_VERSIONS.join(' or ')} is required.
   ERROR
 end
 
-
-# A patch for ActiveResource until a version after 2.3.4 fixes it.
-module ActiveResource
-  # Errors returned from the API layer were not getting put into our object as of Rails 2.3.4
-  # See http://github.com/rails/rails/commit/1488c6cc9e6237ce794e3c4a6201627b9fd4ca09
-  class Base
-    def save
-      save_without_validation
-      true
-    rescue ResourceInvalid => error
-      case error.response['Content-Type']
-      when /application\/xml/
-        errors.from_xml(error.response.body)
-      when /application\/json/
-        errors.from_json(error.response.body)
+# Patch ActiveResource version 2.3.4
+if ActiveResource::VERSION::STRING == '2.3.4'
+  module ActiveResource
+    class Base
+      def save
+        save_without_validation
+        true
+      rescue ResourceInvalid => error
+        case error.response['Content-Type']
+        when /application\/xml/
+          errors.from_xml(error.response.body)
+        when /application\/json/
+          errors.from_json(error.response.body)
+        end
+        false
       end
-      false
     end
   end
 end
