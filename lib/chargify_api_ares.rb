@@ -96,7 +96,7 @@ module Chargify
 
   class Product < Base
     def self.find_by_handle(handle)
-      find(:first, :conditions => {:handle => handle})
+      get(:lookup, :handle => handle)
     end
   end
 end
