@@ -76,7 +76,7 @@ module Chargify
   
   class Customer < Base
     def self.find_by_reference(reference)
-      get(:lookup, :reference => reference)
+      Customer.new get(:lookup, :reference => reference)
     end
   end
   
@@ -96,7 +96,7 @@ module Chargify
 
   class Product < Base
     def self.find_by_handle(handle)
-      get(:lookup, :handle => handle)
+      Product.new get(:lookup, :handle => handle)
     end
   end
 end
