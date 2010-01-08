@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{chargify_api_ares}
-  s.version = "0.2.0"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Klett", "The Lab Rats @ Phase Two Labs"]
-  s.date = %q{2009-12-08}
+  s.date = %q{2010-01-08}
   s.description = %q{}
   s.email = %q{mklett@grasshopper.com}
   s.extra_rdoc_files = [
@@ -26,13 +26,29 @@ Gem::Specification.new do |s|
      "lib/chargify_api_ares.rb",
      "samples/customers.rb",
      "samples/products.rb",
-     "samples/subscriptions.rb"
+     "samples/subscriptions.rb",
+     "spec/base_spec.rb",
+     "spec/customer_spec.rb",
+     "spec/factories.rb",
+     "spec/mocks/fake_resource.rb",
+     "spec/product_spec.rb",
+     "spec/spec_helper.rb",
+     "spec/subscription_spec.rb"
   ]
   s.homepage = %q{http://github.com/grasshopperlabs/chargify_api_ares}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A Chargify API wrapper for Ruby using ActiveResource}
+  s.test_files = [
+    "spec/base_spec.rb",
+     "spec/customer_spec.rb",
+     "spec/factories.rb",
+     "spec/mocks/fake_resource.rb",
+     "spec/product_spec.rb",
+     "spec/spec_helper.rb",
+     "spec/subscription_spec.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
