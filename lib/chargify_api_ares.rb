@@ -92,6 +92,13 @@ module Chargify
     def cancel
       destroy
     end
+    
+    # Perform a one-time charge on an existing subscription.
+    # For more information, please see the one-time charge API docs available 
+    # at: http://support.chargify.com/faqs/api/api-charges
+    def charge(attrs = {})
+      post :charges, :charge => attrs
+    end
   end
 
   class Product < Base

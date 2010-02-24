@@ -32,6 +32,20 @@ describe Chargify::Subscription do
     end
   end
   
+  describe 'one-time charges' do
+    it 'creates a one-time charge' do
+      id = Factory.next(:subscription_id)
+      subscription = Factory(:subscription, :id => id)
+      expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
+      FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
+      
+      response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
+      
+      response.body.should == expected_response
+      response.should be_a(Net::HTTPCreated)
+    end
+  end
+  
   it 'cancels the subscription' do
     @subscription = Factory(:subscription, :id => 1)
     find_subscription = lambda { Chargify::Subscription.find(1) }

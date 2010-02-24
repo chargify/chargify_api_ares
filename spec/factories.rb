@@ -28,6 +28,10 @@ Factory.define :product, :class => Chargify::Product do |p|
   p.name { Factory.next(:product_name) }
 end
 
+Factory.sequence :subscription_id do |n|
+  n
+end
+
 Factory.define :subscription, :class => Chargify::Subscription do |s|
   s.balance_in_cents 500
   s.current_period_ends_at 3.days.from_now
