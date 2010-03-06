@@ -32,18 +32,27 @@ describe Chargify::Subscription do
     end
   end
   
-  describe 'one-time charges' do
-    it 'creates a one-time charge' do
-      id = Factory.next(:subscription_id)
-      subscription = Factory(:subscription, :id => id)
-      expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
-      FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
-      
-      response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
-      
-      response.body.should == expected_response
-      response.should be_a(Net::HTTPCreated)
-    end
+  it 'creates a one-time charge' do
+    id = Factory.next(:subscription_id)
+    subscription = Factory(:subscription, :id => id)
+    expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
+    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
+    
+    response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
+    
+    response.body.should == expected_response
+    response.should be_a(Net::HTTPCreated)
+  end
+  
+  it 'finds by customer reference' do
+    customer = Factory(:customer, :reference => 'roger', :id => 10)
+    subscription = Factory(:subscription, :id => 11, :customer_id => customer.id, :product => Factory(:product))
+    
+    expected_response = [subscription.attributes].to_xml(:root => 'subscriptions')
+    FakeWeb.register_uri(:get, "#{test_domain}/subscriptions.xml?customer_id=#{customer.id}", :status => 200, :body => expected_response)
+    
+    Chargify::Customer.stub!(:find_by_reference).with('roger').and_return(customer)
+    Chargify::Subscription.find_by_customer_reference('roger').should eql(subscription)
   end
   
   it 'cancels the subscription' do

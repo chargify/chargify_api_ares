@@ -6,6 +6,7 @@ describe Chargify::Product do
     before do
       @handle = 'handle1'
       @existing_product = Factory(:product, :handle => @handle, :id => Factory.next(:product_id))
+      puts @existing_product.attributes.to_xml
       FakeWeb.register_uri(:get, "#{test_domain}/products/lookup.xml?handle=#{@existing_product.handle}", :body => @existing_product.attributes.to_xml)
     end
 

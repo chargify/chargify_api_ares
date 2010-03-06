@@ -81,6 +81,11 @@ module Chargify
   end
   
   class Subscription < Base
+    def self.find_by_customer_reference(reference)
+      customer = Customer.find_by_reference(reference)
+      find(:first, :params => {:customer_id => customer.id})
+    end
+    
     # Strip off nested attributes of associations before saving, or type-mismatch errors will occur
     def save
       self.attributes.delete('customer')
