@@ -56,7 +56,7 @@ module Chargify
       yield self
       
       Base.user      = api_key
-      Base.password  = 'X'
+      Base.password  = 'X'      
       Base.site      = site.blank? ? "https://#{subdomain}.chargify.com" : site
     end
   end
@@ -83,7 +83,7 @@ module Chargify
   class Subscription < Base
     def self.find_by_customer_reference(reference)
       customer = Customer.find_by_reference(reference)
-      find(:first, :params => {:customer_id => customer.id})
+      find(:first, :params => {:customer_id => customer.id}) 
     end
     
     # Strip off nested attributes of associations before saving, or type-mismatch errors will occur
@@ -110,5 +110,20 @@ module Chargify
     def self.find_by_handle(handle)
       Product.new get(:lookup, :handle => handle)
     end
+  end
+  
+  class ProductFamily < Base
+  end
+    
+  class Usage < Base
+    def subscription_id=(i)
+      self.prefix_options[:subscription_id] = i
+    end
+    def component_id=(i)
+      self.prefix_options[:component_id] = i
+    end    
+  end
+  
+  class Component < Base
   end
 end

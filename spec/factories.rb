@@ -42,3 +42,8 @@ Factory.define :subscription_with_extra_attrs, :parent => :subscription do |swea
   swea.product Chargify::Product.new
   swea.credit_card "CREDIT CARD"
 end
+
+Factory.define :component, :class => Chargify::Component do |f|
+  f.name { Faker::Company.bs }
+  f.unit_name 'unit'
+end
