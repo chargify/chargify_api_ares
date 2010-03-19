@@ -25,9 +25,11 @@ Gem::Specification.new do |s|
      "chargify_api_ares.gemspec",
      "lib/chargify_api_ares.rb",
      "samples/customers.rb",
+     "samples/metered_components.rb",
      "samples/products.rb",
      "samples/subscriptions.rb",
      "spec/base_spec.rb",
+     "spec/components_spec.rb",
      "spec/customer_spec.rb",
      "spec/factories.rb",
      "spec/mocks/fake_resource.rb",
@@ -42,6 +44,7 @@ Gem::Specification.new do |s|
   s.summary = %q{A Chargify API wrapper for Ruby using ActiveResource}
   s.test_files = [
     "spec/base_spec.rb",
+     "spec/components_spec.rb",
      "spec/customer_spec.rb",
      "spec/factories.rb",
      "spec/mocks/fake_resource.rb",
