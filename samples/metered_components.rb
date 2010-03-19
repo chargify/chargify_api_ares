@@ -13,7 +13,9 @@ Chargify.configure do |c|
   end
 end
 
-
+#
+# This assumes you have a product family with a metered component setup
+#
 product_family = Chargify::ProductFamily.find(:first)
 component =  Chargify::Component.find(:first, :params => {:product_family_id => product_family.id})
 subscription = Chargify::Subscription.find(:first)
