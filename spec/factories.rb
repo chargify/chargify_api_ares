@@ -47,3 +47,16 @@ Factory.define :component, :class => Chargify::Component do |f|
   f.name { Faker::Company.bs }
   f.unit_name 'unit'
 end
+
+Factory.define :quantity_based_component, :class => Chargify::Component do |f|
+  f.name { Faker::Company.bs }
+  f.unit_name 'unit'
+  f.pricing_scheme 'tiered'
+  f.component_type 'quantity_based_component'
+end
+
+Factory.define :subscriptions_component, :class => Chargify::Subscription::Component do |f|
+  f.name { Faker::Company.bs }
+  f.unit_name 'unit'
+  f.component_type 'quantity_based_component'
+end

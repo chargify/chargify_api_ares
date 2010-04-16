@@ -56,8 +56,15 @@ module Chargify
       yield self
       
       Base.user      = api_key
-      Base.password  = 'X'      
-      Base.site      = site.blank? ? "https://#{subdomain}.chargify.com" : site
+      Base.password  = 'X'
+      
+      if site.blank?
+        Base.site                     = "https://#{subdomain}.chargify.com"
+        Subscription::Component.site  = "https://#{subdomain}.chargify.com/subscriptions/:subscription_id"
+      else
+        Base.site                     = site
+        Subscription::Component.site  = site + "/subscriptions/:subscription_id"
+      end
     end
   end
   
@@ -98,11 +105,27 @@ module Chargify
       destroy
     end
     
+    def component(id)
+      Component.find(id, :params => {:subscription_id => self.id})
+    end
+    
+    def components(params = {})
+      params.merge!({:subscription_id => self.id})
+      Component.find(:all, :params => params)
+    end
+    
     # Perform a one-time charge on an existing subscription.
     # For more information, please see the one-time charge API docs available 
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
       post :charges, :charge => attrs
+    end
+    
+    class Component < Base
+      # All Subscription Components are considered already existing records, but the id isn't used
+      def id
+        self.component_id
+      end
     end
   end
 
