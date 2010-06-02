@@ -106,6 +106,10 @@ module Chargify
       destroy
     end
     
+    def reactivate
+      put :reactivate
+    end
+    
     def component(id)
       Component.find(id, :params => {:subscription_id => self.id})
     end
