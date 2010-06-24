@@ -17,12 +17,12 @@ end
 
 # Version check
 module Chargify
-  ARES_VERSIONS = ['2.3.4', '2.3.5', '2.3.6', '2.3.7', '2.3.8']
+  MIN_VERSION = '2.3.4'
 end
 require 'active_resource/version'
-unless Chargify::ARES_VERSIONS.include?(ActiveResource::VERSION::STRING)
+unless ActiveResource::VERSION::STRING >= Chargify::MIN_VERSION
   abort <<-ERROR
-    ActiveResource version #{Chargify::ARES_VERSIONS.join(' or ')} is required.
+    ActiveResource version #{Chargify::MIN_VERSION} or greater is required.
   ERROR
 end
 
