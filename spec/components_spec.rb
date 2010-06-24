@@ -6,7 +6,6 @@ describe Chargify::Component do
       @subscription = Factory(:subscription)
       @component = Factory(:component)
       @now = DateTime.now.to_s
-      puts test_domain
     end
     
     it "should create a usage record" do

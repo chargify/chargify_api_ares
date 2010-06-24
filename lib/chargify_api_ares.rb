@@ -121,6 +121,10 @@ module Chargify
       post :charges, :charge => attrs
     end
     
+    def transactions()
+      Transaction.find(:all, :params =>{:subscription_id => self.id})
+    end
+    
     class Component < Base
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
@@ -149,4 +153,8 @@ module Chargify
   
   class Component < Base
   end
+  
+  class Transaction < Base
+  end
+  
 end
