@@ -121,6 +121,11 @@ module Chargify
       post :charges, :charge => attrs
     end
     
+    def reactivate(include_trial = nil)
+      include_trial = 1 if (include_trial && include_trial != 0)
+      put :reactivate, :include_trial => include_trial
+    end
+
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
     end
