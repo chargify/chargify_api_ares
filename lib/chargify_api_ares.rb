@@ -58,21 +58,16 @@ module Chargify
       Base.user      = api_key
       Base.password  = 'X'
       
-      if site.blank?
-        Base.site                     = "https://#{subdomain}.chargify.com"
-        Subscription::Component.site  = "https://#{subdomain}.chargify.com/subscriptions/:subscription_id"
-      else
-        Base.site                     = site
-        Subscription::Component.site  = site + "/subscriptions/:subscription_id"
-      end
+      self.site ||= "https://#{subdomain}.chargify.com"
+
+      Base.site                     = site
+      Subscription::Component.site  = site + "/subscriptions/:subscription_id"
     end
   end
   
   class Base < ActiveResource::Base
-    class << self
-      def element_name
-        name.split(/::/).last.underscore
-      end
+    def self.element_name
+      name.split(/::/).last.underscore
     end
     
     def to_xml(options = {})
@@ -81,9 +76,25 @@ module Chargify
     end
   end
   
+  class Site < Base
+    def self.clear_data!
+      post(:clear_data)
+    end
+  end
+  
   class Customer < Base
     def self.find_by_reference(reference)
       Customer.new get(:lookup, :reference => reference)
+    end
+    
+    def subscriptions(params = {})
+      params.merge!({:customer_id => self.id})
+      Subscription.find(:all, :params => params)
+    end
+
+    def payment_profiles(params = {})
+      params.merge!({:customer_id => self.id})
+      PaymentProfile.find(:all, :params => params)
     end
   end
   
@@ -114,6 +125,10 @@ module Chargify
       Component.find(:all, :params => params)
     end
     
+    def payment_profile
+      credit_card
+    end
+    
     # Perform a one-time charge on an existing subscription.
     # For more information, please see the one-time charge API docs available 
     # at: http://support.chargify.com/faqs/api/api-charges
@@ -137,9 +152,30 @@ module Chargify
     def self.find_by_handle(handle)
       Product.new get(:lookup, :handle => handle)
     end
+    
+    protected
+    
+    # Products are created in the scope of a ProductFamily, i.e. /product_families/nnn/products
+    #
+    # This alters the collection path such that it uses the product_family_id that is set on the 
+    # attributes.
+    def create
+      pfid = begin
+        self.product_family_id
+      rescue NoMethodError
+        0
+      end
+      connection.post("/product_families/#{pfid}/products.#{self.class.format.extension}", encode, self.class.headers).tap do |response|
+        self.id = id_from_response(response)
+        load_attributes_from_response(response)
+      end
+    end
   end
   
   class ProductFamily < Base
+    def self.find_by_handle(handle, attributes = {})
+      ProductFamily.find(:one, :from => :lookup, :handle => handle)
+    end
   end
     
   class Usage < Base
@@ -155,6 +191,9 @@ module Chargify
   end
   
   class Transaction < Base
+  end
+  
+  class PaymentProfile < Base
   end
   
 end
