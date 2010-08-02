@@ -136,6 +136,10 @@ module Chargify
       post :charges, :charge => attrs
     end
     
+    def reactivate(params = {})
+      put :reactivate, params
+    end
+    
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
     end

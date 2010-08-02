@@ -182,6 +182,41 @@ if run_remote_tests?
       end
     end
     
+    describe "cancelling a subscription" do
+      before(:each) do
+        @subscription = create_once(:subscription) do
+          Chargify::Subscription.create(
+            :product_handle => @@pro_plan.handle,
+            :customer_reference => @@johnadoe.reference,
+            :payment_profile_attributes => good_payment_profile_attributes
+          )
+        end
+        @subscription.cancel
+      end
+      
+      it "is in the active state" do
+        Chargify::Subscription.find(@subscription.id).state.should == 'canceled'
+      end
+    end
+    
+    describe "reactivating a subscriptions" do
+      before(:each) do
+        @subscription = create_once(:subscription) do
+          Chargify::Subscription.create(
+            :product_handle => @@pro_plan.handle,
+            :customer_reference => @@johnadoe.reference,
+            :payment_profile_attributes => good_payment_profile_attributes
+          )
+        end
+        @subscription.cancel
+        @subscription.reactivate
+      end
+      
+      it "is in the active state" do
+        Chargify::Subscription.find(@subscription.id).state.should == 'active'
+      end
+    end
+    
     def already_cleared_site_data?
       @@already_cleared_site_data ||= nil
       @@already_cleared_site_data == true
