@@ -1,2 +1,3 @@
 config/remote.yml
 pkg
+.rvmrc
