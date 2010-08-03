@@ -194,7 +194,7 @@ if run_remote_tests?
         @subscription.cancel
       end
       
-      it "is in the active state" do
+      it "is in the canceled state" do
         Chargify::Subscription.find(@subscription.id).state.should == 'canceled'
       end
     end
@@ -209,11 +209,30 @@ if run_remote_tests?
           )
         end
         @subscription.cancel
+        @subscription.reload.state.should == 'canceled'
         @subscription.reactivate
       end
       
-      it "is in the active state" do
-        Chargify::Subscription.find(@subscription.id).state.should == 'active'
+      it "puts it in the active state" do
+        @subscription.reload.state.should == 'active'
+      end
+    end
+    
+    describe "adding a one time charge" do
+      before(:each) do
+        @subscription = create_once(:subscription) do
+          Chargify::Subscription.create(
+            :product_handle => @@pro_plan.handle,
+            :customer_reference => @@johnadoe.reference,
+            :payment_profile_attributes => good_payment_profile_attributes
+          )
+        end
+      end
+      it "creates a charge and payment" do
+        lambda{
+          @subscription.charge(:amount => 7, :memo => 'One Time Charge')
+        }.should change{@subscription.reload.transactions.size}.by(2)
+        @subscription.transactions.first.amount_in_cents.should == 700
       end
     end
     

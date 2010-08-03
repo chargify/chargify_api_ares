@@ -140,6 +140,10 @@ module Chargify
       put :reactivate, params
     end
     
+    def reset_balance
+      put :reset_balance
+    end
+    
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
     end
