@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{chargify_api_ares}
-  s.version = "0.3.3"
+  s.version = "0.3.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Klett", "The Lab Rats @ Phase Two Labs", "Brian Rose", "Nathan Verni"]
-  s.date = %q{2010-06-24}
+  s.date = %q{2010-08-03}
   s.description = %q{}
   s.email = %q{mklett@grasshopper.com}
   s.extra_rdoc_files = [
@@ -23,17 +23,22 @@ Gem::Specification.new do |s|
      "Rakefile",
      "VERSION",
      "chargify_api_ares.gemspec",
+     "config/remote.example.yml",
      "lib/chargify_api_ares.rb",
      "samples/customers.rb",
      "samples/metered_components.rb",
      "samples/products.rb",
      "samples/subscriptions.rb",
+     "samples/transactions.rb",
      "spec/base_spec.rb",
      "spec/components_spec.rb",
      "spec/customer_spec.rb",
      "spec/factories.rb",
      "spec/mocks/fake_resource.rb",
      "spec/product_spec.rb",
+     "spec/remote/remote_spec.rb",
+     "spec/remote/spec_helper.rb",
+     "spec/spec.opts",
      "spec/spec_helper.rb",
      "spec/subscription_spec.rb",
      "spec/subscriptions_component_spec.rb"
@@ -50,6 +55,8 @@ Gem::Specification.new do |s|
      "spec/factories.rb",
      "spec/mocks/fake_resource.rb",
      "spec/product_spec.rb",
+     "spec/remote/remote_spec.rb",
+     "spec/remote/spec_helper.rb",
      "spec/spec_helper.rb",
      "spec/subscription_spec.rb",
      "spec/subscriptions_component_spec.rb"
