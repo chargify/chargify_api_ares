@@ -63,5 +63,4 @@ describe Chargify::Subscription do
     @subscription.cancel
     find_subscription.should raise_error
   end
-  
 end

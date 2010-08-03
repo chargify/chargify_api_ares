@@ -1,0 +1,7 @@
+# Copy this file to config/remote.yml and make adjustments as necessary.
+#
+# Note: Remote tests will only work when configured to run on a test site that uses the Bogus gateway.
+# Warning: all data in the site specified by 'subdomain' will be cleared and replaced with test data.
+run_tests: true
+subdomain: yoursubdomain
+api_key: xxx
