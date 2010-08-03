@@ -236,6 +236,25 @@ if run_remote_tests?
       end
     end
     
+    describe "adding a credit" do
+      before(:each) do
+        @subscription = create_once(:subscription) do
+          Chargify::Subscription.create(
+            :product_handle => @@pro_plan.handle,
+            :customer_reference => @@johnadoe.reference,
+            :payment_profile_attributes => good_payment_profile_attributes
+          )
+        end
+      end
+      
+      it "creates a credit" do
+        lambda{
+          @subscription.credit(:amount => 7, :memo => 'credit')
+        }.should change{@subscription.reload.transactions.size}.by(1)
+        @subscription.transactions.first.amount_in_cents.should == 700
+      end
+    end
+    
     def already_cleared_site_data?
       @@already_cleared_site_data ||= nil
       @@already_cleared_site_data == true

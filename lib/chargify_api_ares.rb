@@ -137,6 +137,10 @@ module Chargify
       post :charges, :charge => attrs
     end
     
+    def credit(attrs = {})
+      post :credits, :credit => attrs
+    end
+    
     def reactivate(params = {})
       put :reactivate, params
     end
