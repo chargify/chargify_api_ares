@@ -11,6 +11,7 @@ ActiveResource::Base.send :include, ActiveResource::FakeResource
 FakeWeb.allow_net_connect = false
 require 'factory_girl'
 require 'faker'
+require 'factories'
 
 Chargify.configure do |c|
   c.subdomain = 'test'
