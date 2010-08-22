@@ -63,4 +63,16 @@ describe Chargify::Subscription do
     @subscription.cancel
     find_subscription.should raise_error
   end
+
+  it 'upgrades the subscription' do
+    id = Factory.next(:subscription_id)
+    subscription = Factory(:subscription, :id => id)
+    expected_response = [subscription.attributes].to_xml(:root => 'subscription')
+    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/migrations.xml?migration%5Bproduct_handle%5D=upgraded-plan", :status => 201, :body => expected_response)
+    
+    response = subscription.upgrade(:product_handle => 'upgraded-plan')
+
+    response.body.should == expected_response
+    response.should be_a(Net::HTTPCreated)
+  end
 end
