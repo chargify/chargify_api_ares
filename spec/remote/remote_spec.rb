@@ -309,7 +309,7 @@ if run_remote_tests?
         result = @@acme_projects.save
         result.should be_true
       end
-  
+      
       begin
         @@basic_plan ||= Chargify::Product.find_by_handle('basic')
       rescue ActiveResource::ResourceNotFound
