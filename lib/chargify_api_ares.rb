@@ -148,6 +148,10 @@ module Chargify
     def reset_balance
       put :reset_balance
     end
+
+    def migrate(attrs = {})
+      post :migrations, :migration => attrs
+    end
     
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
