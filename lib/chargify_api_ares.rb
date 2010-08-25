@@ -145,10 +145,9 @@ module Chargify
       put :reset_balance
     end
 
-    def upgrade(attrs = {})
+    def migrate(attrs = {})
       post :migrations, :migration => attrs
     end
-    alias :downgrade :upgrade
     
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
