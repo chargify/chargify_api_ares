@@ -141,6 +141,10 @@ module Chargify
       post :credits, :credit => attrs
     end
     
+    def refund(attrs = {})
+      post :refunds, :refund => attrs
+    end
+    
     def reactivate(params = {})
       put :reactivate, params
     end
@@ -148,7 +152,7 @@ module Chargify
     def reset_balance
       put :reset_balance
     end
-
+    
     def migrate(attrs = {})
       post :migrations, :migration => attrs
     end

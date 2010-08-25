@@ -255,6 +255,30 @@ if run_remote_tests?
       end
     end
     
+    describe "adding a refund" do
+      before(:each) do
+        @subscription = create_once(:subscription) do
+          Chargify::Subscription.create(
+            :product_handle => @@pro_plan.handle,
+            :customer_reference => @@johnadoe.reference,
+            :payment_profile_attributes => good_payment_profile_attributes
+          )
+        end
+
+        @subscription.charge(:amount => 7, :memo => 'One Time Charge')
+        @subscription.reload
+      end
+
+      it "creates a refund" do
+        lambda{
+          @subscription.refund :payment_id => @subscription.transactions[0].id, :amount => 7, 
+            :memo => 'Refunding One Time Charge'
+        }.should change{@subscription.reload.transactions.size}.by(1)
+        @subscription.transactions.first.amount_in_cents.should == 700
+        @subscription.transactions.first.transaction_type.should == 'refund'
+      end
+    end
+    
     def already_cleared_site_data?
       @@already_cleared_site_data ||= nil
       @@already_cleared_site_data == true
