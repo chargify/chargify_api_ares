@@ -63,6 +63,7 @@ module Chargify
 
       Base.site                     = site
       Subscription::Component.site  = site + "/subscriptions/:subscription_id"
+      Subscription::Transaction.site  = site + "/subscriptions/:subscription_id"
     end
   end
   
@@ -167,6 +168,9 @@ module Chargify
       def id
         self.component_id
       end
+    end
+
+    class Transaction < Base
     end
   end
 
