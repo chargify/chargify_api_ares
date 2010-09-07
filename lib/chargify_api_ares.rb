@@ -135,15 +135,15 @@ module Chargify
     # For more information, please see the one-time charge API docs available 
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
-      post :charges, :charge => attrs
+      post :charges, {}, attrs.to_xml(:root => :charge)
     end
     
     def credit(attrs = {})
-      post :credits, :credit => attrs
+      post :credits, {}, attrs.to_xml(:root => :credit)
     end
     
     def refund(attrs = {})
-      post :refunds, :refund => attrs
+      post :refunds, {}, attrs.to_xml(:root => :refund)
     end
     
     def reactivate(params = {})
