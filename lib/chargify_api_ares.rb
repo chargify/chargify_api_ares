@@ -157,8 +157,9 @@ module Chargify
       post :migrations, :migration => attrs
     end
     
-    def transactions()
-      Transaction.find(:all, :params =>{:subscription_id => self.id})
+    def transactions(params = {})
+      params.merge!(:subscription_id => self.id)
+      Transaction.find(:all, :params => params)
     end
     
     class Component < Base
