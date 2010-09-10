@@ -117,10 +117,6 @@ module Chargify
       destroy
     end
     
-    def reactivate
-      put :reactivate
-    end
-    
     def component(id)
       Component.find(id, :params => {:subscription_id => self.id})
     end
@@ -145,6 +141,10 @@ module Chargify
       post :credits, :credit => attrs
     end
     
+    def refund(attrs = {})
+      post :refunds, :refund => attrs
+    end
+    
     def reactivate(params = {})
       put :reactivate, params
     end
@@ -152,11 +152,10 @@ module Chargify
     def reset_balance
       put :reset_balance
     end
-
-    def upgrade(attrs = {})
+    
+    def migrate(attrs = {})
       post :migrations, :migration => attrs
     end
-    alias :downgrade :upgrade
     
     def transactions()
       Transaction.find(:all, :params =>{:subscription_id => self.id})
