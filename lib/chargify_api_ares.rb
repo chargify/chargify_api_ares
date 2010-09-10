@@ -78,8 +78,8 @@ module Chargify
   end
   
   class Site < Base
-    def self.clear_data!
-      post(:clear_data)
+    def self.clear_data!(params = {})
+      post(:clear_data, params)
     end
   end
   
