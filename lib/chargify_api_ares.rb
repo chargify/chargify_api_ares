@@ -20,7 +20,7 @@ module Chargify
   MIN_VERSION = '2.3.4'
 end
 require 'active_resource/version'
-unless ActiveResource::VERSION::STRING >= Chargify::MIN_VERSION
+unless Gem::Version.new(ActiveResource::VERSION::STRING) >= Gem::Version.new(Chargify::MIN_VERSION)
   abort <<-ERROR
     ActiveResource version #{Chargify::MIN_VERSION} or greater is required.
   ERROR
