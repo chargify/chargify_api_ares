@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{chargify_api_ares}
-  s.version = "0.3.6"
+  s.version = "0.3.7"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Michael Klett", "The Lab Rats @ Phase Two Labs", "Brian Rose", "Nathan Verni"]
