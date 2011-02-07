@@ -50,7 +50,7 @@ end
 module Chargify
   
   class << self
-    attr_accessor :subdomain, :api_key, :site, :format, :timeout
+    attr_accessor :subdomain, :api_key, :site, :format, :timeout, :logger
     
     def configure
       yield self
@@ -58,6 +58,7 @@ module Chargify
       Base.user      = api_key
       Base.password  = 'X'
       Base.timeout   = timeout unless (timeout.blank?)
+      Base.logger    = logger unless (logger.blank?)
       
       self.site ||= "https://#{subdomain}.chargify.com"
 

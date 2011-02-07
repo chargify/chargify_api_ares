@@ -7,4 +7,5 @@ group :test do
   gem 'fakeweb'
   gem 'factory_girl'
   gem 'faker'
+  gem 'log4r'
 end
