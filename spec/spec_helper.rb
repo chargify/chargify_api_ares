@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'spec'
+require 'rspec'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 
@@ -18,7 +18,7 @@ Chargify.configure do |c|
   c.api_key   = 'test'
 end
  
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.after(:each) do
     ActiveResource::FakeResource.clean
   end

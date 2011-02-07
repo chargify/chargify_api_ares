@@ -1,11 +1,11 @@
 require 'rubygems'
-require 'spec'
+require 'rspec'
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 
 require 'chargify_api_ares'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before(:all) do
     Chargify.configure do |c|
       c.subdomain = remote_configuration['subdomain']
