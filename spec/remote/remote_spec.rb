@@ -251,7 +251,7 @@ if run_remote_tests?
         lambda{
           @subscription.credit(:amount => 7, :memo => 'credit')
         }.should change{@subscription.reload.transactions.size}.by(1)
-        @subscription.transactions.first.amount_in_cents.should == 700
+        @subscription.transactions.first.amount_in_cents.should == -700
       end
     end
     
