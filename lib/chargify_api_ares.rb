@@ -20,7 +20,7 @@ module Chargify
   MIN_VERSION = '2.3.4'
 end
 require 'active_resource/version'
-unless ActiveResource::VERSION::STRING >= Chargify::MIN_VERSION
+unless Gem::Version.new(ActiveResource::VERSION::STRING) >= Gem::Version.new(Chargify::MIN_VERSION)
   abort <<-ERROR
     ActiveResource version #{Chargify::MIN_VERSION} or greater is required.
   ERROR
@@ -63,6 +63,7 @@ module Chargify
 
       Base.site                     = site
       Subscription::Component.site  = site + "/subscriptions/:subscription_id"
+      Subscription::Transaction.site  = site + "/subscriptions/:subscription_id"
     end
   end
   
@@ -134,15 +135,15 @@ module Chargify
     # For more information, please see the one-time charge API docs available 
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
-      post :charges, :charge => attrs
+      post :charges, {}, attrs.to_xml(:root => :charge)
     end
     
     def credit(attrs = {})
-      post :credits, :credit => attrs
+      post :credits, {}, attrs.to_xml(:root => :credit)
     end
     
     def refund(attrs = {})
-      post :refunds, :refund => attrs
+      post :refunds, {}, attrs.to_xml(:root => :refund)
     end
     
     def reactivate(params = {})
@@ -157,14 +158,31 @@ module Chargify
       post :migrations, :migration => attrs
     end
     
-    def transactions()
-      Transaction.find(:all, :params =>{:subscription_id => self.id})
+    def transactions(params = {})
+      params.merge!(:subscription_id => self.id)
+      Transaction.find(:all, :params => params)
     end
     
     class Component < Base
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
         self.component_id
+      end
+    end
+
+    class Transaction < Base
+      def full_refund(attrs = {})
+        return false if self.transaction_type != 'payment'
+
+        attrs.merge!(:amount_in_cents => self.amount_in_cents)
+        self.refund(attrs)
+      end
+
+      def refund(attrs = {})
+        return false if self.transaction_type != 'payment'
+
+        attrs.merge!(:payment_id => self.id)
+        Subscription.find(self.prefix_options[:subscription_id]).refund(attrs)
       end
     end
   end
@@ -212,6 +230,19 @@ module Chargify
   end
   
   class Transaction < Base
+    def full_refund(attrs = {})
+      return false if self.transaction_type != 'payment'
+
+      attrs.merge!(:amount_in_cents => self.amount_in_cents)
+      self.refund(attrs)
+    end
+
+    def refund(attrs = {})
+      return false if self.transaction_type != 'payment'
+
+      attrs.merge!(:payment_id => self.id)
+      Subscription.find(self.subscription_id).refund(attrs)
+    end
   end
   
   class PaymentProfile < Base

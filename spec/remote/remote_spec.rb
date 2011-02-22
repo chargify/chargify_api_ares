@@ -251,7 +251,7 @@ if run_remote_tests?
         lambda{
           @subscription.credit(:amount => 7, :memo => 'credit')
         }.should change{@subscription.reload.transactions.size}.by(1)
-        @subscription.transactions.first.amount_in_cents.should == 700
+        @subscription.transactions.first.amount_in_cents.should == -700
       end
     end
     
@@ -276,6 +276,50 @@ if run_remote_tests?
         }.should change{@subscription.reload.transactions.size}.by(1)
         @subscription.transactions.first.amount_in_cents.should == 700
         @subscription.transactions.first.transaction_type.should == 'refund'
+      end
+
+      context "via subscription payment (Chargify::Subscription::Transaction)" do
+        before :each do
+          @payment = @subscription.transactions.first
+        end
+
+        it "creates a refund" do
+          lambda{
+            @payment.refund :amount => 7, :memo => 'Refunding One Time Charge'
+          }.should change{@subscription.reload.transactions.size}.by(1)
+          @subscription.transactions.first.amount_in_cents.should == 700
+          @subscription.transactions.first.transaction_type.should == 'refund'
+        end
+
+        it "creates a full refund" do
+          lambda{
+            @payment.full_refund :memo => 'Refunding One Time Charge'
+          }.should change{@subscription.reload.transactions.size}.by(1)
+          @subscription.transactions.first.amount_in_cents.should == 700
+          @subscription.transactions.first.transaction_type.should == 'refund'
+        end
+      end
+
+      context "via site payment (Chargify::Transaction)" do
+        before :each do
+          @site_payment = Chargify::Transaction.find(:first)
+        end
+
+        it "creates a refund" do
+          lambda{
+            @site_payment.refund :amount => 7, :memo => 'Refunding One Time Charge'
+          }.should change{@subscription.reload.transactions.size}.by(1)
+          @subscription.transactions.first.amount_in_cents.should == 700
+          @subscription.transactions.first.transaction_type.should == 'refund'
+        end
+
+        it "creates a full refund" do
+          lambda{
+            @site_payment.full_refund :memo => 'Refunding One Time Charge'
+          }.should change{@subscription.reload.transactions.size}.by(1)
+          @subscription.transactions.first.amount_in_cents.should == 700
+          @subscription.transactions.first.transaction_type.should == 'refund'
+        end
       end
     end
     
