@@ -63,6 +63,7 @@ module Chargify
 
       Base.site                     = site
       Subscription::Component.site  = site + "/subscriptions/:subscription_id"
+      Subscription::Statement.site  = site + "/subscriptions/:subscription_id"
       Subscription::Transaction.site  = site + "/subscriptions/:subscription_id"
     end
   end
@@ -157,6 +158,11 @@ module Chargify
     def migrate(attrs = {})
       post :migrations, :migration => attrs
     end
+
+    def statements(params = {})
+      params.merge!(:subscription_id => self.id)
+      Statement.find(:all, :params => params)
+    end
     
     def transactions(params = {})
       params.merge!(:subscription_id => self.id)
@@ -168,6 +174,9 @@ module Chargify
       def id
         self.component_id
       end
+    end
+    
+    class Statement < Base
     end
 
     class Transaction < Base
@@ -228,7 +237,7 @@ module Chargify
   
   class Component < Base
   end
-  
+
   class Transaction < Base
     def full_refund(attrs = {})
       return false if self.transaction_type != 'payment'
