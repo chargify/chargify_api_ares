@@ -160,7 +160,9 @@ module Chargify
     end
 
     def statement(id)
-      Chargify::Statement.find(id)
+      statement = Chargify::Statement.find(id)
+      raise ActiveResource::ResourceNotFound.new(nil) if (statement.subscription_id != self.id)
+      statement
     end
       
     def statements(params = {})
