@@ -159,6 +159,10 @@ module Chargify
       post :migrations, :migration => attrs
     end
 
+    def statement(id)
+      Chargify::Statement.find(id)
+    end
+      
     def statements(params = {})
       params.merge!(:subscription_id => self.id)
       Statement.find(:all, :params => params)
@@ -236,6 +240,9 @@ module Chargify
   end
   
   class Component < Base
+  end
+
+  class Statement < Base
   end
 
   class Transaction < Base
