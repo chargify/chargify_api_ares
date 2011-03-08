@@ -50,7 +50,7 @@ end
 module Chargify
   
   class << self
-    attr_accessor :subdomain, :api_key, :site, :format, :timeout
+    attr_accessor :subdomain, :api_key, :shared_secret, :site, :format, :timeout
     
     def configure
       yield self
