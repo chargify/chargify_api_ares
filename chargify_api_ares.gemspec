@@ -71,5 +71,11 @@ Gem::Specification.new do |s|
     end
   else
   end
+
+  s.add_dependency "activeresource"
+  s.add_development_dependency "rspec", "~> 1.3"
+  s.add_development_dependency "fakeweb"
+  s.add_development_dependency "factory_girl"
+  s.add_development_dependency "faker"
 end
 

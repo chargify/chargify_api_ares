@@ -1,6 +1,3 @@
-# Taken from https://gist.github.com/238158/487a411c392e1fb2a0c00347e32444320f5cdd49
-require 'FakeWeb'
- 
 module ActiveResource
  
   #
