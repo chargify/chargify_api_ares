@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
     ".gitignore",
      "LICENSE.txt",
      "README.md",
-     "Rakefile",
      "VERSION",
      "chargify_api_ares.gemspec",
      "config/remote.example.yml",
