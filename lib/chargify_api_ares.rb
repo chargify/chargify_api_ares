@@ -175,6 +175,10 @@ module Chargify
       Transaction.find(:all, :params => params)
     end
     
+    def adjustment(attrs = {})
+      post :adjustments, {}, attrs.to_xml(:root => :adjustment)
+    end
+    
     class Component < Base
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
