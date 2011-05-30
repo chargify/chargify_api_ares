@@ -17,7 +17,7 @@ Spec::Runner.configure do |config|
 end
 
 def run_remote_tests?
-  remote_configuration['run_tests'] === true
+  remote_configuration['run_tests']
 end
 
 def remote_configuration
