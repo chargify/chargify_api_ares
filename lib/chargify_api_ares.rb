@@ -69,6 +69,7 @@ module Chargify
   end
   
   class Base < ActiveResource::Base
+    self.format = :xml
     def self.element_name
       name.split(/::/).last.underscore
     end
