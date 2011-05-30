@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   
   s.add_dependency "activeresource", [">= 2.0"]
 
-  s.add_development_dependency "rspec", ["1.3.2"]
+  s.add_development_dependency "rspec", ["~> 2.6"]
   s.add_development_dependency "fakeweb"
   s.add_development_dependency "factory_girl"
   s.add_development_dependency "faker"

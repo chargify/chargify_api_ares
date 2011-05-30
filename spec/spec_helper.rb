@@ -17,7 +17,9 @@ Chargify.configure do |c|
   c.api_key   = 'test'
 end
  
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
+  config.filter_run_excluding :remote => false
+  
   config.after(:each) do
     ActiveResource::FakeResource.clean
   end

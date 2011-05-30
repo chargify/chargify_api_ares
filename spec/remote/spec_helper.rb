@@ -4,7 +4,7 @@ require 'bundler/setup'
 
 require 'chargify_api_ares'
 
-Spec::Runner.configure do |config|
+RSpec.configure do |config|
   config.before(:all) do
     Chargify.configure do |c|
       c.subdomain = remote_configuration['subdomain']
@@ -14,10 +14,6 @@ Spec::Runner.configure do |config|
       end
     end
   end
-end
-
-def run_remote_tests?
-  remote_configuration['run_tests']
 end
 
 def remote_configuration
@@ -31,6 +27,6 @@ def load_remote_configuration_file
   if File.exist?(configuration_file)
     YAML.load_file(configuration_file)
   else
-    {}
+    raise StandardError, 'Please provide a yml file to run remote specs. See /config/remote.example.yml.'
   end
 end
