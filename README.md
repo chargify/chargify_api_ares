@@ -29,16 +29,6 @@ See the `samples` directory for more usage examples.
 
 ### Installation
 
-This library can be installed as a gem.  It is hosted on [Gemcutter](http://gemcutter.org).
-
-If you don't have your system set up to use gemcutter, follow the instructions on their site
-<http://gemcutter.org>, i.e.:
-
-$ gem install gemcutter
-$ gem tumble
-
-This will install Gemcutter and set your gem sources to search the gemcutter repos.
-
 Then you can install this library as a gem:
 
 $ gem install chargify_api_ares
@@ -48,9 +38,6 @@ $ gem install chargify_api_ares
 
 This library requires ActiveResource version 2.3.4 or greater.
 
-$ gem install activeresource
-
-
 ### Usage
 
 Simply require this library before you use it:
@@ -58,10 +45,16 @@ Simply require this library before you use it:
     require 'chargify_api_ares'
     
 
-If you're using Rails, you could include this gem in your configuration, i.e. in `environment.rb`
+If you're using Rails
 
+2.3.x add the following to environment.rb
+   
     config.gem 'chargify_api_ares'
+
+3.x add the following to Gemfile
     
+    gem 'chargify_api_ares'
+
 
 Now you'll have access to classes the interact with the Chargify API, such as:
 
