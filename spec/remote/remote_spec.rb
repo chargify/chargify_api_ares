@@ -13,7 +13,7 @@ if run_remote_tests?
         before(:each) do
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@basic_plan.handle,
+              :product_handle => basic_plan.handle,
               :customer_attributes => valid_customer_attributes,
               :payment_profile_attributes => good_payment_profile_attributes
             )
@@ -43,8 +43,8 @@ if run_remote_tests?
         before(:each) do
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@pro_plan.handle,
-              :customer_reference => @@johnadoe.reference,
+              :product_handle => pro_plan.handle,
+              :customer_reference => johnadoe.reference,
               :payment_profile_attributes => good_payment_profile_attributes
             )
           end
@@ -67,7 +67,7 @@ if run_remote_tests?
         end
         
         it "belongs to the existing customer" do
-          @subscription.customer.should == @@johnadoe
+          @subscription.customer.should == johnadoe
         end
       end
 
@@ -75,9 +75,9 @@ if run_remote_tests?
         before(:each) do
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@pro_plan.handle,
-              :customer_reference => @@johnadoe.reference,
-              :payment_profile_id => @@johnadoes_credit_card.id.to_s
+              :product_handle => pro_plan.handle,
+              :customer_reference => johnadoe.reference,
+              :payment_profile_id => johnadoes_credit_card.id.to_s
             )
           end
         end
@@ -91,12 +91,12 @@ if run_remote_tests?
         end
         
         it "belongs to the existing customer" do
-          @subscription.customer.should == @@johnadoe
+          @subscription.customer.should == johnadoe
         end
         
         it "uses the provided credit card" do
-          expected_card = Chargify::PaymentProfile.find(@@johnadoes_credit_card.id)
-          @subscription.payment_profile.id.should == @@johnadoes_credit_card.id
+          expected_card = Chargify::PaymentProfile.find(johnadoes_credit_card.id)
+          @subscription.payment_profile.id.should == johnadoes_credit_card.id
           @subscription.payment_profile.attributes.should == expected_card.attributes
         end
       end
@@ -106,7 +106,7 @@ if run_remote_tests?
           @customer_attributes = valid_customer_attributes.dup
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@basic_plan.handle,
+              :product_handle => basic_plan.handle,
               :customer_attributes => @customer_attributes,
               :payment_profile_attributes => unstorable_payment_profile_attributes
             )
@@ -131,7 +131,7 @@ if run_remote_tests?
         before(:each) do
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@basic_plan.handle,
+              :product_handle => basic_plan.handle,
               :customer_attributes => valid_customer_attributes,
               :payment_profile_attributes => pretokenized_card_attributes,
               :next_billing_at => ten_days_from_now.utc
@@ -163,7 +163,7 @@ if run_remote_tests?
           @customer_attributes = valid_customer_attributes.dup
           @subscription = create_once(:subscription) do
             Chargify::Subscription.create(
-              :product_handle => @@pro_plan.handle,
+              :product_handle => pro_plan.handle,
               :customer_attributes => @customer_attributes,
               :payment_profile_attributes => declined_payment_profile_attributes
             )
@@ -186,8 +186,8 @@ if run_remote_tests?
       before(:each) do
         @subscription = create_once(:subscription) do
           Chargify::Subscription.create(
-            :product_handle => @@pro_plan.handle,
-            :customer_reference => @@johnadoe.reference,
+            :product_handle => pro_plan.handle,
+            :customer_reference => johnadoe.reference,
             :payment_profile_attributes => good_payment_profile_attributes
           )
         end
@@ -203,8 +203,8 @@ if run_remote_tests?
       before(:each) do
         @subscription = create_once(:subscription) do
           Chargify::Subscription.create(
-            :product_handle => @@pro_plan.handle,
-            :customer_reference => @@johnadoe.reference,
+            :product_handle => pro_plan.handle,
+            :customer_reference => johnadoe.reference,
             :payment_profile_attributes => good_payment_profile_attributes
           )
         end
@@ -222,8 +222,8 @@ if run_remote_tests?
       before(:each) do
         @subscription = create_once(:subscription) do
           Chargify::Subscription.create(
-            :product_handle => @@pro_plan.handle,
-            :customer_reference => @@johnadoe.reference,
+            :product_handle => pro_plan.handle,
+            :customer_reference => johnadoe.reference,
             :payment_profile_attributes => good_payment_profile_attributes
           )
         end
@@ -240,8 +240,8 @@ if run_remote_tests?
       before(:each) do
         @subscription = create_once(:subscription) do
           Chargify::Subscription.create(
-            :product_handle => @@pro_plan.handle,
-            :customer_reference => @@johnadoe.reference,
+            :product_handle => pro_plan.handle,
+            :customer_reference => johnadoe.reference,
             :payment_profile_attributes => good_payment_profile_attributes
           )
         end
@@ -259,8 +259,8 @@ if run_remote_tests?
       before(:each) do
         @subscription = create_once(:subscription) do
           Chargify::Subscription.create(
-            :product_handle => @@pro_plan.handle,
-            :customer_reference => @@johnadoe.reference,
+            :product_handle => pro_plan.handle,
+            :customer_reference => johnadoe.reference,
             :payment_profile_attributes => good_payment_profile_attributes
           )
         end
@@ -341,7 +341,23 @@ if run_remote_tests?
         raise StandardError.new("Remote specs may only be run against a site in test mode")
       end
     end
-
+    
+    def pro_plan
+      @@pro_plan
+    end
+    
+    def basic_plan
+      @@basic_plan
+    end
+    
+    def johnadoe
+      @@johnadoe
+    end
+    
+    def johnadoes_credit_card
+      @@johnadoes_credit_card
+    end
+    
     # Create Basic and Pro products in the Acme Projects family
     def setup_plans
       begin
