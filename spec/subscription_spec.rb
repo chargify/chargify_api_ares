@@ -36,7 +36,7 @@ describe Chargify::Subscription do
     id = Factory.next(:subscription_id)
     subscription = Factory(:subscription, :id => id)
     expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
-    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
+    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml", :status => 201, :body => expected_response)
     
     response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
     
@@ -68,7 +68,7 @@ describe Chargify::Subscription do
     id = Factory.next(:subscription_id)
     subscription = Factory(:subscription, :id => id)
     expected_response = [subscription.attributes].to_xml(:root => 'subscription')
-    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/migrations.xml?migration%5Bproduct_handle%5D=upgraded-plan", :status => 201, :body => expected_response)
+    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/migrations.xml?migration[product_handle]=upgraded-plan", :status => 201, :body => expected_response)
     
     response = subscription.migrate(:product_handle => 'upgraded-plan')
 
