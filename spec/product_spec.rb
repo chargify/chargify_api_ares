@@ -1,7 +1,7 @@
 require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 
 describe Chargify::Product do
-  
+
   context 'find by handle' do
     before do
       @handle = 'handle1'
@@ -13,11 +13,10 @@ describe Chargify::Product do
       product = Chargify::Product.find_by_handle(@handle)
       product.should eql(@existing_product)
     end
-    
+
     it 'is an instance of Chargify::Product' do
       product = Chargify::Product.find_by_handle(@handle)
       product.should be_instance_of(Chargify::Product)
-    end  
+    end
   end
-
 end
