@@ -20,16 +20,58 @@ Factory.sequence :product_id do |n|
   n
 end
 
+Factory.sequence :product_family_id do |n|
+  n
+end
+
 Factory.sequence :product_name do |n|
   "Product #{n}"
+end
+
+Factory.sequence :product_family_name do |n|
+  "ProductFamily #{n}"
 end
 
 Factory.define :product, :class => Chargify::Product do |p|
   p.name { Factory.next(:product_name) }
 end
 
+Factory.define :product_family, :class => Chargify::ProductFamily do |pf|
+  pf.name { Factory.next(:product_family_name) }
+  pf.handle { Factory.next(:product_family_handle) }
+  pf.id { Factory.next(:product_family_id) }
+end
+
+Factory.sequence :product_family_handle do |n|
+  "ProductFamily#{n}"
+end
+
+Factory.sequence :product_family_id do |n|
+  n
+end
+
 Factory.sequence :subscription_id do |n|
   n
+end
+
+Factory.sequence :coupon_id do |n|
+  n
+end
+
+Factory.sequence :coupon_name do |n|
+  "Coupon #{n}"
+end
+
+Factory.sequence :coupon_code do |n|
+  "COUPON#{n}"
+end
+
+Factory.define :coupon, :class => Chargify::Coupon do |c|
+  c.start_date 7.days.ago.utc
+  c.end_date 7.days.from_now.utc
+  c.id { Factory.next(:coupon_id) }
+  c.name { Factory.next(:coupon_name) }
+  c.code { Factory.next(:coupon_code) }
 end
 
 Factory.define :subscription, :class => Chargify::Subscription do |s|

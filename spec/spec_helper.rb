@@ -17,7 +17,7 @@ Chargify.configure do |c|
   c.subdomain = 'test'
   c.api_key   = 'test'
 end
- 
+
 Spec::Runner.configure do |config|
   config.after(:each) do
     ActiveResource::FakeResource.clean
