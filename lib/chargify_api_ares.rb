@@ -175,6 +175,10 @@ module Chargify
       Transaction.find(:all, :params => params)
     end
 
+    def adjustment(attrs = {})
+      post :adjustments, {}, attrs.to_xml(:root => :adjustment)
+    end
+
     def add_coupon(code)
       post :add_coupon, :code => code
     end
