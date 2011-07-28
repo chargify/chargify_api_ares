@@ -12,7 +12,7 @@ end
 
 
 # Create a new coupon
-coupon = Chargify::Subscription::Coupon.create(
+coupon = Chargify::Coupon.create(
   :name =>  "66% off",
   :code => "66OFF",
   :description => "66% OFF for life",
@@ -25,16 +25,16 @@ coupon = Chargify::Subscription::Coupon.create(
 coupon = Chargify::Subscription::Coupon.find_by_product_family_id_and_code(2,"10OFF")
 
 # Update coupon information
-coupon      = Chargify::Subscription::Coupon.find_by_product_family_id_and_code(2,"10OFF")
+coupon      = Chargify::Coupon.find_by_product_family_id_and_code(2,"10OFF")
 coupon.code = "FOO"
 coupon.save
 
 # Archive coupon
-coupon      = Chargify::Subscription::Coupon.find_by_product_family_id_and_code(2,"10OFF")
-coupon.destroy
+coupon      = Chargify::Coupon.find_by_product_family_id_and_code(2,"10OFF")
+coupon.archive
 
 # Inspect coupon usage
-coupon      = Chargify::Subscription::Coupon.find_by_product_family_id_and_code(2,"10OFF")
+coupon      = Chargify::Coupon.find_by_product_family_id_and_code(2,"10OFF")
 coupon.usage
 #>> [{"name"=>"Product 1", "savings"=>0.0, "id"=>8, "signups"=>5, "revenue"=>0.0}, {"name"=>"Product 2", "savings"=>0.0, "id"=>9, "signups"=>0, "revenue"=>0.0}]
 
@@ -44,4 +44,4 @@ subscription.add_coupon('5OFF')
 
 #Remove coupon from subscription
 subscription = Subscription.find_by_customer_reference('moklett')
-subscription.remove_coupon
+subscription.remove_coupon('50OFF')
