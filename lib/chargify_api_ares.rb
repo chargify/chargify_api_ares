@@ -61,16 +61,17 @@ module Chargify
 
       self.site ||= "https://#{subdomain}.chargify.com"
 
-      Base.site                     = site
-      Subscription::Component.site  = site + "/subscriptions/:subscription_id"
-      Subscription::Statement.site  = site + "/subscriptions/:subscription_id"
+      Base.site                       = site
+      Subscription::Component.site    = site + "/subscriptions/:subscription_id"
+      Subscription::Statement.site    = site + "/subscriptions/:subscription_id"
       Subscription::Transaction.site  = site + "/subscriptions/:subscription_id"
+      Subscription::Coupon.site       = site + "/product_families/:product_family_id"
     end
   end
 
   class Base < ActiveResource::Base
     self.format = :xml
-  
+
     def self.element_name
       name.split(/::/).last.underscore
     end
@@ -193,6 +194,17 @@ module Chargify
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
         self.component_id
+      end
+    end
+
+    class Coupon < Base
+      # Coupons are found in the scope of a product family
+      def self.find_by_product_family_id_and_code(product_family_id, code)
+         Coupon.new get(:lookup, :product_family_id => product_family_id, :code => code)
+      end
+
+      def usage
+        get :usage
       end
     end
 
