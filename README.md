@@ -29,17 +29,9 @@ See the `samples` directory for more usage examples.
 
 ### Installation
 
-This library can be installed as a gem.  It is hosted on [Gemcutter](http://gemcutter.org).
+This library can be installed as a gem. It is hosted on [Rubygems](http://rubygems.org).
 
-If you don't have your system set up to use gemcutter, follow the instructions on their site
-<http://gemcutter.org>, i.e.:
-
-$ gem install gemcutter
-$ gem tumble
-
-This will install Gemcutter and set your gem sources to search the gemcutter repos.
-
-Then you can install this library as a gem:
+You can install this library as a gem using the following command:
 
 $ gem install chargify_api_ares
 
@@ -71,10 +63,3 @@ Now you'll have access to classes the interact with the Chargify API, such as:
 
 Check out the examples in the `samples` directory.  If you're not familiar with how ActiveResource works,
 you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
-
-
-
-### Contributors
-
-* Michael Klett (Grasshopper Labs and Chargify)
-* The Lab Rats @ Phase Two Labs
