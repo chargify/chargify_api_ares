@@ -37,7 +37,7 @@ describe Chargify::Subscription do
     subscription = Factory(:subscription, :id => id)
     subscription.stub!(:persisted?).and_return(true)
     expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
-    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
+    FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml", :status => 201, :body => expected_response)
     
     response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
     
