@@ -5,7 +5,7 @@ describe Chargify::Product do
   context 'find by handle' do
     before do
       @handle = 'handle1'
-      @existing_product = Factory(:product, :handle => @handle, :id => Factory.next(:product_id))
+      @existing_product = Factory(:product, :handle => @handle, :id => FactoryGirl.generate(:product_id))
       FakeWeb.register_uri(:get, "#{test_domain}/products/lookup.xml?handle=#{@existing_product.handle}", :body => @existing_product.attributes.to_xml)
     end
 

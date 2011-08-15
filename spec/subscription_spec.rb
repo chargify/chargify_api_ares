@@ -4,7 +4,7 @@ describe Chargify::Subscription do
   
   context 'strips nested association attributes before saving' do
     before do
-      @subscription = Factory.build(:subscription_with_extra_attrs)
+      @subscription = FactoryGirl.build(:subscription_with_extra_attrs)
     end
     
     it 'strips customer' do
@@ -26,14 +26,14 @@ describe Chargify::Subscription do
     end
     
     it 'doesn\'t strip other attrs' do
-      subscription = Factory.build(:subscription)
+      subscription = FactoryGirl.build(:subscription)
       
       lambda { subscription.save! }.should_not change(subscription, :attributes)
     end
   end
   
   it 'creates a one-time charge' do
-    id = Factory.next(:subscription_id)
+    id = FactoryGirl.generate(:subscription_id)
     subscription = Factory(:subscription, :id => id)
     expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
     FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml?charge%5Bamount%5D=10.00&charge%5Bmemo%5D=one-time+charge", :status => 201, :body => expected_response)
@@ -65,7 +65,7 @@ describe Chargify::Subscription do
   end
 
   it 'migrates the subscription' do
-    id = Factory.next(:subscription_id)
+    id = FactoryGirl.generate(:subscription_id)
     subscription = Factory(:subscription, :id => id)
     expected_response = [subscription.attributes].to_xml(:root => 'subscription')
     FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/migrations.xml?migration%5Bproduct_handle%5D=upgraded-plan", :status => 201, :body => expected_response)
