@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name = %q{chargify_api_ares}
-  s.version = "0.3.9"
+  s.version = "0.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Michael Klett", "Nathan Verni", "The Lab Rats @ Phase Two Labs", "Brian Rose"]
+  s.authors = ["Michael Klett", "Nathan Verni", "Rodrigo Franco"]
   s.date = %q{2011-03-02}
   s.description = %q{}
-  s.email = %q{mklett@grasshopper.com}
+  s.email = %q{support@chargify.com}
   s.extra_rdoc_files = [
     "LICENSE.txt",
      "README.md"
