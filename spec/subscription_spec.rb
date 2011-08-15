@@ -59,6 +59,8 @@ describe Chargify::Subscription do
     @subscription = Factory(:subscription, :id => 1)
     find_subscription = lambda { Chargify::Subscription.find(1) }
     
+    FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/1.xml", :body => @subscription.attributes.to_xml)
+    
     find_subscription.should_not raise_error
     @subscription.cancel
     find_subscription.should raise_error
