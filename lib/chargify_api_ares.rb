@@ -1,5 +1,7 @@
 # Chargify API Wrapper using ActiveResource.
 #
+require 'thread'
+
 begin
   require 'active_resource'
 rescue LoadError
