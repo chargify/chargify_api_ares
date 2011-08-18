@@ -134,7 +134,7 @@ module Chargify
     end
 
     def payment_profile
-      credit_card
+      self.respond_to?('credit_card') ? credit_card : nil
     end
 
     # Perform a one-time charge on an existing subscription.
