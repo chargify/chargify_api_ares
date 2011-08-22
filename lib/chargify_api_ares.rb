@@ -60,6 +60,9 @@ module Chargify
       Base.format    = format unless format.blank?
       Base.timeout   = timeout unless (timeout.blank?)
 
+      # The Chargify API expects the resources' attributes to be top-level.
+      Base.include_root_in_json = false
+
       self.site ||= "https://#{subdomain}.chargify.com"
 
       Base.site                     = site
