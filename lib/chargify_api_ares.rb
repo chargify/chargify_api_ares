@@ -57,6 +57,7 @@ module Chargify
 
       Base.user      = api_key
       Base.password  = 'X'
+      Base.format    = format unless format.blank?
       Base.timeout   = timeout unless (timeout.blank?)
 
       self.site ||= "https://#{subdomain}.chargify.com"
