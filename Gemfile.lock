@@ -22,9 +22,15 @@ GEM
       rspec (~> 2.0)
       rspec-instafail (~> 0.1.8)
       ruby-progressbar (~> 0.0.10)
+    growl (1.0.3)
+    guard (0.8.7)
+      thor (~> 0.14.6)
+    guard-rspec (0.5.0)
+      guard (>= 0.8.4)
     i18n (0.6.0)
     multi_json (1.0.3)
     rake (0.9.2)
+    rb-fsevent (0.4.3.1)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
@@ -35,6 +41,7 @@ GEM
     rspec-instafail (0.1.8)
     rspec-mocks (2.6.0)
     ruby-progressbar (0.0.10)
+    thor (0.14.6)
 
 PLATFORMS
   ruby
@@ -45,5 +52,8 @@ DEPENDENCIES
   faker
   fakeweb
   fuubar
+  growl (~> 1.0.3)
+  guard-rspec (~> 0.5.0)
   rake
+  rb-fsevent (~> 0.4.2)
   rspec
