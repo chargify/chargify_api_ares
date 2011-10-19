@@ -68,6 +68,7 @@ module Chargify
       Subscription::Statement.site    = site + "/subscriptions/:subscription_id"
       Subscription::Transaction.site  = site + "/subscriptions/:subscription_id"
       Coupon.site                     = site + "/product_families/:product_family_id"
+      ProductFamily::Component.site   = site + "/product_families/:product_family_id"
     end
   end
 
@@ -247,6 +248,15 @@ module Chargify
     def self.find_by_handle(handle, attributes = {})
       ProductFamily.find(:one, :from => :lookup, :handle => handle)
     end
+    
+    class Component < Base
+    end
+    
+    def components(params = {})
+      params.merge!({:product_family_id => self.id})
+      ::Chargify::ProductFamily::Component.find(:all, :params => params)
+    end
+    
   end
 
   class Usage < Base
