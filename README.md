@@ -1,4 +1,4 @@
-Chargify API wrapper for Ruby (using ActiveResource)
+Chargify API wrapper for Ruby (using ActiveResource) [![build status](https://secure.travis-ci.org/grasshopperlabs/chargify_api_ares.png)](http://travis-ci.org/grasshopperlabs/chargify_api_ares)
 ====================================================
 
 chargify_api_ares
