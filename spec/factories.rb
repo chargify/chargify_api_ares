@@ -61,4 +61,14 @@ FactoryGirl.define do
     f.unit_name 'unit'
     f.component_type 'quantity_based_component'
   end
+
+  factory :coupon, :class => Chargify::Coupon do |f|
+    f.name                   { '15% off' }
+    f.code                   { '15OFF' }
+    f.description            { '15% off for life' }
+    f.percentage             { '14' }
+    f.allow_negative_balance { false }
+    f.recurring              { false }
+    f.end_date               { 1.month.from_now }
+  end
 end
