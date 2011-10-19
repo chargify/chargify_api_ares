@@ -60,9 +60,13 @@ module Chargify
       Base.user      = api_key
       Base.password  = 'X'
       Base.timeout   = timeout unless (timeout.blank?)
-
-      self.site = "https://#{subdomain}.chargify.com"
-
+      
+      if site.to_s != Base.site.to_s
+        self.site = site || "https://#{subdomain}.chargify.com"
+      else
+        self.site = "https://#{subdomain}.chargify.com"
+      end
+      
       Base.site                       = site
       Subscription::Component.site    = site + "/subscriptions/:subscription_id"
       Subscription::Statement.site    = site + "/subscriptions/:subscription_id"

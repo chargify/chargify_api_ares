@@ -19,6 +19,16 @@ describe Chargify::Base do
         end
       end.to change { Chargify::Base.site.to_s }.to("https://something-new.chargify.com")
     end
+
+    it "honors the site over the subdomain if it is specified" do
+      expect do
+        Chargify.configure do |c|
+          c.subdomain = "crazy-train"
+          c.site = "http://test-site.chargify-test.com"
+          c.api_key = "abc123"
+        end
+      end.to change { Chargify::Base.site.to_s }.to("http://test-site.chargify-test.com")
+    end
     
     after do
       Chargify.configure do |c|

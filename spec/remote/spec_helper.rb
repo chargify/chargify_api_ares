@@ -8,11 +8,8 @@ require 'chargify_api_ares'
 RSpec.configure do |config|
   config.before(:all) do
     Chargify.configure do |c|
-      c.subdomain = remote_configuration['subdomain']
       c.api_key = remote_configuration['api_key']
-      if remote_configuration['site']
-        c.site = remote_configuration['site']
-      end
+      c.site = remote_configuration['site']
     end
   end
 end
