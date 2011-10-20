@@ -193,8 +193,12 @@ module Chargify
       post :add_coupon, :code => code
     end
 
-    def remove_coupon(code)
-      delete :remove_coupon, :code => code
+    def remove_coupon(code=nil)
+      if code.nil?
+        delete :remove_coupon
+      else
+        delete :remove_coupon, :code => code
+      end
     end
 
     class Component < Base
