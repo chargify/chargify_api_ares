@@ -20,6 +20,22 @@ describe Chargify::Base do
       end.to change { Chargify::Base.site.to_s }.to("https://something-new.chargify.com")
     end
 
+    it "honors changes made to the subdomain" do
+      Chargify.configure do |c|
+        c.subdomain = "grizzly-bear"
+        c.api_key = "abc123"
+      end
+
+      Chargify.site.should == "https://grizzly-bear.chargify.com"
+      
+      Chargify.configure do |c|
+        c.subdomain = "zebra"
+        c.api_key = "abc123"
+      end
+      
+      Chargify.site.should == "https://zebra.chargify.com"
+    end
+
     it "honors the site over the subdomain if it is specified" do
       expect do
         Chargify.configure do |c|
