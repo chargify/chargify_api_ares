@@ -61,11 +61,7 @@ module Chargify
       Base.password  = 'X'
       Base.timeout   = timeout unless (timeout.blank?)
       
-      if site.to_s != Base.site.to_s
-        self.site = site || "https://#{subdomain}.chargify.com"
-      else
-        self.site = "https://#{subdomain}.chargify.com"
-      end
+      self.site ||= "https://#{subdomain}.chargify.com"
       
       Base.site                       = site
       Subscription::Component.site    = site + "/subscriptions/:subscription_id"
