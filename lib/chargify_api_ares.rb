@@ -246,7 +246,7 @@ module Chargify
 
   class ProductFamily < Base
     def self.find_by_handle(handle, attributes = {})
-      ProductFamily.find(:one, :from => :lookup, :handle => handle)
+      ProductFamily.find(:one, :from => :lookup, :params => { :handle => handle })
     end
     
     class Component < Base
