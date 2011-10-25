@@ -249,6 +249,11 @@ module Chargify
       ProductFamily.find(:one, :from => :lookup, :params => { :handle => handle })
     end
     
+    def products(params = {})
+      params.merge!(:product_family_id => self.id)
+      Product.find(:all, :params => params)
+    end
+    
     class Component < Base
     end
     
