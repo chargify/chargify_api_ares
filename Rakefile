@@ -1,9 +1,6 @@
-require 'rake'
+require 'bundler'
+Bundler::GemHelper.install_tasks
 require 'rspec/core/rake_task'
 
-desc 'Run the spec suite'
-RSpec::Core::RakeTask.new('spec') {|t|
-  t.rspec_opts = ['--colour', '--format Fuubar']
-}
-
+RSpec::Core::RakeTask.new(:spec)
 task :default => :spec

@@ -1,4 +1,4 @@
-require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
+require 'spec_helper'
 
 describe Chargify::Subscription do
   
@@ -25,7 +25,7 @@ describe Chargify::Subscription do
       @subscription.attributes['credit_card'].should be_blank
     end
     
-    it 'doesn\'t strip other attrs' do
+    it "doesn't strip other attrs" do
       subscription = FactoryGirl.build(:subscription)
       
       lambda { subscription.save! }.should_not change(subscription, :attributes)
