@@ -33,3 +33,6 @@ u.save
 
 x = Chargify::Usage.find(:last, :params => {:subscription_id => subscription.id, :component_id => component.id})
 puts x.memo == d
+
+# Call a specific Component by ID
+component = Chargify::ProductFamily::Component.find(component_id, :params => {:product_family_id => product_family_id})
