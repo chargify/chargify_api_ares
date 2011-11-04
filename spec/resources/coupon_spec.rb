@@ -17,4 +17,19 @@ describe Chargify::Coupon do
       coupon.should be_instance_of(Chargify::Coupon)
     end
   end
+  
+  context '.find_all_by_product_family_id' do
+    let(:coupon_1) { Factory.build(:coupon, :product_family_id => 5) }
+    let(:coupon_2) { Factory.build(:coupon, :product_family_id => 5) }
+    
+    before do
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons.xml?product_family_id=5", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)
+    end
+    
+    it "returns all of the coupons for a product family" do
+      coupons = Chargify::Coupon.find_all_by_product_family_id(5)
+      coupons.count.should == 2
+      coupons.map{|c| c.should be_instance_of(Chargify::Coupon)}
+    end
+  end
 end
