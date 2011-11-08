@@ -4,8 +4,8 @@ describe Chargify::Coupon do
   context '.find_by_product_family_id_and_code' do
     let(:existing_coupon) { Factory.build(:coupon, :code => '20OFF') }
     
-    before do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/10/coupons/lookup.xml?code=#{existing_coupon.code}", :body => existing_coupon.attributes.to_xml)
+    before(:each) do
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons/lookup.xml?code=#{existing_coupon.code}&product_family_id=10", :body => existing_coupon.attributes.to_xml)
     end
     
     it "finds the correct coupon by product family and code" do
@@ -17,13 +17,13 @@ describe Chargify::Coupon do
       coupon.should be_instance_of(Chargify::Coupon)
     end
   end
-
+  
   context '.find_all_by_product_family_id' do
     let(:coupon_1) { Factory.build(:coupon, :product_family_id => 5) }
     let(:coupon_2) { Factory.build(:coupon, :product_family_id => 5) }
     
     before do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/5/coupons.xml", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons.xml?product_family_id=5", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)
     end
     
     it "returns all of the coupons for a product family" do

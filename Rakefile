@@ -1,9 +1,16 @@
-require 'rake'
+require 'bundler'
+Bundler::GemHelper.install_tasks
 require 'rspec/core/rake_task'
 
-desc 'Run the spec suite'
-RSpec::Core::RakeTask.new('spec') {|t|
-  t.rspec_opts = ['--colour', '--format Fuubar']
-}
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.pattern = FileList['spec/**/*_spec.rb'].exclude('spec/remote/**/*')
+end
+
+namespace :spec do
+  desc "Run remote specs"
+  RSpec::Core::RakeTask.new(:remote) do |t|
+    t.pattern = FileList['spec/remote/**/*_spec.rb']
+  end
+end
 
 task :default => :spec

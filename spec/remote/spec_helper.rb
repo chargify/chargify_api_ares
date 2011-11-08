@@ -5,7 +5,16 @@ $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', '..', 'lib'))
 
 require 'chargify_api_ares'
 
+unless File.exists?(File.join(File.dirname(__FILE__), 'remote.yml'))
+  STDERR.puts "\nERROR: Make sure a remote.yml file exists at ./spec/remote/remote.yml\n\n"
+  abort
+end
+
 RSpec.configure do |config|
+  config.filter_run :focused => true
+  config.run_all_when_everything_filtered = true
+  config.alias_example_to :fit, :focused => true
+  config.color_enabled = true
   config.before(:all) do
     Chargify.configure do |c|
       c.api_key = remote_configuration['api_key']
@@ -14,21 +23,8 @@ RSpec.configure do |config|
   end
 end
 
-def run_remote_tests?
-  remote_configuration['run_tests'] === true
-end
-
-def remote_configuration
-  @remote_configuration ||= load_remote_configuration_file
-end
-
 private
 
-def load_remote_configuration_file
-  configuration_file = File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'config', 'remote.yml'))
-  if File.exist?(configuration_file)
-    YAML.load_file(configuration_file)
-  else
-    {}
-  end
+def remote_configuration
+  @remote_configuration ||= YAML.load_file(File.expand_path(File.join(File.dirname(__FILE__), 'remote.yml')))
 end

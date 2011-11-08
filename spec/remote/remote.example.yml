@@ -1,0 +1,6 @@
+# Copy this file to spec/remote/remote.yml and make adjustments as necessary.
+#
+# Note: Remote tests will only work when configured to run on a test site that uses the Bogus gateway.
+# Warning: All data in the site specified will be cleared and replaced with test data.
+api_key: your_api_key
+site: your_site

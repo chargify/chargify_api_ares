@@ -2,46 +2,50 @@ FactoryGirl.define do
   sequence :email do |n|
     "customer#{n}@example.com"
   end
-
+  
+  sequence :product_name do |n|
+    "Product #{n}"
+  end
+  
   sequence :customer_id do |n|
     n
   end
-
-  factory :customer, :class => Chargify::Customer do |c|
-    c.first_name { Faker::Name.first_name }
-    c.last_name { Faker::Name.last_name }
-    c.email { FactoryGirl.generate(:email) }
-    c.organization { Faker::Company.name }
-    c.created_at { 2.days.ago }
-    c.updated_at { 1.hour.ago }
+  
+  sequence :subscription_id do |n|
+    n
   end
-
-
+  
   sequence :product_id do |n|
     n
   end
 
-  sequence :product_name do |n|
-    "Product #{n}"
+  factory :customer, :class => Chargify::Customer do |f|
+    f.first_name { Faker::Name.first_name }
+    f.last_name { Faker::Name.last_name }
+    f.email { FactoryGirl.generate(:email) }
+    f.organization { Faker::Company.name }
+    f.created_at { 2.days.ago }
+    f.updated_at { 1.hour.ago }
   end
 
-  factory :product, :class => Chargify::Product do |p|
-    p.name { FactoryGirl.generate(:product_name) }
+  factory :product, :class => Chargify::Product do |f|
+    f.name { FactoryGirl.generate(:product_name) }
   end
 
-  sequence :subscription_id do |n|
-    n
+  factory :product_family, :class => Chargify::ProductFamily do |f|
+    f.name { Faker::Name.name }
+    f.handle 'mining'
   end
 
-  factory :subscription, :class => Chargify::Subscription do |s|
-    s.balance_in_cents 500
-    s.current_period_ends_at 3.days.from_now
+  factory :subscription, :class => Chargify::Subscription do |f|
+    f.balance_in_cents 500
+    f.current_period_ends_at 3.days.from_now
   end
 
-  factory :subscription_with_extra_attrs, :parent => :subscription do |swea|
-    swea.customer Chargify::Customer.new
-    swea.product Chargify::Product.new
-    swea.credit_card "CREDIT CARD"
+  factory :subscription_with_extra_attrs, :parent => :subscription do |f|
+    f.customer Chargify::Customer.new
+    f.product Chargify::Product.new
+    f.credit_card "CREDIT CARD"
   end
 
   factory :component, :class => Chargify::Component do |f|
