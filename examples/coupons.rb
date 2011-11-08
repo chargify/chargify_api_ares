@@ -47,4 +47,4 @@ subscription.add_coupon('5OFF')
 
 # Remove coupon from subscription
 subscription = Subscription.find_by_customer_reference('moklett')
-subscription.remove_coupon('50OFF')
+subscription.remove_coupon

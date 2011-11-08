@@ -81,13 +81,17 @@ module Chargify
       post :add_coupon, :code => code
     end
 
-    def remove_coupon(code)
-      delete :remove_coupon, :code => code
+    def remove_coupon(code=nil)
+      if code.nil?
+        delete :remove_coupon
+      else
+        delete :remove_coupon, :code => code
+      end
     end
 
     class Component < Base
       self.prefix = "/subscriptions/:subscription_id/"
-      
+
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
         self.component_id
@@ -100,7 +104,7 @@ module Chargify
 
     class Transaction < Base
       self.prefix = "/subscriptions/:subscription_id/"
-      
+
       def full_refund(attrs = {})
         return false if self.transaction_type != 'payment'
 
