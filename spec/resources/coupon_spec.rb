@@ -16,6 +16,11 @@ describe Chargify::Coupon do
       coupon = Chargify::Coupon.find_by_product_family_id_and_code(10, '20OFF')
       coupon.should be_instance_of(Chargify::Coupon)
     end
+
+    it 'is marked as persisted' do
+      coupon = Chargify::Coupon.find_by_product_family_id_and_code(10, '20OFF')
+      coupon.persisted?.should == true
+    end
   end
   
   context '.find_all_by_product_family_id' do

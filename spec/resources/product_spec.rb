@@ -18,6 +18,11 @@ describe Chargify::Product do
       product = Chargify::Product.find_by_handle('green-money')
       product.should be_instance_of(Chargify::Product)
     end  
+
+    it 'is marked as persisted' do
+      product = Chargify::Product.find_by_handle('green-money')
+      product.persisted?.should == true
+    end
   end
 
 end
