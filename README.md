@@ -47,6 +47,14 @@ If you're using Rails, you could include this gem in your configuration, i.e. in
 ``` ruby
 config.gem 'chargify_api_ares'
 ```
+
+If you're using Rails 3 or greater, you could include this gem in your Gemfile.
+``` ruby
+gem 'chargify_api_ares'
+```
+
+Install the gem using the following command:
+$ bundle install
     
 Now you'll have access to classes the interact with the Chargify API, such as:
 
