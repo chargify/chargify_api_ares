@@ -41,8 +41,16 @@ Simply require this library before you use it:
 ``` ruby
 require 'chargify_api_ares'
 ```
-    
-If you're using Rails, you could include this gem in your configuration, i.e. in `environment.rb`
+
+If you're using Rails 3.x, you could include this gem in your Gemfile.
+``` ruby
+gem 'chargify_api_ares'
+```
+
+Install the gem using the following command:
+$ bundle install
+
+If you're using Rails 2 you could include this gem in your configuration, i.e. in `environment.rb`
 
 ``` ruby
 config.gem 'chargify_api_ares'
