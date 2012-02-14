@@ -17,6 +17,11 @@ describe Chargify::Customer do
       customer = Chargify::Customer.find_by_reference('sigma')
       customer.should be_instance_of(Chargify::Customer)
     end
+
+    it 'is marked as persisted' do
+      customer = Chargify::Customer.find_by_reference('sigma')
+      customer.persisted?.should == true
+    end
   end
 
   context "#subscriptions" do
