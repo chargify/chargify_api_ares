@@ -1,7 +1,7 @@
 module Chargify
   class Customer < Base
     def self.find_by_reference(reference)
-      Customer.new(get(:lookup, :reference => reference), true)
+      find(:one, :from => :lookup, :params => {:reference => reference})
     end
 
     class Subscription < Base
