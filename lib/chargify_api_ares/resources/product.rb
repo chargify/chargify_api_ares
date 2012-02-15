@@ -1,7 +1,7 @@
 module Chargify
   class Product < Base
     def self.find_by_handle(handle)
-      Product.new get(:lookup, :handle => handle)
+      find(:one, :from => :lookup, :params => {:handle => handle})
     end
     
     protected
