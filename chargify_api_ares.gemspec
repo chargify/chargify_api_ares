@@ -4,13 +4,13 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
   
   s.name    = 'chargify_api_ares'
-  s.version = '0.5.1'
+  s.version = '0.5.2'
   s.date    = '2012-12-15'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
   s.authors = ["Michael Klett", "Nathan Verni", "Rodrigo Franco", "Shay Frendt"]
   s.email = 'support@chargify.com'
-  s.homepage = 'http://github.com/grasshopperlabs/chargify_api_ares'
+  s.homepage = 'http://github.com/chargify/chargify_api_ares'
   
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
