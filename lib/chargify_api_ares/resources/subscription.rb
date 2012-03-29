@@ -13,8 +13,13 @@ module Chargify
       super
     end
 
-    def cancel
-      destroy
+    def cancel(cancellation_message = nil)
+      if cancellation_message.nil?
+        destroy
+      else
+        #Destory does not support body, must work around it to send verb DELETE
+        self.connection.post(element_path, {:cancellation_message => cancellation_message}.to_xml(:root => :subscription), self.class.headers.merge({'X-Http-Method-Override' => 'DELETE'}))
+      end
     end
 
     def component(id)
