@@ -34,7 +34,14 @@ module Chargify
     # For more information, please see the one-time charge API docs available
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
-      post :charges, {}, attrs.to_xml(:root => :charge)
+      charge = Charge.new
+      begin
+        http = post :charges, {}, attrs.to_xml(:root => :charge)
+        charge.from_xml(http.body)
+      rescue ActiveResource::ResourceInvalid => error
+        charge.errors.from_xml(error.response.body)
+      end   
+      return charge
     end
 
     def credit(attrs = {})
@@ -99,6 +106,10 @@ module Chargify
     end
 
     class Statement < Base
+      self.prefix = "/subscriptions/:subscription_id/"
+    end
+    
+    class Charge < Base
       self.prefix = "/subscriptions/:subscription_id/"
     end
 
