@@ -38,7 +38,7 @@ module Chargify
       begin
         http = post :charges, {}, attrs.to_xml(:root => :charge)
         charge.from_xml(http.body)
-      rescue ActiveResource::ResourceInvalid => error
+      rescue ActiveResource::ResourceInvalid, ActiveResource::ResourceNotFound => error
         charge.errors.from_xml(error.response.body)
       end   
       return charge
