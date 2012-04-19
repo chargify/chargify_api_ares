@@ -61,7 +61,14 @@ module Chargify
     end
 
     def migrate(attrs = {})
-      post :migrations, :migration => attrs
+      migrate = Migrate.new
+      begin
+        http = post :migrations, :migration => attrs
+        migrate.from_xml(http.body)
+      rescue ActiveResource::ResourceInvalid, ActiveResource::ResourceNotFound => error
+        migrate.errors.from_xml(error.response.body)
+      end   
+      return migrate
     end
 
     def statement(id)
@@ -110,6 +117,10 @@ module Chargify
     end
     
     class Charge < Base
+      self.prefix = "/subscriptions/:subscription_id/"
+    end
+
+    class Migrate < Base
       self.prefix = "/subscriptions/:subscription_id/"
     end
 
