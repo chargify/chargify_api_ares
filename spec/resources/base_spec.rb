@@ -33,9 +33,20 @@ describe Chargify::Base do
       end.to change { Chargify::Base.site.to_s }.to("http://test-site.chargify-test.com")
     end
     
+    it "allows you to specify the domain" do
+      expect do
+        Chargify.configure do |c|
+          c.subdomain = "crazy-train"
+          c.domain = "chargify.local"
+          c.api_key = "abc123"
+        end
+      end.to change { Chargify::Base.site.to_s }.to("https://crazy-train.chargify.local")
+    end
+
     after do
       Chargify.configure do |c|
         c.subdomain = @original_subdomain
+        c.domain = nil
       end
     end
   end
