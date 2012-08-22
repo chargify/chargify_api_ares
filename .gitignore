@@ -2,3 +2,5 @@ config/remote.yml
 spec/remote/remote.yml
 pkg
 .rvmrc
+.bundle/
+bin/
