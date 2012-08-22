@@ -20,12 +20,12 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency('activeresource', '>= 2.3.5')
 
   # Development Dependencies
-  s.add_development_dependency('rake', '~> 0.9.2')
-  s.add_development_dependency('rspec', '~> 2.7.0')
-  s.add_development_dependency('factory_girl', '~> 2.1.0')
+  s.add_development_dependency('rake', '~> 0.9.2.2')
+  s.add_development_dependency('rspec', '~> 2.11.0')
+  s.add_development_dependency('factory_girl', '~> 4.0.0')
   s.add_development_dependency('fakeweb', '~> 1.3.0')
   s.add_development_dependency('faker', '~> 1.0.1')
-  s.add_development_dependency('guard-rspec', '~> 0.5.0')
+  s.add_development_dependency('guard', '~> 1.3.2')
+  s.add_development_dependency('guard-rspec', '~> 1.2.1')
   s.add_development_dependency('growl', '~> 1.0.3')
-  s.add_development_dependency('rb-fsevent', '~> 0.4.2')
 end

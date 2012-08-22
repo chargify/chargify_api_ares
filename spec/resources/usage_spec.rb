@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Chargify::Usage do
   context "create" do
     before do
-      @subscription = Factory(:subscription)
-      @component = Factory(:component)
+      @subscription = build(:subscription)
+      @component = build(:component)
       @now = DateTime.now.to_s
     end
     
@@ -24,8 +24,8 @@ describe Chargify::Usage do
   
   context "find" do
     before do
-      @subscription = Factory(:subscription)
-      @component = Factory(:component)
+      @subscription = build(:subscription)
+      @component = build(:component)
       @now = DateTime.now.to_s
     end
     
