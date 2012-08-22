@@ -1,13 +1,11 @@
 $:.unshift File.expand_path('../lib', File.dirname(__FILE__))
 
-require 'chargify_api_ares'
-require 'rspec'
-require 'fakeweb'
-require 'support/fake_resource'
-require 'factory_girl'
-require 'faker'
-require 'factories'
+require 'bundler'
+Bundler.require(:default, :development)
 
+require 'support/fake_resource'
+
+FactoryGirl.find_definitions
 ActiveResource::Base.send :include, ActiveResource::FakeResource
 FakeWeb.allow_net_connect = false
 
@@ -21,7 +19,9 @@ RSpec.configure do |config|
   config.run_all_when_everything_filtered = true
   config.alias_example_to :fit, :focused => true
   config.color_enabled = true
-  
+
+  config.include FactoryGirl::Syntax::Methods
+
   config.after(:each) do
     ActiveResource::FakeResource.clean
   end
