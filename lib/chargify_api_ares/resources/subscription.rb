@@ -26,6 +26,11 @@ module Chargify
       Component.find(:all, :params => params)
     end
 
+    def events(params = {})
+      params.merge!(:subscription_id => self.id)
+      Event.all(:params => params)
+    end
+
     def payment_profile
       self.respond_to?('credit_card') ? credit_card : nil
     end
@@ -96,6 +101,10 @@ module Chargify
       def id
         self.component_id
       end
+    end
+
+    class Event < Base
+      self.prefix = '/subscriptions/:subscription_id/'
     end
 
     class Statement < Base
