@@ -313,6 +313,62 @@ describe "Remote" do
         tx.transaction_type.should == 'refund'
       end
     end
+
+    describe 'Webhooks' do
+      before(:all) do
+        @subscription = Chargify::Subscription.create(
+          :product_handle => pro_plan.handle,
+          :customer_reference => johnadoe.reference,
+          :payment_profile_attributes => good_payment_profile_attributes)
+      end
+
+      it 'should list all webhooks' do
+        Chargify::Webhook.all.should_not be_empty
+      end
+
+      # The sleep in the next 2 examples precludes the use of expect{foo}.to change{bar}
+      it 'should replay specified webhooks' do
+        # Note: Webhook#reload doesn't work.
+        webhook = Chargify::Webhook.first
+        last_sent_at = webhook.last_sent_at
+
+        webhook.replay
+
+        sleep 4
+        Chargify::Webhook.first.last_sent_at.should_not == last_sent_at
+      end
+
+      it 'should replay webhooks specified by id' do
+        webhooks = Chargify::Webhook.all
+        webhook_ids = [0, 1].map {|i| webhooks[i].id}
+
+        fetch_last_sent_times = lambda {|ary| ary.select{ |w| webhook_ids.include?(w.id) }.map(&:last_sent_at)}
+
+        last_sent_at_times = fetch_last_sent_times.call(webhooks)
+
+        Chargify::Webhook.replay(webhook_ids)
+
+        sleep 4
+        fetch_last_sent_times.call(Chargify::Webhook.all).should_not == last_sent_at_times
+      end
+    end
+
+    describe 'Events' do
+      before(:all) do
+        @subscription = Chargify::Subscription.create(
+          :product_handle => pro_plan.handle,
+          :customer_reference => johnadoe.reference,
+          :payment_profile_attributes => good_payment_profile_attributes)
+      end
+
+      it 'should list all events for the site' do
+        Chargify::Event.all.should_not be_empty
+      end
+
+      it 'should lits all events for a subscription' do
+        @subscription.events.should_not be_empty
+      end
+    end
   end
 
   def clear_site_data
