@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::ProductFamily do
+describe Chargify::ProductFamily, :fake_resource do
   context ".find_by_handle" do
     let(:product_family) { Chargify::ProductFamily.create(:id => 1, :handle => 'farming') }
     

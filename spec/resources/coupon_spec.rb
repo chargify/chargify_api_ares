@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Chargify::Coupon do
+describe Chargify::Coupon, :fake_resource do
   context '.find_by_product_family_id_and_code' do
-    let(:existing_coupon) { Factory.build(:coupon, :code => '20OFF') }
+    let(:existing_coupon) { build(:coupon, :code => '20OFF') }
     
     before(:each) do
       FakeWeb.register_uri(:get, "#{test_domain}/coupons/lookup.xml?code=#{existing_coupon.code}&product_family_id=10", :body => existing_coupon.attributes.to_xml)
@@ -24,8 +24,8 @@ describe Chargify::Coupon do
   end
   
   context '.find_all_by_product_family_id' do
-    let(:coupon_1) { Factory.build(:coupon, :product_family_id => 5) }
-    let(:coupon_2) { Factory.build(:coupon, :product_family_id => 5) }
+    let(:coupon_1) { build(:coupon, :product_family_id => 5) }
+    let(:coupon_2) { build(:coupon, :product_family_id => 5) }
     
     before do
       FakeWeb.register_uri(:get, "#{test_domain}/coupons.xml?product_family_id=5", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)

@@ -1,8 +1,8 @@
 require 'spec_helper'
 
-describe Chargify::Customer do
+describe Chargify::Customer, :fake_resource do
   context '.find_by_reference' do
-    let(:existing_customer) { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
+    let(:existing_customer) { debugger; Chargify::Customer.create(:id => 5, :reference => 'sigma') }
 
     before(:each) do
       FakeWeb.register_uri(:get, "#{test_domain}/customers/lookup.xml?reference=#{existing_customer.reference}", :body => existing_customer.attributes.to_xml)
