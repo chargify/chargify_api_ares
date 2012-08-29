@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Coupon do
+describe Chargify::Coupon, :fake_resource do
   context '.find_by_product_family_id_and_code' do
     let(:existing_coupon) { build(:coupon, :code => '20OFF') }
     

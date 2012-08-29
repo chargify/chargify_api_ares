@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Subscription do
+describe Chargify::Subscription, :fake_resource do
   
   context 'strips nested association attributes before saving' do
     before do

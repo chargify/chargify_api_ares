@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Subscription::Component do
+describe Chargify::Subscription::Component, :fake_resource do
   before(:each) do
     @subscription = Chargify::Subscription.new(:id => 1)
     @sc1 = Chargify::Subscription::Component.new(

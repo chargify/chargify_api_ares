@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Customer do
+describe Chargify::Customer, :fake_resource do
   context '.find_by_reference' do
     let(:existing_customer) { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
 
