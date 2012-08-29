@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Usage do
+describe Chargify::Usage, :fake_resource do
   context "create" do
     before do
       @subscription = build(:subscription)
