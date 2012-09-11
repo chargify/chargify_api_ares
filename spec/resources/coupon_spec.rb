@@ -37,4 +37,27 @@ describe Chargify::Coupon do
       coupons.map{|c| c.should be_instance_of(Chargify::Coupon)}
     end
   end
+
+  context '.validate' do
+    let(:coupon_1) { build(:coupon, :product_family_id => 6) }
+
+    before do
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons/validate.xml?product_family_id=6&coupon_code=foobar123", :body => coupon_1.attributes.to_xml)
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons/validate.xml?coupon_code=foobar123", :body => coupon_1.attributes.to_xml)
+    end
+
+    it 'returns the coupon that matches the coupon code' do
+      coupon = Chargify::Coupon.validate(:product_family_id => 6, :coupon_code => 'foobar123')
+      coupon.should be_instance_of Chargify::Coupon
+    end
+
+    it 'treats the product_family_id as an optional parameter' do
+      coupon = Chargify::Coupon.validate(:coupon_code => 'foobar123')
+      coupon.should be_instance_of Chargify::Coupon
+    end
+
+    it 'treats the coupon_code as a required parameter' do
+      expect { coupon = Chargify::Coupon.validate }.to raise_error(ArgumentError)
+    end
+  end
 end
