@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Chargify::Product do
+describe Chargify::Product, :fake_resource do
   
   context '.find_by_handle' do
     let(:existing_product) { Chargify::Product.create(:id => 2, :handle => 'green-money') }
