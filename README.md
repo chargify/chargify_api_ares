@@ -4,7 +4,7 @@ Chargify API wrapper for Ruby (using ActiveResource)
 
 This is a Ruby wrapper for the [Chargify](http://chargify.com) API that leverages ActiveResource.
 
-ActiveResource versions 3.0.0 to 3.0.19 are not compatible and will throw an exception. Please use at least version 3.0.20 if on 3.0. 
+ActiveResource versions 3.0.0 to 3.0.19 are not compatible and will throw an exception. Please use at least version 3.0.20 if on 3.0. For more information see the [relevant rails pull request](https://github.com/rails/rails/pull/8853/files).
 
 It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
 
