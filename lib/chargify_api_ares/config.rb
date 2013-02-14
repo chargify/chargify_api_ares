@@ -11,6 +11,8 @@ module Chargify
       
       self.site ||= "https://#{subdomain}.chargify.com"
       Base.site = site
+      self.format ||= :xml
+      Base.format = format
     end
   end
 end
