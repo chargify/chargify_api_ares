@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.date    = '2012-12-15'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
-  s.authors = ["Michael Klett", "Nathan Verni", "Rodrigo Franco", "Shay Frendt"]
+  s.authors = ["Michael Klett", "Nathan Verni", "Graham McIntire", "Rodrigo Franco", "Shay Frendt"]
   s.email = 'support@chargify.com'
   s.homepage = 'http://github.com/chargify/chargify_api_ares'
   
@@ -24,8 +24,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency('rspec', '~> 2.7.0')
   s.add_development_dependency('factory_girl', '~> 2.1.0')
   s.add_development_dependency('fakeweb', '~> 1.3.0')
-  s.add_development_dependency('faker', '~> 1.0.1')
+  s.add_development_dependency('faker', '~> 1.1.2')
   s.add_development_dependency('guard-rspec', '~> 0.5.0')
   s.add_development_dependency('growl', '~> 1.0.3')
-  s.add_development_dependency('rb-fsevent', '~> 0.4.2')
+  s.add_development_dependency('rb-fsevent', '~> 0.9.2')
 end
