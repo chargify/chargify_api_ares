@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
   
   s.name    = 'chargify_api_ares'
-  s.version = '0.5.2'
-  s.date    = '2012-12-15'
+  s.version = '0.5.3'
+  s.date    = '2013-02-14'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
   s.authors = ["Michael Klett", "Nathan Verni", "Graham McIntire", "Rodrigo Franco", "Shay Frendt"]
