@@ -39,7 +39,7 @@ describe Chargify::Coupon do
   end
 
   context '.validate' do
-    let(:coupon_1) { build(:coupon, :product_family_id => 6) }
+    let(:coupon_1) { Factory.build(:coupon, :product_family_id => 6) }
 
     before do
       FakeWeb.register_uri(:get, "#{test_domain}/coupons/validate.xml?product_family_id=6&coupon_code=foobar123", :body => coupon_1.attributes.to_xml)
