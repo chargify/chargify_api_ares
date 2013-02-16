@@ -22,7 +22,7 @@ Gem::Specification.new do |s|
   # Development Dependencies
   s.add_development_dependency('rake', '~> 10.0.3')
   s.add_development_dependency('rspec', '~> 2.12.0')
-  s.add_development_dependency('factory_girl', '~> 4.2.0')
+  s.add_development_dependency('factory_girl', '~> 2.6')
   s.add_development_dependency('fakeweb', '~> 1.3.0')
   s.add_development_dependency('faker', '~> 1.1.2')
   s.add_development_dependency('guard-rspec', '~> 2.4.0')

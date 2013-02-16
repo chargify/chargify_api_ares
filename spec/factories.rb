@@ -22,14 +22,14 @@ FactoryGirl.define do
   factory :customer, :class => Chargify::Customer do |f|
     f.first_name { Faker::Name.first_name }
     f.last_name { Faker::Name.last_name }
-    f.email { generate(:email) }
+    f.email { FactoryGirl.generate(:email) }
     f.organization { Faker::Company.name }
     f.created_at { 2.days.ago }
     f.updated_at { 1.hour.ago }
   end
 
   factory :product, :class => Chargify::Product do |f|
-    f.name { generate(:product_name) }
+    f.name { FactoryGirl.generate(:product_name) }
   end
 
   factory :product_family, :class => Chargify::ProductFamily do |f|
