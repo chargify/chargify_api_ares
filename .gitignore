@@ -3,3 +3,5 @@ spec/remote/remote.yml
 pkg
 .rvmrc
 .ruby-version
+.bundle/
+bin/

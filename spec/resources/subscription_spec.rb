@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Chargify::Subscription do
+describe Chargify::Subscription, :fake_resource do
   
   context 'strips nested association attributes before saving' do
     before do
-      @subscription = FactoryGirl.build(:subscription_with_extra_attrs)
+      @subscription = build(:subscription_with_extra_attrs)
     end
     
     it 'strips customer' do
@@ -26,15 +26,15 @@ describe Chargify::Subscription do
     end
     
     it "doesn't strip other attrs" do
-      subscription = FactoryGirl.build(:subscription)
+      subscription = build(:subscription)
       
       lambda { subscription.save! }.should_not change(subscription, :attributes)
     end
   end
   
   it 'creates a one-time charge' do
-    id = FactoryGirl.generate(:subscription_id)
-    subscription = Factory(:subscription, :id => id)
+    id = generate(:subscription_id)
+    subscription = build(:subscription, :id => id)
     subscription.stub!(:persisted?).and_return(true)
     expected_response = {:charge => {:amount_in_cents => 1000, :memo => "one-time charge", :success => true}}.to_xml
     FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/charges.xml", :status => 201, :body => expected_response)
@@ -46,8 +46,8 @@ describe Chargify::Subscription do
   end
   
   it 'finds by customer reference' do
-    customer = Factory(:customer, :reference => 'roger', :id => 10)
-    subscription = Factory(:subscription, :id => 11, :customer_id => customer.id, :product => Factory(:product))
+    customer = build(:customer, :reference => 'roger', :id => 10)
+    subscription = build(:subscription, :id => 11, :customer_id => customer.id, :product => build(:product))
     
     expected_response = [subscription.attributes].to_xml(:root => 'subscriptions')
     FakeWeb.register_uri(:get, "#{test_domain}/subscriptions.xml?customer_id=#{customer.id}", :status => 200, :body => expected_response)
@@ -57,7 +57,7 @@ describe Chargify::Subscription do
   end
   
   it 'cancels the subscription' do
-    @subscription = Factory(:subscription, :id => 1)
+    @subscription = build(:subscription, :id => 1)
     find_subscription = lambda { Chargify::Subscription.find(1) }
     
     FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/1.xml", :body => @subscription.attributes.to_xml)
@@ -68,8 +68,8 @@ describe Chargify::Subscription do
   end
 
   it 'migrates the subscription' do
-    id = FactoryGirl.generate(:subscription_id)
-    subscription = Factory(:subscription, :id => id)
+    id = generate(:subscription_id)
+    subscription = build(:subscription, :id => id)
     subscription.stub!(:persisted?).and_return(true)
     expected_response = [subscription.attributes].to_xml(:root => 'subscription')
     FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/migrations.xml?migration%5Bproduct_handle%5D=upgraded-plan", :status => 201, :body => expected_response)
