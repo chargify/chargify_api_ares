@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     chargify_api_ares (0.5.4)
-      activeresource (>= 2.3.5)
+      activeresource (>= 3.0.0)
 
 GEM
   remote: http://rubygems.org/

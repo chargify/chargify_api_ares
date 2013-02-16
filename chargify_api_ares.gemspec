@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = %w[lib]
 
   # Runtime Dependencies
-  s.add_runtime_dependency('activeresource', '>= 2.3.5')
+  s.add_runtime_dependency('activeresource', '>= 3.0.0')
 
   # Development Dependencies
   s.add_development_dependency('rake', '~> 10.0.3')
