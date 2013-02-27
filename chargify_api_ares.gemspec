@@ -4,11 +4,11 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
   
   s.name    = 'chargify_api_ares'
-  s.version = '0.6.0'
-  s.date    = '2013-02-16'
+  s.version = '0.6.1'
+  s.date    = '2013-02-26'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
-  s.authors = ["Michael Klett", "Nathan Verni", "Graham McIntire", "Rodrigo Franco", "Shay Frendt"]
+  s.authors = ["Michael Klett", "Nathan Verni", "Graham McIntire", "Jeremy W. Rowe", "Rodrigo Franco", "Shay Frendt"]
   s.email = 'support@chargify.com'
   s.homepage = 'http://github.com/chargify/chargify_api_ares'
   
@@ -28,4 +28,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency('guard-rspec', '~> 2.4.0')
   s.add_development_dependency('growl', '~> 1.0.3')
   s.add_development_dependency('rb-fsevent', '~> 0.9.2')
+  s.add_development_dependency('pry', '~> 0.9.12')
 end

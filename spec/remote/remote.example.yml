@@ -2,5 +2,8 @@
 #
 # Note: Remote tests will only work when configured to run on a test site that uses the Bogus gateway.
 # Warning: All data in the site specified will be cleared and replaced with test data.
-api_key: your_api_key
-site: your_site
+api_key: your_api_key # your api key for your login (Required)
+subdomain: your_site  # the subdomain for the site you wish to test (Required)
+#domain: ".foo.dev"   # this is optional to point to a local version of chargify
+#protocol: "http"     # this is an optional value to use https or http
+#site: "http://doo.foo-com" # this is optional to override the entire url
