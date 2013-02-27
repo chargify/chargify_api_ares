@@ -6,6 +6,42 @@ Chargify API wrapper for Ruby (using ActiveResource)
 
 This is a Ruby wrapper for the [Chargify](http://chargify.com) API that leverages ActiveResource.
 
+To configure api key, site, domain, and protocol you can do the
+following. Please note that this step is required.
+
+Most common usage
+----------------
+
+``` ruby
+  Chargify.configure do |c|
+    c.api_key   = "your_key_goes_here"
+    c.subdomain = "test-site"
+  end
+```
+
+Overriding the endpoint
+--------------
+
+``` ruby
+  Chargify.configure do |c|
+    c.api_key   = "your_key_goes_here"
+    c.site      = "https://test-site.some-domain.com"
+  end
+```
+
+Available configuration options
+-------------------------------
+
+| Name              | Description                                                                                      | Default      | Required                   |
+| ----------------- | -----------------------------------------------------------------------------------              | ---------    | -------------------------- |
+| api_key           | The api_key credentials that are used to access your chargify account.                           | N/A          | Yes                        |
+| subdomain         | The subdomain (site name) of the chargify endpoint you are trying to interact with               | test         | Yes (unless site was used) |
+| domain            | The domain of the endpoint, in which you want to interact with.                                  | chargify.com | No                         |
+| protocol          | The endpoint protocol that you wish to use (http / https)                                        | https        | No                         |
+| site              | This is meant to override all three of the previous settings eg: http://foo.bar.com              | N/A          | No                         |
+| format            | The format of the request and response type that you want to deal with                           | xml          | No                         |
+| timeout           | The time in seconds for a request to be valid. Will raise a timeout error if exceeds time limit. | N/A          | No                         |
+
 It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
 
 ``` ruby

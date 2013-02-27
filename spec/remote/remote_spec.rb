@@ -34,9 +34,9 @@ describe "Remote" do
       :email => "john.doe@example.com",
       :reference => "johndoe")
   end
-  
+
   let(:johnadoes_credit_card) { Chargify::PaymentProfile.create(good_payment_profile_attributes.merge(:customer_id => johnadoe.id)) }
-  
+
   before(:all) do
     # Make sure the test site data is set up correctly
     clear_site_data; acme_projects; basic_plan; pro_plan; johnadoe; johnadoes_credit_card
@@ -46,16 +46,16 @@ describe "Remote" do
     context "when providing valid attributes for the customer and the payment profile" do
       before(:all) do
         @subscription = Chargify::Subscription.create(
-          :product_handle => basic_plan.handle, 
+          :product_handle => basic_plan.handle,
           :customer_attributes => {
             :first_name => "Rick",
             :last_name => "James",
             :email => "rick@example.com",
             :reference => "rickjames"
-          }, 
-          :payment_profile_attributes => good_payment_profile_attributes) 
+          },
+          :payment_profile_attributes => good_payment_profile_attributes)
       end
-      
+
       it "sets the current_period_started_at attribute to now" do
         @subscription.current_period_started_at.utc.should be_within(60).of(now.utc)
       end
@@ -128,7 +128,7 @@ describe "Remote" do
             :last_name => "Marley",
             :email => "ziggy@example.com",
             :reference => "ziggy"
-          }, 
+          },
           :payment_profile_attributes => unstorable_payment_profile_attributes)
       end
 
@@ -155,7 +155,7 @@ describe "Remote" do
             :last_name => "Denver",
             :email => "john.denver@example.com",
             :reference => "johndenver"
-          }, 
+          },
           :payment_profile_attributes => pretokenized_card_attributes,
           :next_billing_at => ten_days_from_now.utc)
         @subscription.should be_a(Chargify::Subscription)
@@ -185,8 +185,12 @@ describe "Remote" do
             :last_name => "Sinatra",
             :email => "frank.sinatra@example.com",
             :reference => "franksinatra"
-          }, 
+          },
           :payment_profile_attributes => declined_payment_profile_attributes)
+      end
+
+      it "returns the correct error message" do
+        @subscription.errors[:base].should include "Bogus Gateway: Forced failure"
       end
 
       it "does not create the subscription" do
@@ -281,7 +285,7 @@ describe "Remote" do
     context "via Chargify::Subscription#refund" do
       it "creates a refund" do
         lambda{
-          @subscription.refund :payment_id => @payment.id, :amount => 7, 
+          @subscription.refund :payment_id => @payment.id, :amount => 7,
             :memo => 'Refunding One Time Charge'
         }.should change{@subscription.reload.transactions.size}.by(1)
 
@@ -313,7 +317,7 @@ describe "Remote" do
         tx.transaction_type.should == 'refund'
       end
     end
-    
+
     describe 'Webhooks' do
       before(:all) do
         @subscription = Chargify::Subscription.create(

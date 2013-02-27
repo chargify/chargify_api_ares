@@ -10,8 +10,11 @@ end
 RSpec.configure do |config|
   config.before(:all) do
     Chargify.configure do |c|
-      c.api_key = remote_configuration['api_key']
-      c.site = remote_configuration['site']
+      c.api_key    = remote_configuration['api_key']
+      c.protocol   = remote_configuration['protocol']  if remote_configuration['protocol']
+      c.domain     = remote_configuration['domain']    if remote_configuration['domain']
+      c.subdomain  = remote_configuration['subdomain'] if remote_configuration['subdomain']
+      c.site       = remote_configuration['site']      if remote_configuration['site']
     end
   end
 end

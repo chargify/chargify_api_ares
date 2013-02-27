@@ -4,6 +4,7 @@ require 'bundler'
 Bundler.require(:default, :development)
 
 require 'support/fake_resource'
+require 'pry'
 
 FactoryGirl.find_definitions
 ActiveResource::Base.send :include, ActiveResource::FakeResource
@@ -13,7 +14,7 @@ Chargify.configure do |c|
   c.subdomain = 'test'
   c.api_key   = 'test'
 end
- 
+
 RSpec.configure do |config|
   config.filter_run :focused => true
   config.run_all_when_everything_filtered = true
