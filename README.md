@@ -6,72 +6,15 @@ Chargify API wrapper for Ruby (using ActiveResource)
 
 This is a Ruby wrapper for the [Chargify](http://chargify.com) API that leverages ActiveResource.
 
-To configure api key, site, domain, and protocol you can do the
-following. Please note that this step is required.
-
-Most common usage
-----------------
-
-``` ruby
-  Chargify.configure do |c|
-    c.api_key   = "your_key_goes_here"
-    c.subdomain = "test-site"
-  end
-```
-
-Overriding the endpoint
---------------
-
-``` ruby
-  Chargify.configure do |c|
-    c.api_key   = "your_key_goes_here"
-    c.site      = "https://test-site.some-domain.com"
-  end
-```
-
-Available configuration options
--------------------------------
-
-| Name              | Description                                                                                      | Default      | Required                   |
-| ----------------- | -----------------------------------------------------------------------------------              | ---------    | -------------------------- |
-| api_key           | The api_key credentials that are used to access your chargify account.                           | N/A          | Yes                        |
-| subdomain         | The subdomain (site name) of the chargify endpoint you are trying to interact with               | test         | Yes (unless site was used) |
-| domain            | The domain of the endpoint, in which you want to interact with.                                  | chargify.com | No                         |
-| protocol          | The endpoint protocol that you wish to use (http / https)                                        | https        | No                         |
-| site              | This is meant to override all three of the previous settings eg: http://foo.bar.com              | N/A          | No                         |
-| format            | The format of the request and response type that you want to deal with                           | xml          | No                         |
-| timeout           | The time in seconds for a request to be valid. Will raise a timeout error if exceeds time limit. | N/A          | No                         |
-
-It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
-
-``` ruby
-Chargify::Subscription.create(
-  :customer_reference => 'moklett',
-  :product_handle => 'chargify-api-ares-test',
-  :credit_card_attributes => {
-    :first_name => "Michael",
-    :last_name => "Klett",
-    :expiration_month => 1,
-    :expiration_year => 2010,
-    :full_number => "1234-1234-1234-1234"
-  }
-)
-
-subscription.credit_card_attributes = { :expiration_year => 2013 }
-subscription.save
-
-subscription.cancel
-```
-
-See the `examples` directory for more usage examples.
-
 ### Installation
 
 This library can be installed as a gem. It is hosted on [Rubygems](http://rubygems.org).
 
 You can install this library as a gem using the following command:
 
+``` bash
 $ gem install chargify_api_ares
+```
 
 ### Usage
 
@@ -94,12 +37,66 @@ If you're using Rails 2 you could include this gem in your configuration, i.e. i
 ``` ruby
 config.gem 'chargify_api_ares'
 ```
-    
+
+To configure api key, site, domain, and protocol you can do the
+following. Please note that this step is required.
+
+#### Most common usage
+
+``` ruby
+  Chargify.configure do |c|
+    c.api_key   = "your_key_goes_here"
+    c.subdomain = "test-site"
+  end
+```
+
+#### Overriding the endpoint
+
+``` ruby
+  Chargify.configure do |c|
+    c.api_key   = "your_key_goes_here"
+    c.site      = "https://test-site.some-domain.com"
+  end
+```
+
+### Available configuration options
+
+| Name              | Description                                                                                      | Default      | Required                   |
+| ----------------- | -----------------------------------------------------------------------------------              | ---------    | -------------------------- |
+| api_key           | The api_key credentials that are used to access your chargify account.                           | N/A          | Yes                        |
+| subdomain         | The subdomain (site name) of the chargify endpoint you are trying to interact with               | test         | Yes (unless site was used) |
+| domain            | The domain of the endpoint, in which you want to interact with.                                  | chargify.com | No                         |
+| protocol          | The endpoint protocol that you wish to use (http / https)                                        | https        | No                         |
+| site              | This is meant to override all three of the previous settings eg: http://foo.bar.com              | N/A          | No                         |
+| format            | The format of the request and response type that you want to deal with                           | xml          | No                         |
+| timeout           | The time in seconds for a request to be valid. Will raise a timeout error if exceeds time limit. | N/A          | No                         |
+
 Now you'll have access to classes the interact with the Chargify API, such as:
 
 * `Chargify::Product`  
 * `Chargify::Customer`  
 * `Chargify::Subscription`
+
+It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
+
+``` ruby
+Chargify::Subscription.create(
+  :customer_reference => 'moklett',
+  :product_handle => 'chargify-api-ares-test',
+  :credit_card_attributes => {
+    :first_name => "Michael",
+    :last_name => "Klett",
+    :expiration_month => 1,
+    :expiration_year => 2010,
+    :full_number => "1234-1234-1234-1234"
+  }
+)
+
+subscription.credit_card_attributes = { :expiration_year => 2013 }
+subscription.save
+
+subscription.cancel
+```
 
 Check out the examples in the `examples` directory.  If you're not familiar with how ActiveResource works, you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
 
