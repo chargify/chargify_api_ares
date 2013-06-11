@@ -47,7 +47,7 @@ module Chargify
       url
     end
 
-    def hosted_updated_payment_page_url
+    def hosted_update_payment_page_url
       self.hosted_page_url('update_payment')
     end
 
