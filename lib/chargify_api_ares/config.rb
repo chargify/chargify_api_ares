@@ -1,6 +1,6 @@
 module Chargify
   class << self
-    attr_accessor :subdomain, :api_key, :site, :format, :timeout, :domain, :protocol
+    attr_accessor :subdomain, :api_key, :site, :shared_key, :format, :timeout, :domain, :protocol
 
     def configure
       yield self
@@ -12,6 +12,7 @@ module Chargify
       Base.password  = 'X'
       Base.timeout   = timeout unless (timeout.blank?)
       Base.site      = site || "#{protocol}://#{subdomain}.#{domain}"
+      Base.shared_key = shared_key
       Base.format    = format
     end
   end
