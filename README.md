@@ -65,6 +65,7 @@ following. Please note that this step is required.
 | ----------------- | -----------------------------------------------------------------------------------              | ---------    | -------------------------- |
 | api_key           | The api_key credentials that are used to access your chargify account.                           | N/A          | Yes                        |
 | subdomain         | The subdomain (site name) of the chargify endpoint you are trying to interact with               | test         | Yes (unless site was used) |
+| shared_key        | The shared_key of the site you want to generate hosted page URLs for.                            | N/A          | No                         |
 | domain            | The domain of the endpoint, in which you want to interact with.                                  | chargify.com | No                         |
 | protocol          | The endpoint protocol that you wish to use (http / https)                                        | https        | No                         |
 | site              | This is meant to override all three of the previous settings eg: http://foo.bar.com              | N/A          | No                         |

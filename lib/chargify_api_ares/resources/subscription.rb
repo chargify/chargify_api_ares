@@ -35,6 +35,22 @@ module Chargify
       self.respond_to?('credit_card') ? credit_card : nil
     end
 
+    def hosted_page_url(page)
+      url = nil
+      if self.respond_to?('id')
+        # Generate 10 character SHA1 token
+        token_string = "#{page}--#{self.id}--#{Chargify.shared_key}"
+        token = Digest::SHA1.hexdigest(token_string)[0..9]
+        # Format URL for page
+        url = "https://#{Chargify.subdomain}.chargify.com/#{page}/#{self.id}/#{token}"
+      end
+      url
+    end
+
+    def hosted_update_payment_page_url
+      self.hosted_page_url('update_payment')
+    end
+
     # Perform a one-time charge on an existing subscription.
     # For more information, please see the one-time charge API docs available
     # at: http://support.chargify.com/faqs/api/api-charges
