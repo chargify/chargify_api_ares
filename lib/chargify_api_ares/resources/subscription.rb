@@ -78,6 +78,14 @@ module Chargify
       post :migrations, :migration => attrs
     end
 
+    def migrate_preview(attrs = {})
+      api_url = "https://#{Chargify.subdomain}.chargify.com/subscriptions/#{self.id}/migrations/preview.xml"
+      data = attrs.to_xml(:root => :migration, :dasherize => false, :skip_types => true).tr("\n", "").strip
+      response = connection.post(api_url, :body => data, :basic_auth => {:username => Chargify.api_key, :password => 'X'})
+      response_xml = Hash.from_xml(response.body)
+      response_xml["migration"]
+    end
+
     def statement(id)
       statement = Chargify::Statement.find(id)
       raise ActiveResource::ResourceNotFound.new(nil) if (statement.subscription_id != self.id)
