@@ -41,8 +41,8 @@ describe Chargify::Subscription, :fake_resource do
     
     response = subscription.charge(:amount => "10.00", "memo" => "one-time charge")
     
-    response.body.should == expected_response
-    response.should be_a(Net::HTTPCreated)
+    expect(response.valid?).to be_true
+    expect(response).to be_a(Chargify::Charge)
   end
   
   it 'finds by customer reference' do

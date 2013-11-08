@@ -39,7 +39,7 @@ module Chargify
     # For more information, please see the one-time charge API docs available
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
-      post :charges, {}, attrs.to_xml(:root => :charge)
+      Chargify::Charge.create(attrs.merge(subscription_id: self.id))
     end
 
     def credit(attrs = {})

@@ -251,6 +251,25 @@ describe "Remote" do
     end
   end
 
+  describe "failing to add a one time charge" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => declined_payment_profile_attributes)
+      
+      @charge = @subscription.charge(amount: 7, memo: 'One Time Charge')
+    end
+
+    it "is not valid when creating a charge fails" do
+      expect(@charge).to_not be_valid
+    end
+
+    it "has errors when creating a charge fails" do
+      expect(@charge.errors.full_messages.first).to eql "Bogus Gateway: Forced failure"
+    end
+  end
+  
   describe "adding a credit" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
