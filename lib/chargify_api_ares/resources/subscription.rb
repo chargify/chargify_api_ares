@@ -39,7 +39,14 @@ module Chargify
     # For more information, please see the one-time charge API docs available
     # at: http://support.chargify.com/faqs/api/api-charges
     def charge(attrs = {})
-      post :charges, {}, attrs.to_xml(:root => :charge)
+      charge = Charge.new
+      begin
+        http = post :charges, {}, attrs.to_xml(:root => :charge)
+        charge.from_xml(http.body)
+      rescue ActiveResource::ResourceInvalid, ActiveResource::ResourceNotFound => error
+        charge.errors.from_xml(error.response.body)
+      end   
+      return charge
     end
 
     def credit(attrs = {})
@@ -59,7 +66,14 @@ module Chargify
     end
 
     def migrate(attrs = {})
-      post :migrations, :migration => attrs
+      migrate = Migrate.new
+      begin
+        http = post :migrations, :migration => attrs
+        migrate.from_xml(http.body)
+      rescue ActiveResource::ResourceInvalid, ActiveResource::ResourceNotFound => error
+        migrate.errors.from_xml(error.response.body)
+      end   
+      return migrate
     end
 
     def statement(id)
@@ -108,6 +122,14 @@ module Chargify
     end
     
     class Statement < Base
+      self.prefix = "/subscriptions/:subscription_id/"
+    end
+    
+    class Charge < Base
+      self.prefix = "/subscriptions/:subscription_id/"
+    end
+
+    class Migrate < Base
       self.prefix = "/subscriptions/:subscription_id/"
     end
 
