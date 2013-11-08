@@ -22,7 +22,7 @@ coupon = Chargify::Coupon.create(
 )
 
 # Lookup up existing coupon using the product_family_id and the coupon code
-coupon = Chargify::Subscription::Coupon.find_by_product_family_id_and_code(2,"10OFF")
+coupon = Chargify::Coupon.find_by_product_family_id_and_code(2,"10OFF")
 
 # Looking up all coupons for a product family
 coupons = Chargify::Coupon.find_all_by_product_family_id(12345)
