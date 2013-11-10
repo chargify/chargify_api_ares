@@ -35,6 +35,22 @@ module Chargify
       self.respond_to?('credit_card') ? credit_card : nil
     end
 
+    def hosted_page_url(page)
+      url = nil
+      if self.respond_to?('id')
+        # Generate 10 character SHA1 token
+        token_string = "#{page}--#{self.id}--#{Chargify.shared_key}"
+        token = Digest::SHA1.hexdigest(token_string)[0..9]
+        # Format URL for page
+        url = "https://#{Chargify.subdomain}.chargify.com/#{page}/#{self.id}/#{token}"
+      end
+      url
+    end
+
+    def hosted_update_payment_page_url
+      self.hosted_page_url('update_payment')
+    end
+
     # Perform a one-time charge on an existing subscription.
     # For more information, please see the one-time charge API docs available
     # at: http://support.chargify.com/faqs/api/api-charges
@@ -60,6 +76,14 @@ module Chargify
 
     def migrate(attrs = {})
       post :migrations, :migration => attrs
+    end
+
+    def migrate_preview(attrs = {})
+      api_url = "https://#{Chargify.subdomain}.chargify.com/subscriptions/#{self.id}/migrations/preview.xml"
+      data = attrs.to_xml(:root => :migration, :dasherize => false, :skip_types => true).tr("\n", "").strip
+      response = connection.post(api_url, :body => data, :basic_auth => {:username => Chargify.api_key, :password => 'X'})
+      response_xml = Hash.from_xml(response.body)
+      response_xml["migration"]
     end
 
     def statement(id)
