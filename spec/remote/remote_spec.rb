@@ -258,7 +258,7 @@ describe "Remote" do
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => declined_payment_profile_attributes)
       
-      @charge = @subscription.charge(amount: 7, memo: 'One Time Charge')
+      @charge = @subscription.charge(:amount => 7, :memo => 'One Time Charge')
     end
 
     it "is not valid when creating a charge fails" do
