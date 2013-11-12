@@ -17,6 +17,20 @@ module Chargify
       destroy
     end
 
+
+    def allocate_components(components, params={})
+      allocations = []
+      components.each do |c|
+        allocations << {
+                         :component_id => c.component_id,
+                         :quantity => c.allocated_quantity
+                       }
+      end
+
+      params.merge!({:subscription_id => self.id, :allocations => allocations})
+      Allocation.create(params)
+    end
+
     def component(id)
       Component.find(id, :params => {:subscription_id => self.id})
     end
@@ -25,7 +39,7 @@ module Chargify
       params.merge!({:subscription_id => self.id})
       Component.find(:all, :params => params)
     end
-    
+
     def events(params = {})
       params.merge!(:subscription_id => self.id)
       Event.all(:params => params)
@@ -106,7 +120,7 @@ module Chargify
     class Event < Base
       self.prefix = '/subscriptions/:subscription_id/'
     end
-    
+
     class Statement < Base
       self.prefix = "/subscriptions/:subscription_id/"
     end
