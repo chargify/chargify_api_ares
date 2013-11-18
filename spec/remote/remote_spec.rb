@@ -270,6 +270,126 @@ describe "Remote" do
     end
   end
   
+  describe "migrating a subscription to a valid product" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+      
+      @migration = @subscription.migrate(:product_handle => pro_plan.handle)  
+    end
+
+    it "is valid when the migration is successful" do
+      expect(@migration).to be_valid
+    end
+
+    it "migrates the product" do
+      expect(@migration.subscription.product.handle).to eql "pro"
+    end
+    
+    it "has a subscription" do
+      expect(@migration.subscription).to_not be_nil
+    end
+  end
+
+  describe "migrating a subscription to an invalid product" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+      
+      @migration = @subscription.migrate(:product_handle => "a-bad-handle")  
+    end
+
+    it "is invalid when the migration is not successful" do
+      expect(@migration).to_not be_valid
+    end
+    
+    it "is has errors when the migration is not successful" do
+      expect(@migration.errors.full_messages.first).to eql "Invalid Product"
+    end
+    
+    it "will not have a subscription" do
+      expect(@migration.subscription).to be_nil
+    end
+  end
+
+  describe "previewing a valid migration via Chargify::Migration" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)  
+    end
+
+    it "is valid when the migration preview is successful" do
+      expect(@preview).to be_valid
+    end
+
+    it "is a proper preview" do
+      expect(@preview.charge_in_cents).to eql "5000"
+    end
+  end
+  
+  describe "previewing a valid migration via Chargify::Migration::Preview" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)  
+    end
+
+    it "is valid when the migration preview is successful" do
+      expect(@preview).to be_valid
+    end
+
+    it "is a proper preview" do
+      expect(@preview.charge_in_cents).to eql "5000"
+    end
+  end
+  
+  describe "previewing an invalid migration via Chargify::Migration" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+
+      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_id => 9999999) 
+    end
+
+    it "is invalid when the migration preview is invalid" do
+      expect(@preview).to_not be_valid
+    end
+
+    it "has errors when the migration preview is invalid" do
+      expect(@preview.errors.full_messages.first).to eql "Product must be specified"
+    end
+  end
+  
+  describe "previewing an invalid migration via Chargify::Migration::Preview" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => basic_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+
+      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_id => 9999999) 
+    end
+
+    it "is invalid when the migration preview is invalid" do
+      expect(@preview).to_not be_valid
+    end
+
+    it "has errors when the migration preview is invalid" do
+      expect(@preview.errors.full_messages.first).to eql "Product must be specified"
+    end
+  end
+  
   describe "adding a credit" do
     before(:all) do
       @subscription = Chargify::Subscription.create(

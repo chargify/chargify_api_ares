@@ -76,7 +76,8 @@ describe Chargify::Subscription, :fake_resource do
     
     response = subscription.migrate(:product_handle => 'upgraded-plan')
 
-    response.body.should == expected_response
-    response.should be_a(Net::HTTPCreated)
+    expect(response.valid?).to be_true
+    expect(response.errors.any?).to be_false
+    expect(response).to be_a(Chargify::Migration)
   end
 end
