@@ -2,6 +2,8 @@ Chargify API wrapper for Ruby (using ActiveResource)
 ====================================================
 [![build status](https://secure.travis-ci.org/chargify/chargify_api_ares.png)](http://travis-ci.org/chargify/chargify_api_ares)
 
+**Note:** we have bumped to v1.0.0 to indicate a backwards incompatible change to the responses from `Chargify::Subscription.charge` and `Chargify::Subscription.migrate`.  Please see the HISTORY.md for more information.
+
 **Please see important compatibility information at the bottom of this file.**
 
 This is a Ruby wrapper for the [Chargify](http://chargify.com) API that leverages ActiveResource.
@@ -140,3 +142,21 @@ requests will be rejected.
 Version 0.6.x of this gem will attempt to patch your ActiveModel if you
 have an incompatible version.  To avoid this patch, you should use
 3.0.20 or higher of ActiveResource.
+
+### Contributing
+
+* Check out the latest master to make sure the feature hasn't been
+  implemented or the bug hasn't been fixed yet
+* Check out the [issue
+  tracker](http://github.com/chargify/chargify_api_ares/issues) to make
+sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for the feature/bugfix
+* Please squash your commits.
+* Please try not to mess with the Rakefile, version, or history. If you
+  want to have your own version, or is otherwise necessary, that is
+fine, but please isolate it to its own commit so we can cherry-pick
+around it.
+

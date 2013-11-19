@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chargify_api_ares (0.6.1)
+    chargify_api_ares (1.0.0)
       activeresource (>= 3.0.0)
 
 GEM
