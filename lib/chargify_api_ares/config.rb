@@ -8,10 +8,11 @@ module Chargify
       self.domain    = domain    || "chargify.com"
       self.format    = format    || :xml
       self.subdomain = subdomain || "test"
+      self.site      = site || "#{protocol}://#{subdomain}.#{domain}"
+      Base.site      = site
       Base.user      = api_key
       Base.password  = 'X'
       Base.timeout   = timeout unless (timeout.blank?)
-      Base.site      = site || "#{protocol}://#{subdomain}.#{domain}"
       Base.format    = format
     end
   end
