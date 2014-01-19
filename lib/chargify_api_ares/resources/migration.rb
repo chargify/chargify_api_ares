@@ -1,9 +1,9 @@
 module Chargify
   class Migration < Base
     self.prefix = "/subscriptions/:subscription_id/"
-    
+
     def self.preview(attrs = {})
-      Chargify::Migration::Preview.create(attrs) 
+      Chargify::Migration::Preview.create(attrs)
     end
 
     def subscription
