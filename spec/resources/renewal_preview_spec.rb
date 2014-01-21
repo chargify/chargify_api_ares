@@ -7,22 +7,22 @@ describe Chargify::Renewal::Preview, :fake_resource do
       subscription = build(:subscription, :id => id)
       subscription.stub!(:persisted?).and_return(true)
       expected_response = {
-        renewal_preview: {
-          next_assessment_at: DateTime.parse("2014-04-04T01:00:00-04:00"),
-          subtotal_in_cents: 1000,
-          total_tax_in_cents: 0,
-          total_discount_in_cents: 0,
-          total_in_cents: 1000,
-          existing_balance_in_cents: -77,
-          total_amount_due_in_cents: 923,
-          line_items:[
+        :renewal_preview => {
+          :next_assessment_at => DateTime.parse("2014-04-04T01:00:00-04:00"),
+          :subtotal_in_cents => 1000,
+          :total_tax_in_cents => 0,
+          :total_discount_in_cents => 0,
+          :total_in_cents => 1000,
+          :existing_balance_in_cents => -77,
+          :total_amount_due_in_cents => 923,
+          :line_items => [
             {
-              transaction_type: "charge",
-              kind: "baseline",
-              amount_in_cents: 1000,
-              memo: "Foosball (Fri, 04 Apr 2014 01:00:00 -0400 - Sun, 04 May 2014 01:00:00 -0400)",
-              discount_amount_in_cents: 0,
-              taxable_amount_in_cents: 0,
+              :transaction_type => "charge",
+              :kind => "baseline",
+              :amount_in_cents => 1000,
+              :memo => "Foosball (Fri, 04 Apr 2014 01:00:00 -0400 - Sun, 04 May 2014 01:00:00 -0400)",
+              :discount_amount_in_cents => 0,
+              :taxable_amount_in_cents => 0,
             }
           ]
         }
