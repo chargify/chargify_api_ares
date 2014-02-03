@@ -17,6 +17,7 @@ require 'chargify_api_ares/resources/subscription'
 require 'chargify_api_ares/resources/transaction'
 require 'chargify_api_ares/resources/usage'
 require 'chargify_api_ares/resources/webhook'
+require 'chargify_api_ares/resources/invoice'
 
 require 'active_resource/version'
 if defined?(::ActiveResource::VERSION::MAJOR) &&
