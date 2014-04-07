@@ -100,7 +100,7 @@ subscription.save
 subscription.cancel
 ```
 
-### Note
+##### Note
 
 Updating nested resources is _not_ supported nor recommended. If you wish to update a subscriptions customer please do so by updating the customer object itself.
 
