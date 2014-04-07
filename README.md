@@ -100,6 +100,27 @@ subscription.save
 subscription.cancel
 ```
 
+### Note
+
+Updating nested resources is _not_ supported nor recommended. If you wish to update a subscriptions customer please do so by updating the customer object itself.
+
+Bad:
+
+```ruby
+subscription = Chargify::Subscription.find(123)
+subscription.customer.first_name = 'fred'
+subscription.customer.save
+```
+
+Good:
+
+```ruby
+subscription = Chargify::Subscription.find(123)
+customer     = Chargify::Customer.find(subscription.customer.id)
+customer.first_name = 'fred'
+customer.save
+```
+
 Check out the examples in the `examples` directory.  If you're not familiar with how ActiveResource works, you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
 
 ### Compatibility
