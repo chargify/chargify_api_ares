@@ -1,9 +1,11 @@
 module Chargify
   class Coupon < Base
+    include ResponseHelper
+
     def self.find_all_by_product_family_id(product_family_id)
       Coupon.find(:all, :params => { :product_family_id => product_family_id })
     end
-    
+
     def self.find_by_product_family_id_and_code(product_family_id, code)
       find(:one, :from => :lookup, :params => {:product_family_id => product_family_id, :code => code})
     end
@@ -21,7 +23,9 @@ module Chargify
     end
 
     def usage
-      get :usage
+      process_capturing_errors do
+        get :usage
+      end
     end
 
     def archive

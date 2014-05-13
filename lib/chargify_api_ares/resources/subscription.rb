@@ -1,5 +1,7 @@
 module Chargify
   class Subscription < Base
+    include ResponseHelper
+
     def self.find_by_customer_reference(reference)
       customer = Customer.find_by_reference(reference)
       find(:first, :params => {:customer_id => customer.id})
@@ -25,7 +27,7 @@ module Chargify
       params.merge!({:subscription_id => self.id})
       Component.find(:all, :params => params)
     end
-    
+
     def events(params = {})
       params.merge!(:subscription_id => self.id)
       Event.all(:params => params)
@@ -43,19 +45,27 @@ module Chargify
     end
 
     def credit(attrs = {})
-      post :credits, {}, attrs.to_xml(:root => :credit)
+      process_capturing_errors do
+        post :credits, {}, attrs.to_xml(:root => :credit)
+      end
     end
 
     def refund(attrs = {})
-      post :refunds, {}, attrs.to_xml(:root => :refund)
+      process_capturing_errors do
+        post :refunds, {}, attrs.to_xml(:root => :refund)
+      end
     end
 
     def reactivate(params = {})
-      put :reactivate, params
+      process_capturing_errors do
+        put :reactivate, params
+      end
     end
 
     def reset_balance
-      put :reset_balance
+      process_capturing_errors do
+        put :reset_balance
+      end
     end
 
     def migrate(attrs = {})
@@ -79,20 +89,28 @@ module Chargify
     end
 
     def adjustment(attrs = {})
-      post :adjustments, {}, attrs.to_xml(:root => :adjustment)
+      process_capturing_errors do
+        post :adjustments, {}, attrs.to_xml(:root => :adjustment)
+      end
     end
 
     def add_coupon(code)
-      post :add_coupon, :code => code
+      process_capturing_errors do
+        post :add_coupon, :code => code
+      end
     end
 
     def remove_coupon(code=nil)
-      if code.nil?
-        delete :remove_coupon
-      else
-        delete :remove_coupon, :code => code
+      process_capturing_errors do
+        if code.nil?
+          delete :remove_coupon
+        else
+          delete :remove_coupon, :code => code
+        end
       end
     end
+
+    private
 
     class Component < Base
       self.prefix = "/subscriptions/:subscription_id/"
@@ -106,7 +124,7 @@ module Chargify
     class Event < Base
       self.prefix = '/subscriptions/:subscription_id/'
     end
-    
+
     class Statement < Base
       self.prefix = "/subscriptions/:subscription_id/"
     end

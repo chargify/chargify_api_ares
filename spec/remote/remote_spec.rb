@@ -235,6 +235,25 @@ describe "Remote" do
     end
   end
 
+  describe 'failing to reactivate a subscription' do
+    before(:all) do
+      @reactivated_subscription = Chargify::Subscription.create(
+        :product_handle => pro_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+
+      @result = @reactivated_subscription.reactivate
+    end
+
+    it "is not valid after a reactivation" do
+      expect(@result.errors.any?).to be_true
+    end
+
+    it 'has errors when the reactivation fails' do
+      expect(@result.errors.full_messages.first).to eql 'Cannot reactivate a subscription that is not marked "Canceled", "Unpaid", or "Trial Ended".'
+    end
+  end
+
   describe "adding a one time charge" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
@@ -257,7 +276,7 @@ describe "Remote" do
         :product_handle => basic_plan.handle,
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => declined_payment_profile_attributes)
-      
+
       @charge = @subscription.charge(:amount => 7, :memo => 'One Time Charge')
     end
 
@@ -269,15 +288,15 @@ describe "Remote" do
       expect(@charge.errors.full_messages.first).to eql "Bogus Gateway: Forced failure"
     end
   end
-  
+
   describe "migrating a subscription to a valid product" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
         :product_handle => basic_plan.handle,
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
-      
-      @migration = @subscription.migrate(:product_handle => pro_plan.handle)  
+
+      @migration = @subscription.migrate(:product_handle => pro_plan.handle)
     end
 
     it "is valid when the migration is successful" do
@@ -287,7 +306,7 @@ describe "Remote" do
     it "migrates the product" do
       expect(@migration.subscription.product.handle).to eql "pro"
     end
-    
+
     it "has a subscription" do
       expect(@migration.subscription).to_not be_nil
     end
@@ -299,18 +318,18 @@ describe "Remote" do
         :product_handle => basic_plan.handle,
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
-      
-      @migration = @subscription.migrate(:product_handle => "a-bad-handle")  
+
+      @migration = @subscription.migrate(:product_handle => "a-bad-handle")
     end
 
     it "is invalid when the migration is not successful" do
       expect(@migration).to_not be_valid
     end
-    
+
     it "is has errors when the migration is not successful" do
       expect(@migration.errors.full_messages.first).to eql "Invalid Product"
     end
-    
+
     it "will not have a subscription" do
       expect(@migration.subscription).to be_nil
     end
@@ -322,7 +341,7 @@ describe "Remote" do
         :product_handle => basic_plan.handle,
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
-      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)  
+      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)
     end
 
     it "is valid when the migration preview is successful" do
@@ -333,14 +352,14 @@ describe "Remote" do
       expect(@preview.charge_in_cents).to eql "5000"
     end
   end
-  
+
   describe "previewing a valid migration via Chargify::Migration::Preview" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
         :product_handle => basic_plan.handle,
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
-      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)  
+      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_handle => pro_plan.handle)
     end
 
     it "is valid when the migration preview is successful" do
@@ -351,7 +370,7 @@ describe "Remote" do
       expect(@preview.charge_in_cents).to eql "5000"
     end
   end
-  
+
   describe "previewing an invalid migration via Chargify::Migration" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
@@ -359,7 +378,7 @@ describe "Remote" do
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
 
-      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_id => 9999999) 
+      @preview = Chargify::Migration.preview(:subscription_id => @subscription.id, :product_id => 9999999)
     end
 
     it "is invalid when the migration preview is invalid" do
@@ -370,7 +389,7 @@ describe "Remote" do
       expect(@preview.errors.full_messages.first).to eql "Product must be specified"
     end
   end
-  
+
   describe "previewing an invalid migration via Chargify::Migration::Preview" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
@@ -378,7 +397,7 @@ describe "Remote" do
         :customer_reference => johnadoe.reference,
         :payment_profile_attributes => good_payment_profile_attributes)
 
-      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_id => 9999999) 
+      @preview = Chargify::Migration::Preview.create(:subscription_id => @subscription.id, :product_id => 9999999)
     end
 
     it "is invalid when the migration preview is invalid" do
@@ -389,7 +408,7 @@ describe "Remote" do
       expect(@preview.errors.full_messages.first).to eql "Product must be specified"
     end
   end
-  
+
   describe "adding a credit" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
@@ -403,6 +422,11 @@ describe "Remote" do
         @subscription.credit(:amount => 7, :memo => 'credit')
       }.should change{@subscription.reload.transactions.size}.by(1)
       most_recent_transaction(@subscription).amount_in_cents.should == -700
+    end
+
+    it 'responds with errors when request is invalid' do
+      response = @subscription.credit(:amount => nil)
+      expect(response.errors.full_messages.first).to eql "Amount in cents: is not a number."
     end
   end
 
@@ -422,6 +446,12 @@ describe "Remote" do
     end
 
     context "via Chargify::Subscription#refund" do
+
+      it 'responds with an error if params are not present' do
+        response = @subscription.refund(:payment_id => @payment.id)
+        expect(response.errors.full_messages.first).to eql("Memo: cannot be blank.")
+      end
+
       it "creates a refund" do
         lambda{
           @subscription.refund :payment_id => @payment.id, :amount => 7,

@@ -1,6 +1,6 @@
 module Chargify
   class Invoice < Base
-    
+
     def self.find_by_invoice_id(id)
       find(:first, params: {id: id})
     end
@@ -8,7 +8,7 @@ module Chargify
     def self.find_by_subscription_id(id)
       find(:all, params: {subscription_id: id})
     end
-  
+
     def self.unpaid_from_subscription(subscription_id)
       find(:all, params: {subscription_id: subscription_id, state: "unpaid"})
     end

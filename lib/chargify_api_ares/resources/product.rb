@@ -3,7 +3,7 @@ module Chargify
     def self.find_by_handle(handle)
       find(:one, :from => :lookup, :params => {:handle => handle})
     end
-    
+
     protected
 
     # Products are created in the scope of a ProductFamily, i.e. /product_families/nnn/products
