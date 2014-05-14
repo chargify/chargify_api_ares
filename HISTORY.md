@@ -1,3 +1,16 @@
+## 1.0.5 / May 11 2014
+
+### Backwards-incompatible changes
+* `Chargify::Subscription` methods no longer raise exception when there is a validation error. Now you must inspect the subscription object for errors. eg:
+
+```ruby
+subscription.reactivate
+
+if subscription.errors.any?
+  # handle errors
+end
+```
+
 ## 1.0.0 / Nov 19 2013
 
 ### Backwards-incompatible changes
