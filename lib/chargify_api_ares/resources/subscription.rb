@@ -12,6 +12,7 @@ module Chargify
       self.attributes.delete('customer')
       self.attributes.delete('product')
       self.attributes.delete('credit_card')
+      self.attributes.delete('bank_account')
       super
     end
 

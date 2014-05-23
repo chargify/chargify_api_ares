@@ -24,6 +24,12 @@ describe Chargify::Subscription, :fake_resource do
       @subscription.save!
       @subscription.attributes['credit_card'].should be_blank
     end
+
+    it 'strips bank account' do
+      @subscription.attributes['bank_account'].should_not be_blank
+      @subscription.save!
+      @subscription.attributes['bank_account'].should be_blank
+    end
     
     it "doesn't strip other attrs" do
       subscription = build(:subscription)
