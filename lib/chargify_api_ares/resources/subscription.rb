@@ -34,7 +34,11 @@ module Chargify
     end
 
     def payment_profile
-      self.respond_to?('credit_card') ? credit_card : nil
+      if self.respond_to?('credit_card')
+        credit_card
+      elsif self.respond_to?('bank_account')
+        bank_account
+      end
     end
 
     # Perform a one-time charge on an existing subscription.
