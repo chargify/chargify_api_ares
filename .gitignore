@@ -6,3 +6,4 @@ pkg
 .bundle/
 bin/
 .rbenv-version
+tmp

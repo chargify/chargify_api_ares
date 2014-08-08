@@ -1,0 +1,266 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://acme_test_key:X@acme.chargify.dev/subscriptions.xml
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      authorization:
+      - Basic YWNtZV90ZXN0X2tleTpY
+      accept:
+      - application/xml
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      content-type:
+      - application/xml; charset=utf-8
+      x-meta-request-version:
+      - 0.3.3
+      x-ratelimit-limit:
+      - '1000000'
+      x-ratelimit-remaining:
+      - '999989'
+      x-ratelimit-reset:
+      - '1408579200'
+      x-ua-compatible:
+      - IE=Edge
+      etag:
+      - '"d792e14bb55540e5e197604a6a3715df"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      p3p:
+      - CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"
+      set-cookie:
+      - _chargify_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiJTYzYjEzOWUyYTBmNzRkZmY0OTM2NjBlMjU1ODRhZDk0BjsAVEkiF3NlbGxlcl9jcmVkZW50aWFscwY7AEZJIgGAMzc2NjRiYTU1MjUxNTgyYWU2YTg2MmU5ZDk0YzllODU3ZGIyZjQ0Y2M0YmZlMTU4N2Y4MjUzODY2MzBkNWM5ZWIyM2Q2NzVlYmViZTc2ZjU1MTk4YjIyNTJlYTYxYzY3NzkyNzk1NGRmMTU4OTA3NmM3MGFhYzA0NTI5N2Y5ZmIGOwBGSSIac2VsbGVyX2NyZWRlbnRpYWxzX2lkBjsARmkH--8ad350c97ec34870db6ec966836951160ec5909f;
+        domain=.chargify.dev; path=/; HttpOnly
+      x-request-id:
+      - e13206c19fb48daf2375032c3713bb3b
+      x-runtime:
+      - '0.138341'
+      connection:
+      - close
+      server:
+      - thin 1.6.2 codename Doc Brown
+      date:
+      - Wed, 20 Aug 2014 03:32:09 GMT
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <subscriptions type="array">
+          <subscription>
+            <activated_at type="datetime" nil="true"/>
+            <balance_in_cents type="integer">0</balance_in_cents>
+            <cancel_at_end_of_period type="boolean">false</cancel_at_end_of_period>
+            <canceled_at type="datetime" nil="true"/>
+            <cancellation_message nil="true"/>
+            <created_at type="datetime">2014-08-19T08:40:44-04:00</created_at>
+            <current_period_ends_at type="datetime">2014-09-19T08:40:44-04:00</current_period_ends_at>
+            <expires_at type="datetime" nil="true"/>
+            <id type="integer">23</id>
+            <next_assessment_at type="datetime">2014-09-19T08:40:44-04:00</next_assessment_at>
+            <payment_collection_method>automatic</payment_collection_method>
+            <state>trialing</state>
+            <trial_ended_at type="datetime">2014-09-19T08:40:44-04:00</trial_ended_at>
+            <trial_started_at type="datetime">2014-08-19T08:40:44-04:00</trial_started_at>
+            <updated_at type="datetime">2014-08-19T10:52:48-04:00</updated_at>
+            <current_period_started_at type="datetime">2014-08-19T08:40:44-04:00</current_period_started_at>
+            <previous_state>trialing</previous_state>
+            <signup_payment_id type="integer">49</signup_payment_id>
+            <signup_revenue>0.00</signup_revenue>
+            <delayed_cancel_at nil="true"/>
+            <coupon_code nil="true"/>
+            <total_revenue_in_cents type="integer">0</total_revenue_in_cents>
+            <product_price_in_cents type="integer">2400</product_price_in_cents>
+            <product_version_number type="integer">1</product_version_number>
+            <payment_type>credit_card</payment_type>
+            <customer>
+              <address>vern st</address>
+              <address_2></address_2>
+              <city>vern city</city>
+              <country>GB</country>
+              <created_at type="datetime">2014-08-19T08:40:44-04:00</created_at>
+              <email>vern@example.com</email>
+              <first_name>Nathan</first_name>
+              <id type="integer">23</id>
+              <last_name>Verni</last_name>
+              <organization>Chargify</organization>
+              <phone></phone>
+              <portal_customer_created_at type="datetime" nil="true"/>
+              <portal_invite_last_accepted_at type="datetime" nil="true"/>
+              <portal_invite_last_sent_at type="datetime" nil="true"/>
+              <reference>vern</reference>
+              <state>ANS</state>
+              <updated_at type="datetime">2014-08-19T08:40:44-04:00</updated_at>
+              <verified type="boolean">false</verified>
+              <zip>11111</zip>
+            </customer>
+            <product>
+              <accounting_code nil="true"/>
+              <archived_at type="datetime" nil="true"/>
+              <created_at type="datetime">2014-08-19T08:32:30-04:00</created_at>
+              <description>Culpa illum quia reiciendis consequatur vitae.  Ut sunt dolor consectetur excepturi odio maxime.  Temporibus eius adipisci est illum eaque praesentium numquam.</description>
+              <expiration_interval type="integer" nil="true"/>
+              <expiration_interval_unit nil="true"/>
+              <handle>basic</handle>
+              <id type="integer">20</id>
+              <initial_charge_in_cents type="integer" nil="true"/>
+              <interval type="integer">1</interval>
+              <interval_unit>month</interval_unit>
+              <name>Basic</name>
+              <price_in_cents type="integer">2400</price_in_cents>
+              <request_credit_card type="boolean">true</request_credit_card>
+              <require_credit_card type="boolean">true</require_credit_card>
+              <return_params nil="true"/>
+              <return_url nil="true"/>
+              <taxable type="boolean">false</taxable>
+              <trial_interval type="integer">1</trial_interval>
+              <trial_interval_unit>month</trial_interval_unit>
+              <trial_price_in_cents type="integer">0</trial_price_in_cents>
+              <update_return_url nil="true"/>
+              <updated_at type="datetime">2014-08-19T08:32:30-04:00</updated_at>
+              <product_family>
+                <accounting_code nil="true"/>
+                <description nil="true"/>
+                <handle>acme-online</handle>
+                <id type="integer">3</id>
+                <name>Acme Online</name>
+              </product_family>
+            </product>
+            <credit_card>
+              <billing_address>vern st</billing_address>
+              <billing_address_2></billing_address_2>
+              <billing_city>vern city</billing_city>
+              <billing_country>US</billing_country>
+              <billing_state>AL</billing_state>
+              <billing_zip>11111</billing_zip>
+              <card_type>bogus</card_type>
+              <current_vault>bogus</current_vault>
+              <customer_id type="integer">23</customer_id>
+              <customer_vault_token nil="true"/>
+              <expiration_month type="integer">8</expiration_month>
+              <expiration_year type="integer">2021</expiration_year>
+              <first_name>Nathan</first_name>
+              <id type="integer">23</id>
+              <last_name>Verni</last_name>
+              <masked_card_number>XXXX-XXXX-XXXX-1</masked_card_number>
+              <vault_token>1</vault_token>
+              <payment_type>credit_card</payment_type>
+            </credit_card>
+          </subscription>
+          <subscription>
+            <activated_at type="datetime">2014-08-19T08:38:37-04:00</activated_at>
+            <balance_in_cents type="integer">0</balance_in_cents>
+            <cancel_at_end_of_period type="boolean">false</cancel_at_end_of_period>
+            <canceled_at type="datetime" nil="true"/>
+            <cancellation_message nil="true"/>
+            <created_at type="datetime">2014-08-19T08:38:36-04:00</created_at>
+            <current_period_ends_at type="datetime">2014-09-19T08:38:36-04:00</current_period_ends_at>
+            <expires_at type="datetime" nil="true"/>
+            <id type="integer">22</id>
+            <next_assessment_at type="datetime">2014-09-19T08:38:36-04:00</next_assessment_at>
+            <payment_collection_method>automatic</payment_collection_method>
+            <state>active</state>
+            <trial_ended_at type="datetime" nil="true"/>
+            <trial_started_at type="datetime" nil="true"/>
+            <updated_at type="datetime">2014-08-19T10:52:27-04:00</updated_at>
+            <current_period_started_at type="datetime">2014-08-19T08:38:36-04:00</current_period_started_at>
+            <previous_state>active</previous_state>
+            <signup_payment_id type="integer">48</signup_payment_id>
+            <signup_revenue>0.00</signup_revenue>
+            <delayed_cancel_at nil="true"/>
+            <coupon_code nil="true"/>
+            <total_revenue_in_cents type="integer">0</total_revenue_in_cents>
+            <product_price_in_cents type="integer">0</product_price_in_cents>
+            <product_version_number type="integer">1</product_version_number>
+            <payment_type>credit_card</payment_type>
+            <customer>
+              <address>2126 lakeside lofts cir</address>
+              <address_2></address_2>
+              <city>Cary</city>
+              <country>US</country>
+              <created_at type="datetime">2014-08-19T08:38:36-04:00</created_at>
+              <email>jeremy.w.rowe@gmail.com</email>
+              <first_name>Jeremy</first_name>
+              <id type="integer">22</id>
+              <last_name>Rowe</last_name>
+              <organization>chargify</organization>
+              <phone></phone>
+              <portal_customer_created_at type="datetime" nil="true"/>
+              <portal_invite_last_accepted_at type="datetime" nil="true"/>
+              <portal_invite_last_sent_at type="datetime" nil="true"/>
+              <reference>jdawg</reference>
+              <state>AL</state>
+              <updated_at type="datetime">2014-08-19T08:38:36-04:00</updated_at>
+              <verified type="boolean">false</verified>
+              <zip>27513</zip>
+            </customer>
+            <product>
+              <accounting_code nil="true"/>
+              <archived_at type="datetime" nil="true"/>
+              <created_at type="datetime">2014-08-19T08:32:30-04:00</created_at>
+              <description>Id nostrum fugit.  Voluptate et qui.  Iure quas enim id impedit odit sit expedita.</description>
+              <expiration_interval type="integer" nil="true"/>
+              <expiration_interval_unit nil="true"/>
+              <handle>free</handle>
+              <id type="integer">19</id>
+              <initial_charge_in_cents type="integer" nil="true"/>
+              <interval type="integer">1</interval>
+              <interval_unit>month</interval_unit>
+              <name>Free</name>
+              <price_in_cents type="integer">0</price_in_cents>
+              <request_credit_card type="boolean">true</request_credit_card>
+              <require_credit_card type="boolean">true</require_credit_card>
+              <return_params nil="true"/>
+              <return_url nil="true"/>
+              <taxable type="boolean">false</taxable>
+              <trial_interval type="integer" nil="true"/>
+              <trial_interval_unit nil="true"/>
+              <trial_price_in_cents type="integer" nil="true"/>
+              <update_return_url nil="true"/>
+              <updated_at type="datetime">2014-08-19T08:32:30-04:00</updated_at>
+              <product_family>
+                <accounting_code nil="true"/>
+                <description nil="true"/>
+                <handle>acme-online</handle>
+                <id type="integer">3</id>
+                <name>Acme Online</name>
+              </product_family>
+            </product>
+            <credit_card>
+              <billing_address>2126 Lakeside Lofts Cir</billing_address>
+              <billing_address_2></billing_address_2>
+              <billing_city>Cary</billing_city>
+              <billing_country>US</billing_country>
+              <billing_state>AK</billing_state>
+              <billing_zip>27513</billing_zip>
+              <card_type>bogus</card_type>
+              <current_vault>bogus</current_vault>
+              <customer_id type="integer">22</customer_id>
+              <customer_vault_token nil="true"/>
+              <expiration_month type="integer">1</expiration_month>
+              <expiration_year type="integer">2018</expiration_year>
+              <first_name>Jeremy &lt;3</first_name>
+              <id type="integer">22</id>
+              <last_name>Rowe</last_name>
+              <masked_card_number>XXXX-XXXX-XXXX-1</masked_card_number>
+              <vault_token>1</vault_token>
+              <payment_type>credit_card</payment_type>
+            </credit_card>
+          </subscription>
+        </subscriptions>
+    http_version: '1.1'
+  recorded_at: Wed, 20 Aug 2014 03:32:09 GMT
+recorded_with: VCR 2.9.2

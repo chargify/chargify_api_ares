@@ -1,0 +1,77 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://acme_test_key:X@acme.chargify.dev/subscriptions/22/metadata.xml
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      authorization:
+      - Basic YWNtZV90ZXN0X2tleTpY
+      accept:
+      - application/xml
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      content-type:
+      - application/xml; charset=utf-8
+      x-meta-request-version:
+      - 0.3.3
+      x-ratelimit-limit:
+      - '1000000'
+      x-ratelimit-remaining:
+      - '999991'
+      x-ratelimit-reset:
+      - '1408579200'
+      x-ua-compatible:
+      - IE=Edge
+      etag:
+      - '"b12cf71c34241f3b8ef1c893401c6645"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      p3p:
+      - CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"
+      set-cookie:
+      - _chargify_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiJTlmNzY3YzJhYmQ1OGI4MzMxNWNhNmI2YWQ5OWY3OWFjBjsAVEkiF3NlbGxlcl9jcmVkZW50aWFscwY7AEZJIgGAYjEyNjk1MmVhMDAzMDkyNGMwYzczMmNjYjU4NzMyNjYzZDQ3MjJjM2QxNjE1OGVjNjViODBjYzZiYzZkMzlhMTM4OWM0YWQyZjA0NWEyMzQyZDZkNjM2YWNkNjRkNDk0NGI0OWNkZWU2OWU2YmYxMmE4NWY3NjA0ZTFiYjBjMWIGOwBGSSIac2VsbGVyX2NyZWRlbnRpYWxzX2lkBjsARmkH--476471b0db187af33fda6ef554f7ffc6fcf43436;
+        domain=.chargify.dev; path=/; HttpOnly
+      x-request-id:
+      - ace8a1104eaa6ac01256237cd077572f
+      x-runtime:
+      - '0.064855'
+      connection:
+      - close
+      server:
+      - thin 1.6.2 codename Doc Brown
+      date:
+      - Wed, 20 Aug 2014 03:27:24 GMT
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <results>
+          <total-count type="integer">1</total-count>
+          <current-page type="integer">1</current-page>
+          <total-pages type="integer">1</total-pages>
+          <per-page type="integer">20</per-page>
+          <metadata type="array">
+            <metadatum>
+              <resource-id type="integer">22</resource-id>
+              <value>red</value>
+              <name>favorite color</name>
+            </metadatum>
+          </metadata>
+        </results>
+    http_version: '1.1'
+  recorded_at: Wed, 20 Aug 2014 03:27:24 GMT
+recorded_with: VCR 2.9.2

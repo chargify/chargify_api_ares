@@ -20,6 +20,19 @@ module Chargify
       destroy
     end
 
+    def build_metadata(params = {})
+      SubscriptionMetadata.new(params.reverse_merge({:resource_id => self.id}))
+    end
+
+    def create_metadata(params = {})
+      SubscriptionMetadata.create(params.reverse_merge({:resource_id => self.id}))
+    end
+
+    def metadata(params={})
+      params.merge!({:resource_id => self.id})
+      SubscriptionMetadata.find(:all, :params => params)
+    end
+
     def component(id)
       Component.find(id, :params => {:subscription_id => self.id})
     end
