@@ -1,6 +1,7 @@
 require 'active_resource'
 require 'chargify_api_ares/config'
 require 'chargify_api_ares/response_helper'
+require 'chargify_api_ares/metafield_xml_formatter'
 require 'chargify_api_ares/resources/base'
 require 'chargify_api_ares/resources/charge'
 require 'chargify_api_ares/resources/component'
@@ -19,6 +20,9 @@ require 'chargify_api_ares/resources/transaction'
 require 'chargify_api_ares/resources/usage'
 require 'chargify_api_ares/resources/webhook'
 require 'chargify_api_ares/resources/invoice'
+require 'chargify_api_ares/resources/metafield'
+require 'chargify_api_ares/resources/customer_metafield'
+require 'chargify_api_ares/resources/subscription_metafield'
 
 require 'active_resource/version'
 if defined?(::ActiveResource::VERSION::MAJOR) &&
