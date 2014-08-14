@@ -31,6 +31,27 @@ describe Chargify::Subscription, :fake_resource do
       lambda { subscription.save! }.should_not change(subscription, :attributes)
     end
   end
+
+  describe "points to the correct payment profile" do
+    before do
+      @subscription = build(:subscription)
+    end
+
+    it 'does not have a payment profile' do
+      @subscription.payment_profile.should be_nil
+    end
+
+    it 'returns credit_card details' do
+      @subscription.credit_card = "CREDIT CARD"
+      @subscription.payment_profile.should == "CREDIT CARD"
+    end
+
+    it 'returns bank_account details' do
+      @subscription.bank_account = "BANK ACCOUNT"
+      @subscription.payment_profile.should == "BANK ACCOUNT"
+    end
+    
+  end
   
   it 'creates a one-time charge' do
     id = generate(:subscription_id)
