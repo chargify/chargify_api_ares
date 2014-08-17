@@ -1,6 +1,6 @@
 Chargify API wrapper for Ruby (using ActiveResource)
 ====================================================
-[![build status](https://secure.travis-ci.org/chargify/chargify_api_ares.png)](http://travis-ci.org/chargify/chargify_api_ares)
+[![build status](https://secure.travis-ci.org/chargify/chargify_api_ares.png)](http://travis-ci.org/chargify/chargify_api_ares) [![Code Climate](https://codeclimate.com/github/chargify/chargify_api_ares/badges/gpa.svg)](https://codeclimate.com/github/chargify/chargify_api_ares)
 
 **Note:** we have bumped to v1.0.0 to indicate a backwards incompatible change to the responses from `Chargify::Subscription.charge` and `Chargify::Subscription.migrate`.  Please see the HISTORY.md for more information.
 
