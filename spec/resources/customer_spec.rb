@@ -5,14 +5,14 @@ describe Chargify::Customer, :fake_resource do
     let(:existing_customer) { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
 
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/customers/lookup.xml?reference=#{existing_customer.reference}", :body => existing_customer.attributes.to_xml)
+      FakeWeb.register_uri(:get, "#{test_domain}/customers/lookup.xml?reference=sigma", :body => existing_customer.attributes.to_xml)
     end
-    
+
     it 'finds the correct customer by reference' do
       customer = Chargify::Customer.find_by_reference('sigma')
       customer.should == existing_customer
     end
-    
+
     it 'is an instance of Chargify::Customer' do
       customer = Chargify::Customer.find_by_reference('sigma')
       customer.should be_instance_of(Chargify::Customer)
@@ -25,7 +25,7 @@ describe Chargify::Customer, :fake_resource do
   end
 
   context "#subscriptions" do
-    let(:customer) { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
+    let(:customer)       { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
     let(:subscription_1) { Chargify::Customer::Subscription.create(:customer_id => customer.id, :balance_in_cents => 4999) }
     let(:subscription_2) { Chargify::Customer::Subscription.create(:customer_id => customer.id, :balance_in_cents => 2499) }
 

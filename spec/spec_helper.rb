@@ -5,14 +5,25 @@ Bundler.require(:default, :development)
 
 require 'support/fake_resource'
 require 'pry'
+require 'dotenv'
+
+Dotenv.load
 
 FactoryGirl.find_definitions
 ActiveResource::Base.send :include, ActiveResource::FakeResource
 FakeWeb.allow_net_connect = false
 
 Chargify.configure do |c|
-  c.subdomain = 'test'
-  c.api_key   = 'test'
+  c.subdomain = ENV['SUBDOMAIN'] || 'acme'
+  c.api_key   = ENV['API_KEY']   || 'acme_test_key'
+  c.domain    = ENV['DOMAIN']    || 'chargify.dev'
+  c.protocol  = ENV['protocol']  || 'https'
+end
+
+VCR.configure do |c|
+  c.allow_http_connections_when_no_cassette = true
+  c.cassette_library_dir = 'spec/cassettes'
+  c.hook_into :fakeweb
 end
 
 RSpec.configure do |config|
@@ -21,6 +32,7 @@ RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.alias_example_to :fit, :focused => true
   config.color_enabled = true
+  config.filter_run_excluding :remote => true
 
   config.include FactoryGirl::Syntax::Methods
 

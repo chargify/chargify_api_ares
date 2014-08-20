@@ -1,0 +1,78 @@
+---
+http_interactions:
+- request:
+    method: post
+    uri: http://acme_test_key:X@acme.chargify.dev/subscriptions/22/metadata.xml
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <metadata>
+          <name>favorite color</name>
+          <value>red</value>
+        </metadata>
+    headers:
+      authorization:
+      - Basic YWNtZV90ZXN0X2tleTpY
+      content-type:
+      - application/xml
+      accept-encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      accept:
+      - '*/*'
+      user-agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      x-frame-options:
+      - SAMEORIGIN
+      content-type:
+      - application/xml; charset=utf-8
+      x-meta-request-version:
+      - 0.3.3
+      x-ratelimit-limit:
+      - '1000000'
+      x-ratelimit-remaining:
+      - '999992'
+      x-ratelimit-reset:
+      - '1408579200'
+      x-ua-compatible:
+      - IE=Edge
+      etag:
+      - '"8978e8b3fa40ae07917c2bf207f94bb7"'
+      cache-control:
+      - max-age=0, private, must-revalidate
+      p3p:
+      - CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"
+      set-cookie:
+      - _chargify_session=BAh7CEkiD3Nlc3Npb25faWQGOgZFVEkiJWExNzM3YmQ1M2M1MjNjMjE5ZWI0ZDdmM2ZjZmZiN2NlBjsAVEkiF3NlbGxlcl9jcmVkZW50aWFscwY7AEZJIgGAMDYxM2U3ZDA4MmM0ZGMyZTkzMjJhMTBjMGY0NjQzMmQ5NGM5NjJjNjE2YmRjMzk0MDRkYTRkZTc4MzIyNTM2YjQyZmNiNzU0MjIwMmQ4ZDU5Yjg4YjgzNmI5NDI5MTIxMTE4YTNlZDFjZTliNzA2OTgzMzI5MjNlMDM4Y2U4ODUGOwBGSSIac2VsbGVyX2NyZWRlbnRpYWxzX2lkBjsARmkH--cafdef26202c6f0240cac62227ecc8ce22e582e6;
+        domain=.chargify.dev; path=/; HttpOnly
+      x-request-id:
+      - fe1ac35a2915fe7ee0d5ca40c2b94d62
+      x-runtime:
+      - '0.318252'
+      connection:
+      - close
+      server:
+      - thin 1.6.2 codename Doc Brown
+      date:
+      - Wed, 20 Aug 2014 03:24:51 GMT
+      transfer-encoding:
+      - chunked
+    body:
+      encoding: UTF-8
+      string: |
+        <?xml version="1.0" encoding="UTF-8"?>
+        <metadata type="array">
+          <metadatum>
+            <resource-id type="integer">22</resource-id>
+            <value>red</value>
+            <name>favorite color</name>
+          </metadatum>
+        </metadata>
+    http_version: '1.1'
+  recorded_at: Wed, 20 Aug 2014 03:24:51 GMT
+recorded_with: VCR 2.9.2
