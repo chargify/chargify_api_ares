@@ -1,3 +1,12 @@
+## 1.1.0 / Aug 20 2014
+
+* Added cancellation message option for subscription canceling
+* restore 1.8.7 style hash syntax
+* Add metafields and metadata
+* Remove 'bank\_account' attribute from subscription upon save
+* Update Gemfile source to https://rubygems.org due to Bundler deprecation
+* Update payment\_profile on subscriptions to return credit\_card or bank\_account
+
 ## 1.0.5 / May 11 2014
 
 ### Backwards-incompatible changes
