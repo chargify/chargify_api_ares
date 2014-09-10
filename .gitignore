@@ -1,9 +1,8 @@
 config/remote.yml
 spec/remote/remote.yml
 pkg
-.rvmrc
 .ruby-version
+.ruby-gemset
 .bundle/
 bin/
-.rbenv-version
 tmp
