@@ -4,8 +4,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.3.7'
 
   s.name    = 'chargify_api_ares'
-  s.version = '1.1.0'
-  s.date    = '2014-08-20'
+  s.version = '1.2.0'
+  s.date    = '2014-09-18'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
   s.authors = ["Michael Klett", "Nathan Verni", "Jeremy W. Rowe", "Eric Farkas"]
@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.require_paths = %w[lib]
 
   # Runtime Dependencies
-  s.add_runtime_dependency('activeresource', '~> 3.2.16')
+  s.add_runtime_dependency('activeresource', '>= 3.2.16')
 
   # Development Dependencies
   s.add_development_dependency('rake', '~> 10.0.3')
