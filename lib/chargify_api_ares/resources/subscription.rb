@@ -38,6 +38,20 @@ module Chargify
       SubscriptionMetadata.find(:all, :params => params)
     end
 
+
+    def allocate_components(components, params={})
+      allocations = []
+      components.each do |c|
+        allocations << {
+                         :component_id => c.component_id,
+                         :quantity => c.allocated_quantity
+                       }
+      end
+
+      params.merge!({:subscription_id => self.id, :allocations => allocations})
+      Allocation.create(params)
+    end
+
     def component(id)
       Component.find(id, :params => {:subscription_id => self.id})
     end
