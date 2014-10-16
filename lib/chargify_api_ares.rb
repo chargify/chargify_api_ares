@@ -25,6 +25,7 @@ require 'chargify_api_ares/resources/webhook'
 require 'chargify_api_ares/resources/invoice'
 require 'chargify_api_ares/resources/customer_metafield'
 require 'chargify_api_ares/resources/subscription_metafield'
+require 'chargify_api_ares/resources/allocation'
 
 require 'active_resource/version'
 if defined?(::ActiveResource::VERSION::MAJOR) &&
