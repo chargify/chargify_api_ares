@@ -16,3 +16,8 @@ matrix:
     - rvm: ruby-head
     - rvm: rbx-2
   fast_finish: true
+
+gemfile:
+  - gemfiles/rails_3.gemfile
+  - gemfiles/rails_4.gemfile
+  - gemfiles/rails_4.1.gemfile

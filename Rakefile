@@ -12,4 +12,5 @@ namespace :spec do
   end
 end
 
+task :test    => :spec
 task :default => :spec
