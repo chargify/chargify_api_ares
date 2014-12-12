@@ -168,6 +168,11 @@ module Chargify
         attrs.merge!(:payment_id => self.id)
         Subscription.find(self.prefix_options[:subscription_id]).refund(attrs)
       end
+
+      class Taxation < Base
+        class TaxRule < Base
+        end
+      end
     end
   end
 end
