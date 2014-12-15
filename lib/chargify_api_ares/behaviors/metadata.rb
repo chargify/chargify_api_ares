@@ -43,8 +43,14 @@ module Chargify
           (class << self; self; end).send(:define_method, :element_name) do;  name; end
         end
 
-        def instantiate_collection(collection, prefix_options = {})
-          collection[self.resource].collect! { |record| instantiate_record(record, prefix_options) }
+        if ActiveResource::VERSION::MAJOR > 3
+          def instantiate_collection(collection, original_params = {}, prefix_options = {})
+            collection[self.resource].collect! { |record| instantiate_record(record, prefix_options) }
+          end
+        else
+          def instantiate_collection(collection, prefix_options = {})
+            collection[self.resource].collect! { |record| instantiate_record(record, prefix_options) }
+          end
         end
 
         def instantiate_record(record, prefix_options = {})
