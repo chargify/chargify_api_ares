@@ -1,3 +1,7 @@
+## 1.3.1 / Dec 15 2014
+
+* Update metadata / metafield endpoints to work with activeresource 4+
+
 ## 1.1.0 / Aug 20 2014
 
 * Added cancellation message option for subscription canceling
