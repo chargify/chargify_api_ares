@@ -133,6 +133,11 @@ module Chargify
       end
     end
 
+    def delayed_cancel(cancel_at_end_of_period = true)
+      self.cancel_at_end_of_period = cancel_at_end_of_period
+      save
+    end
+
     private
 
     class Component < Base
