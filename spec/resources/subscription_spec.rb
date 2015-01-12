@@ -107,4 +107,31 @@ describe Chargify::Subscription, :fake_resource do
     expect(response.errors.any?).to be_false
     expect(response).to be_a(Chargify::Migration)
   end
+
+  describe '#delayed_cancel' do
+    context 'argument provided' do
+      it 'schedules subscription cancellation' do
+        subscription = build(:subscription, :id => 1, :cancel_at_end_of_period => false)
+
+        subscription.delayed_cancel(true)
+        expect(subscription.cancel_at_end_of_period).to eq(true)
+      end
+
+      it 'unschedules subscription cancellation' do
+        subscription = build(:subscription, :id => 1, :cancel_at_end_of_period => true)
+
+        subscription.delayed_cancel(false)
+        expect(subscription.cancel_at_end_of_period).to eq(false)
+      end
+    end
+
+    context 'no argument provided' do
+      it 'schedules subscription cancellation' do
+        subscription = build(:subscription, :id => 1, :cancel_at_end_of_period => false)
+
+        subscription.delayed_cancel
+        expect(subscription.cancel_at_end_of_period).to eq(true)
+      end
+    end
+  end
 end

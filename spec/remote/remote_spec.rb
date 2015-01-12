@@ -219,6 +219,27 @@ describe "Remote" do
     end
   end
 
+  describe "scheduling a subscription cancellation" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => pro_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+    end
+
+    it "schedules the cancellation" do
+      @subscription.delayed_cancel
+      Chargify::Subscription.find(@subscription.id).cancel_at_end_of_period.should == true
+    end
+
+    it "unschedules the cancellation" do
+      @subscription.delayed_cancel
+      Chargify::Subscription.find(@subscription.id).cancel_at_end_of_period.should == true
+      @subscription.delayed_cancel(false)
+      Chargify::Subscription.find(@subscription.id).cancel_at_end_of_period.should == false
+    end
+  end
+
   describe "reactivating a subscriptions" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
