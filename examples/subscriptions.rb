@@ -59,3 +59,12 @@ subscription.delayed_cancel(true)
 
 # Unschedule a delayed cancellation
 subscription.delayed_cancel(false)
+
+# Change the product immediately
+subscription.product_change('new-handle')
+
+# Change the product at the end of the billing period
+subscription.product_change('new-handle', true)
+
+# Cancel a delayed product change
+subscription.cancel_delayed_product_change
