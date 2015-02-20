@@ -1,3 +1,8 @@
+## 1.3.2 / Dec 15 2014
+
+* `product_change` and `cancel_delayed_product_change` added to Subscription
+  resource
+
 ## 1.3.1 / Dec 15 2014
 
 * Update metadata / metafield endpoints to work with activeresource 4+
