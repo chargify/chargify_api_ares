@@ -138,6 +138,17 @@ module Chargify
       save
     end
 
+    def product_change(handle, delayed = false)
+      self.product_handle = handle
+      self.product_change_delayed = delayed
+      save
+    end
+
+    def cancel_delayed_product_change
+      self.next_product_id = nil
+      save
+    end
+
     private
 
     class Component < Base
