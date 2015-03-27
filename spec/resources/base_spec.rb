@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Chargify::Base do
-  
+
   it 'parses element names' do
     Chargify::Base.stub!(:name).and_return("Test::Namespace::ElementName")
     Chargify::Base.element_name.should eql('element_name')
@@ -32,7 +32,22 @@ describe Chargify::Base do
         end
       end.to change { Chargify::Base.site.to_s }.to("http://test-site.chargify-test.com")
     end
-    
+
+    it "allows the subdomain and site to be reconfigured" do
+      Chargify.configure do |c|
+        c.subdomain = "first"
+      end
+
+      expect(Chargify::Base.site.to_s).to eql("https://first.chargify.dev")
+
+      expect do
+        Chargify.configure do |c|
+          c.subdomain = "second"
+        end
+      end.to change { Chargify::Base.site.to_s }.to("https://second.chargify.dev")
+
+    end
+
     after do
       Chargify.configure do |c|
         c.subdomain = @original_subdomain
