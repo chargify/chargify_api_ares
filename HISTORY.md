@@ -1,3 +1,7 @@
+## 1.3.3 / Mar 27 2015
+
+* When reconfiguring, the site should recalculate based on new settings
+
 ## 1.3.2 / Dec 15 2014
 
 * `product_change` and `cancel_delayed_product_change` added to Subscription
