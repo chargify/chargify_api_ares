@@ -17,7 +17,7 @@ Chargify.configure do |c|
   c.subdomain = ENV['SUBDOMAIN'] || 'acme'
   c.api_key   = ENV['API_KEY']   || 'acme_test_key'
   c.domain    = ENV['DOMAIN']    || 'chargify.dev'
-  c.protocol  = ENV['protocol']  || 'https'
+  c.protocol  = ENV['protocol']  || 'http'
 end
 
 VCR.configure do |c|
