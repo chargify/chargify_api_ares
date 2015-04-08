@@ -1,5 +1,7 @@
 module Chargify
   class ProductFamily < Base
+    include ResponseHelper
+
     def self.find_by_handle(handle, attributes = {})
       ProductFamily.find(:one, :from => :lookup, :params => { :handle => handle })
     end

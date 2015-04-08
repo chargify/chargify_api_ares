@@ -1,5 +1,7 @@
 module Chargify
   class Customer < Base
+    include ResponseHelper
+
     def self.find_by_reference(reference)
       find(:one, :from => :lookup, :params => {:reference => reference})
     end
