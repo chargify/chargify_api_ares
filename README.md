@@ -123,6 +123,22 @@ customer.save
 
 Check out the examples in the `examples` directory.  If you're not familiar with how ActiveResource works, you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
 
+### Duplicate Prevention
+
+[Duplicate Prevention](https://docs.chargify.com/api-duplicate-prevention) is supported by including the `uniqueness_token` attribute, for example:
+
+```ruby
+subscription = Chargify::Subscription.create(
+  :product_handle => 'product-with-trial',
+  :customer_attributes => {
+    :first_name => "Test",
+    :last_name => "Customer",
+    :email => "test@example.com"
+  },
+  :uniqueness_token => "abc-123-def-456"
+)
+```
+
 ### Compatibility
 
 * Rails/ActiveResource 2.3.x, use 0.5.x
