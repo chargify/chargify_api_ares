@@ -17,5 +17,18 @@ module Chargify
       params.merge!({:customer_id => self.id})
       PaymentProfile.find(:all, :params => params)
     end
+
+    def build_metadata(params = {})
+      CustomerMetadata.new(params.reverse_merge({:resource_id => self.id}))
+    end
+
+    def create_metadata(params = {})
+      CustomerMetadata.create(params.reverse_merge({:resource_id => self.id}))
+    end
+
+    def metadata(params={})
+      params.merge!({:resource_id => self.id})
+      CustomerMetadata.find(:all, :params => params)
+    end
   end
 end
