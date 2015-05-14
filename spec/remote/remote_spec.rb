@@ -394,6 +394,20 @@ describe "Remote" do
       }.should change{@subscription.reload.transactions.size}.by(2)
       most_recent_transaction(@subscription).amount_in_cents.should == 700
     end
+
+    context "with duplicate protection" do
+      it "creates the charge and payment and detects duplicates" do
+        uniqueness_token = SecureRandom.hex
+
+        expect {
+          @subscription.charge(:amount => 5, :memo => 'One Time Charge With Duplicate Protection', :uniqueness_token => uniqueness_token)
+        }.to_not raise_error
+
+        expect {
+          @subscription.charge(:amount => 5, :memo => 'One Time Charge With Duplicate Protection', :uniqueness_token => uniqueness_token)
+        }.to raise_error ActiveResource::ResourceConflict
+      end
+    end
   end
 
   describe "failing to add a one time charge" do
