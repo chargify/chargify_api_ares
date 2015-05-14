@@ -38,13 +38,13 @@ describe Chargify::Base do
         c.subdomain = "first"
       end
 
-      expect(Chargify::Base.site.to_s).to eql("http://first.chargify.dev")
+      expect(Chargify::Base.site.to_s).to eql("https://first.chargify.com")
 
       expect do
         Chargify.configure do |c|
           c.subdomain = "second"
         end
-      end.to change { Chargify::Base.site.to_s }.to("http://second.chargify.dev")
+      end.to change { Chargify::Base.site.to_s }.to("https://second.chargify.com")
 
     end
 
