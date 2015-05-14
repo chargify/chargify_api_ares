@@ -395,8 +395,8 @@ describe "Remote" do
       most_recent_transaction(@subscription).amount_in_cents.should == 700
     end
 
-    context "duplicate protection" do
-      it "creates with duplicate protection" do
+    context "with duplicate protection" do
+      it "creates the charge and payment and detects duplicates" do
         uniqueness_token = SecureRandom.hex
 
         expect {
