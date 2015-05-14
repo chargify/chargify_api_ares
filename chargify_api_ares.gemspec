@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
   s.date    = '2015-03-27'
   s.summary = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
-  s.authors = ["Michael Klett", "Nathan Verni", "Jeremy W. Rowe", "Eric Farkas", "Wendy Smoak"]
+  s.authors = ["Michael Klett", "Nathan Verni", "Eric Farkas", "Wendy Smoak"]
   s.email = 'support@chargify.com'
   s.homepage = 'http://github.com/chargify/chargify_api_ares'
 
