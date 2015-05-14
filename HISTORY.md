@@ -1,3 +1,7 @@
+## 1.3.4 / May 14 2015
+
+* Adds duplicate prevention support
+
 ## 1.3.3 / Mar 27 2015
 
 * When reconfiguring, the site should recalculate based on new settings
