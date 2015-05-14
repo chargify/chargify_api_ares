@@ -13,13 +13,6 @@ FactoryGirl.find_definitions
 ActiveResource::Base.send :include, ActiveResource::FakeResource
 FakeWeb.allow_net_connect = false
 
-Chargify.configure do |c|
-  c.subdomain = ENV['SUBDOMAIN'] || 'acme'
-  c.api_key   = ENV['API_KEY']   || 'acme_test_key'
-  c.domain    = ENV['DOMAIN']    || 'chargify.dev'
-  c.protocol  = ENV['protocol']  || 'http'
-end
-
 VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = true
   c.cassette_library_dir = 'spec/cassettes'

@@ -85,6 +85,14 @@ describe "Remote" do
 
   let(:johnadoes_credit_card) { Chargify::PaymentProfile.create(good_payment_profile_attributes.merge(:customer_id => johnadoe.id)) }
 
+  let(:subscription_to_pro) do
+    Chargify::Subscription.create(
+      :product_handle => pro_plan.handle,
+      :customer_reference => johnadoe.reference,
+      :payment_profile_attributes => good_payment_profile_attributes
+    )
+  end
+
   before(:all) do
     # Make sure the test site data is set up correctly
     clear_site_data; acme_projects; basic_plan; pro_plan; johnadoe; johnadoes_credit_card
@@ -98,10 +106,10 @@ describe "Remote" do
           :uniqueness_token => uniqueness_token,
           :product_handle => basic_plan.handle,
           :customer_attributes => {
-            :first_name => "Lil",
-            :last_name => "Wayne",
-            :email => "lil.wayne@example.com",
-            :reference => "lilwayne"
+            :first_name => "Jane",
+            :last_name => "Doe",
+            :email => "jane.doe@example.com",
+            :reference => "janedoe"
           },
           :payment_profile_attributes => good_payment_profile_attributes)
       }.to_not raise_error
@@ -111,10 +119,10 @@ describe "Remote" do
           :uniqueness_token => uniqueness_token,
           :product_handle => basic_plan.handle,
           :customer_attributes => {
-            :first_name => "Lil",
-            :last_name => "Wayne",
-            :email => "lil.wayne@example.com",
-            :reference => "lilwayne"
+            :first_name => "Jane",
+            :last_name => "Doe",
+            :email => "jane.doe@example.com",
+            :reference => "janedoe"
           },
           :payment_profile_attributes => good_payment_profile_attributes)
       }.to raise_error ActiveResource::ResourceConflict
@@ -609,7 +617,7 @@ describe "Remote" do
 
     it 'responds with errors when request is invalid' do
       response = @subscription.credit(:amount => nil)
-      expect(response.errors.full_messages.first).to eql "Amount in cents: is not a number."
+      expect(response.errors.full_messages.first).to eql "Amount: is not a number."
     end
   end
 
@@ -753,6 +761,32 @@ describe "Remote" do
 
       it 'should lits all events for a subscription' do
         @subscription.events.to_a.should_not be_empty
+      end
+    end
+  end
+
+  context "metadata" do
+    before { subscription_to_pro }
+    let(:subscription) { Chargify::Subscription.last }
+
+    describe 'listing metadata for a subscription' do
+      it 'returns a list of metadata' do
+        list = subscription.metadata
+        expect(list).to eql([])
+      end
+    end
+
+    describe 'creating a piece of metadata' do
+      it 'can create a new metadata' do
+        data = subscription.create_metadata(:name => 'favorite color', :value => 'red')
+
+        expect(data).to be_persisted
+        expect(data.name).to eql('favorite color')
+        expect(data.value).to eql('red')
+
+        list = subscription.metadata
+        expect(list.size).to eql(1)
+        expect(list).to include(data)
       end
     end
   end
