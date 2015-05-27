@@ -75,8 +75,8 @@ following. Please note that this step is required.
 
 Now you'll have access to classes the interact with the Chargify API, such as:
 
-* `Chargify::Product`  
-* `Chargify::Customer`  
+* `Chargify::Product`
+* `Chargify::Customer`
 * `Chargify::Subscription`
 
 It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
@@ -197,3 +197,7 @@ sure someone already hasn't requested it and/or contributed it
 fine, but please isolate it to its own commit so we can cherry-pick
 around it.
 
+### Contributors
+
+We would like to publicly thank [everyone who has contributed](https://github.com/chargify/chargify_api_ares/graphs/contributors) their time
+and talents to developing this gem. Thank you!
