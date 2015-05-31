@@ -75,8 +75,8 @@ following. Please note that this step is required.
 
 Now you'll have access to classes the interact with the Chargify API, such as:
 
-* `Chargify::Product`  
-* `Chargify::Customer`  
+* `Chargify::Product`
+* `Chargify::Customer`
 * `Chargify::Subscription`
 
 It allows you to interface with the Chargify API using simple ActiveRecord-like syntax, i.e.:
@@ -122,6 +122,22 @@ customer.save
 ```
 
 Check out the examples in the `examples` directory.  If you're not familiar with how ActiveResource works, you may be interested in some [ActiveResource Documentation](http://apidock.com/rails/ActiveResource/Base)
+
+### Duplicate Prevention
+
+[Duplicate Prevention](https://docs.chargify.com/api-duplicate-prevention) is supported by including the `uniqueness_token` attribute, for example:
+
+```ruby
+subscription = Chargify::Subscription.create(
+  :product_handle => 'product-with-trial',
+  :customer_attributes => {
+    :first_name => "Test",
+    :last_name => "Customer",
+    :email => "test@example.com"
+  },
+  :uniqueness_token => "abc-123-def-456"
+)
+```
 
 ### Compatibility
 
@@ -181,3 +197,7 @@ sure someone already hasn't requested it and/or contributed it
 fine, but please isolate it to its own commit so we can cherry-pick
 around it.
 
+### Contributors
+
+We would like to publicly thank [everyone who has contributed](https://github.com/chargify/chargify_api_ares/graphs/contributors) their time
+and talents to developing this gem. Thank you!

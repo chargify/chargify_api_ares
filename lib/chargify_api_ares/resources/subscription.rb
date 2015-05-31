@@ -9,10 +9,14 @@ module Chargify
 
     # Strip off nested attributes of associations before saving, or type-mismatch errors will occur
     def save
+      self.attributes.stringify_keys!
       self.attributes.delete('customer')
       self.attributes.delete('product')
       self.attributes.delete('credit_card')
       self.attributes.delete('bank_account')
+
+      self.attributes, options = extract_uniqueness_token(attributes)
+      self.prefix_options.merge!(options)
       super
     end
 
@@ -68,14 +72,16 @@ module Chargify
     end
 
     def credit(attrs = {})
+      attrs, options = extract_uniqueness_token(attrs)
       process_capturing_errors do
-        post :credits, {}, attrs.to_xml(:root => :credit)
+        post :credits, options, attrs.to_xml(:root => :credit)
       end
     end
 
     def refund(attrs = {})
+      attrs, options = extract_uniqueness_token(attrs)
       process_capturing_errors do
-        post :refunds, {}, attrs.to_xml(:root => :refund)
+        post :refunds, options, attrs.to_xml(:root => :refund)
       end
     end
 
@@ -112,8 +118,9 @@ module Chargify
     end
 
     def adjustment(attrs = {})
+      attrs, options = extract_uniqueness_token(attrs)
       process_capturing_errors do
-        post :adjustments, {}, attrs.to_xml(:root => :adjustment)
+        post :adjustments, options, attrs.to_xml(:root => :adjustment)
       end
     end
 
