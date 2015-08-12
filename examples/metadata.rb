@@ -7,7 +7,7 @@ end
 
 subscription = Chargify::Subscription.last
 
-## Listing all of your customer metafields
+## Listing all of this subscription's metadata
 metadata = subscription.metadata
 # => [#<Chargify::SubscriptionMetadata resource_id: 22, current_name: favorite color, name: favorite color, value: red>]
 
@@ -56,3 +56,12 @@ data.persisted? # => true
 
 data
 # => #<Chargify::SubscriptionMetadata resource_id: 22, current_name: job 1234, name: job 1234, value: 2014-08-21 02:10:46 UTC>
+
+##### Customer Metadata
+
+customer = Chargify::Customer.last
+
+## Listing all of this customer's metadata
+metadata = customer.metadata
+
+# See above examples for subscription metadata; the same methods are available

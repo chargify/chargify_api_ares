@@ -768,6 +768,7 @@ describe "Remote" do
   context "metadata" do
     before { subscription_to_pro }
     let(:subscription) { Chargify::Subscription.last }
+    let(:customer) { Chargify::Customer.last }
 
     describe 'listing metadata for a subscription' do
       it 'returns a list of metadata' do
@@ -776,7 +777,7 @@ describe "Remote" do
       end
     end
 
-    describe 'creating a piece of metadata' do
+    describe 'creating a piece of subscription metadata' do
       it 'can create a new metadata' do
         data = subscription.create_metadata(:name => 'favorite color', :value => 'red')
 
@@ -785,6 +786,27 @@ describe "Remote" do
         expect(data.value).to eql('red')
 
         list = subscription.metadata
+        expect(list.size).to eql(1)
+        expect(list).to include(data)
+      end
+    end
+
+    describe 'listing metadata for a customer' do
+      it 'returns a list of metadata' do
+        list = customer.metadata
+        expect(list).to eql([])
+      end
+    end
+
+    describe 'creating a piece of customer metadata' do
+      it 'can create a new metadata' do
+        data = customer.create_metadata(:name => 'favorite color', :value => 'blue')
+
+        expect(data).to be_persisted
+        expect(data.name).to eql('favorite color')
+        expect(data.value).to eql('blue')
+
+        list = customer.metadata
         expect(list.size).to eql(1)
         expect(list).to include(data)
       end
