@@ -1,3 +1,7 @@
+## 1.3.5 / Aug 12 2015
+
+* Adds support for customer metadata
+
 ## 1.3.4 / May 14 2015
 
 * Adds duplicate prevention support
