@@ -139,6 +139,13 @@ subscription = Chargify::Subscription.create(
 )
 ```
 
+### Statements PDF retrieving
+```ruby
+File.open(file_path, 'wb+') do |f|
+  f.write Chargify::Statement.find_pdf(statement.id)
+end
+```
+
 ### Compatibility
 
 * Rails/ActiveResource 2.3.x, use 0.5.x
