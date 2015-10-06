@@ -7,9 +7,10 @@ Gem::Specification.new do |s|
   s.version     = '1.4.0'
   s.date        = '2015-10-06'
   s.summary     = 'A Chargify API wrapper for Ruby using ActiveResource'
-  s.description = ''
+  s.description = 'Chargify is the best online billing software for all of your recurring billing needs. Visit https://chargify.com to learn more.'
   s.authors     = ["Chargify Development Team"]
   s.email       = 'dev@chargify.com'
+  s.licenses    = ['MIT']
   s.homepage    = 'http://github.com/chargify/chargify_api_ares'
 
   s.files         = `git ls-files`.split("\n")
