@@ -1,3 +1,8 @@
+## 1.4.0 / Oct 6 2015
+
+* Reverts custom `load_remote_errors` for Migration API (https://github.com/chargify/chargify_api_ares/pull/118)
+* Adds a `Chargify::Statement.find_pdf` method (https://github.com/chargify/chargify_api_ares/pull/116)
+
 ## 1.3.5 / Aug 12 2015
 
 * Adds support for customer metadata
