@@ -47,6 +47,7 @@ FactoryGirl.define do
     f.product Chargify::Product.new
     f.credit_card "CREDIT CARD"
     f.bank_account "BANK ACCOUNT"
+    f.paypal_account "PAYPAL ACCOUNT"
   end
 
   factory :component, :class => Chargify::Component do |f|

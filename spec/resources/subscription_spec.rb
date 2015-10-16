@@ -31,6 +31,12 @@ describe Chargify::Subscription, :fake_resource do
       @subscription.attributes['bank_account'].should be_blank
     end
 
+    it 'strips paypal account' do
+      @subscription.attributes['paypal_account'].should_not be_blank
+      @subscription.save!
+      @subscription.attributes['paypal_account'].should be_blank
+    end
+
     it "doesn't strip other attrs" do
       subscription = build(:subscription)
 
@@ -55,6 +61,11 @@ describe Chargify::Subscription, :fake_resource do
     it 'returns bank_account details' do
       @subscription.bank_account = "BANK ACCOUNT"
       @subscription.payment_profile.should == "BANK ACCOUNT"
+    end
+
+    it 'returns paypal_account details' do
+      @subscription.paypal_account = "PAYPAL ACCOUNT"
+      @subscription.payment_profile.should == "PAYPAL ACCOUNT"
     end
 
   end
