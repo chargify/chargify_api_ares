@@ -1,3 +1,7 @@
+## 1.4.1 / Nov 12 2015
+
+* Adds `paypal_account` nested attribute to subscription [PR 119](https://github.com/chargify/chargify_api_ares/pull/119) by @richmisen
+
 ## 1.4.0 / Oct 6 2015
 
 * Reverts custom `load_remote_errors` for Migration API (https://github.com/chargify/chargify_api_ares/pull/118)
