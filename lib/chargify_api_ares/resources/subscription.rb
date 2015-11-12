@@ -14,6 +14,7 @@ module Chargify
       self.attributes.delete('product')
       self.attributes.delete('credit_card')
       self.attributes.delete('bank_account')
+      self.attributes.delete('paypal_account')
 
       self.attributes, options = extract_uniqueness_token(attributes)
       self.prefix_options.merge!(options)
@@ -61,6 +62,8 @@ module Chargify
         credit_card
       elsif self.respond_to?('bank_account')
         bank_account
+      elsif self.respond_to?('paypal_account')
+        paypal_account
       end
     end
 
