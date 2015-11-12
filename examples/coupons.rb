@@ -48,3 +48,6 @@ subscription.add_coupon('5OFF')
 # Remove coupon from subscription
 subscription = Subscription.find_by_customer_reference('moklett')
 subscription.remove_coupon
+
+# Validate a coupon code (or subcode)
+coupon = Chargify::Coupon.validate(coupon_code: "ABC123", product_family_id: 12345)
