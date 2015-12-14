@@ -74,18 +74,19 @@ module Chargify
       Chargify::Charge.create(attrs.merge(:subscription_id => self.id))
     end
 
-    def credit(attrs = {})
+    def reverse(type, attrs = {})
       attrs, options = extract_uniqueness_token(attrs)
       process_capturing_errors do
-        post :credits, options, attrs.to_xml(:root => :credit)
+        post (type.to_s + "s").to_sym, options, attrs.to_xml(:root => type)
       end
     end
 
+    def credit(attrs = {})
+      reverse(:credit, attrs)
+    end
+
     def refund(attrs = {})
-      attrs, options = extract_uniqueness_token(attrs)
-      process_capturing_errors do
-        post :refunds, options, attrs.to_xml(:root => :refund)
-      end
+      reverse(:refund, attrs)
     end
 
     def reactivate(params = {})
@@ -121,10 +122,7 @@ module Chargify
     end
 
     def adjustment(attrs = {})
-      attrs, options = extract_uniqueness_token(attrs)
-      process_capturing_errors do
-        post :adjustments, options, attrs.to_xml(:root => :adjustment)
-      end
+      reverse(:adjustment, attrs)
     end
 
     def add_coupon(code)
