@@ -1,3 +1,7 @@
+## 1.4.2 / Jan 4 2016
+
+* Adds `Chargify::Allocations.bulk_create` to work with https://docs.chargify.com/api-allocations#create-multiple-allocations. [PR 125](https://github.com/chargify/chargify_api_ares/pull/125) by @ryansch
+
 ## 1.4.1 / Nov 12 2015
 
 * Adds `paypal_account` nested attribute to subscription [PR 119](https://github.com/chargify/chargify_api_ares/pull/119) by @richmisen
