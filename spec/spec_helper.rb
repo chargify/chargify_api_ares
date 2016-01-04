@@ -36,6 +36,10 @@ RSpec.configure do |config|
   config.after(:each, :fake_resource) do
     ActiveResource::FakeResource.disable
   end
+
+  config.before(:each) do
+    Chargify.configure {}
+  end
 end
 
 def test_domain
