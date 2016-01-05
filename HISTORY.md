@@ -1,3 +1,7 @@
+## 1.4.3 / Jan 5 2016
+
+* Force json format for bulk allocations endpoints [PR 126](https://github.com/chargify/chargify_api_ares/pull/126) by @ryansch
+
 ## 1.4.2 / Jan 4 2016
 
 * Adds `Chargify::Allocations.bulk_create` to work with https://docs.chargify.com/api-allocations#create-multiple-allocations. [PR 125](https://github.com/chargify/chargify_api_ares/pull/125) by @ryansch
