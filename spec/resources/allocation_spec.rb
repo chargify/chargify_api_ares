@@ -88,4 +88,26 @@ describe Chargify::Allocation do
       end
     end
   end
+
+  describe '.with_json_format' do
+    before do
+      Chargify.configure do |config|
+        config.format = :xml
+      end
+    end
+
+    it 'forces json format' do
+      ran = false
+      block_format = nil
+      block = proc do |format|
+        ran = true
+        block_format = format
+      end
+
+      Chargify::Allocation.with_json_format(&block)
+      expect(ran).to be_true
+      expect(block_format).to be_an ActiveResource::Formats[:json]
+      expect(Chargify::Allocation.connection.format).to be_an ActiveResource::Formats[:xml]
+    end
+  end
 end
