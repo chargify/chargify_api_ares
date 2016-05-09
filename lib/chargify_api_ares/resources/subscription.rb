@@ -74,6 +74,14 @@ module Chargify
       Chargify::Charge.create(attrs.merge(:subscription_id => self.id))
     end
 
+    # Record an external payment on an existing subscription.
+    # This DOES NOT charge the customer's credit card.
+    # For more information, please see the API docs available
+    # at: https://docs.chargify.com/api-payments
+    def payment(attrs = {})
+      Chargify::Payment.create(attrs.merge(:subscription_id => self.id))
+    end
+
     def credit(attrs = {})
       attrs, options = extract_uniqueness_token(attrs)
       process_capturing_errors do
