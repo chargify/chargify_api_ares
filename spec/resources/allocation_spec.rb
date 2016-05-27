@@ -82,9 +82,10 @@ describe Chargify::Allocation do
           subscription_id: subscription_id,
           allocations: allocations
         )
+        puts result.inspect
         expect(result.size).to eq 1
         expect(result.first).to be_a Chargify::Allocation
-        expect(result.first.payment).to be_a Chargify::Allocation::Payment
+        expect(result.first.payment).to be_a Chargify::Payment
       end
     end
   end
