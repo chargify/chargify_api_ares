@@ -36,5 +36,11 @@ module Chargify
         connection.format = orig_format
       end
     end
+
+    # Needed to avoid ActiveResource using Chargify::Payment
+    # when there is a Payment inside an Allocation.
+    # This Payment is an output-only attribute of an Allocation.
+    class Payment < Base
+    end
   end
 end
