@@ -1,3 +1,7 @@
+## 1.4.4 / Jun 3 2016
+
+* Adds support for External Payments [PR 128](https://github.com/chargify/chargify_api_ares/pull/128)
+
 ## 1.4.3 / Jan 5 2016
 
 * Force json format for bulk allocations endpoints [PR 126](https://github.com/chargify/chargify_api_ares/pull/126) by @ryansch
