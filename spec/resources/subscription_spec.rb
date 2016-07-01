@@ -145,4 +145,113 @@ describe Chargify::Subscription, :fake_resource do
       end
     end
   end
+
+  describe "#statements" do
+    let(:subscription_id) {1}
+    let(:statements) do
+      [{id: 1234}, {id: 5678}]
+    end
+
+    before do
+      FakeWeb.register_uri(
+        :get,
+        "#{test_domain}/subscriptions/#{subscription_id}/statements.xml",
+        status: 201,
+        body: statements.to_xml
+      )
+    end
+
+    it "lists statements" do
+      subscription = build(:subscription, id: subscription_id)
+      expect(subscription.statements.first.id).to eq(1234)
+      expect(subscription.statements.last.id).to eq(5678)
+    end
+  end
+
+  describe "#statement" do
+    let(:statement_id) {1234}
+    let(:subscription_id) {4242}
+    let(:statement) do
+      {id: statement_id, subscription_id: subscription_id}
+    end
+
+    before do
+      FakeWeb.register_uri(
+        :get,
+        "#{test_domain}/statements/#{statement_id}.xml",
+        status: 201,
+        body: statement.to_xml
+      )
+    end
+
+    it "finds a statement" do
+      subscription = build(:subscription, id: subscription_id)
+      found = subscription.statement(statement_id)
+      expect(found.id).to eql(statement_id)
+      expect(found.subscription_id).to eql(subscription_id)
+    end
+
+    context "when attempting to query a statement not under this subscription" do
+      it "raises an error" do
+        subscription = build(:subscription, id: 9999)
+        expect {subscription.statement(statement_id)}.to raise_error(ActiveResource::ResourceNotFound)
+      end
+    end
+  end
+
+
+  describe "#invoices" do
+    let(:subscription_id) {1}
+    let(:invoices) do
+      [{id: 1234}, {id: 5678}]
+    end
+
+    before do
+      # Note this uses the invoices endpoint, passing subscription id as a param
+      FakeWeb.register_uri(
+        :get,
+        "#{test_domain}/invoices.xml?subscription_id=#{subscription_id}",
+        status: 201,
+        body: invoices.to_xml
+      )
+    end
+
+    it "lists invoices" do
+      subscription = build(:subscription, id: subscription_id)
+      expect(subscription.invoices.first.id).to eq(1234)
+      expect(subscription.invoices.last.id).to eq(5678)
+    end
+  end
+
+  describe "#invoice" do
+    let(:invoice_id) {1234}
+    let(:subscription_id) {4242}
+    let(:invoice) do
+      {id: invoice_id, subscription_id: subscription_id}
+    end
+
+    before do
+      FakeWeb.register_uri(
+        :get,
+        "#{test_domain}/invoices/#{invoice_id}.xml",
+        status: 201,
+        body: invoice.to_xml
+      )
+    end
+
+    it "finds an invoice" do
+      subscription = build(:subscription, id: subscription_id)
+      found = subscription.invoice(invoice_id)
+      expect(found.id).to eql(invoice_id)
+      expect(found.subscription_id).to eql(subscription_id)
+    end
+
+    context "when attempting to query an invoice not under this subscription" do
+      it "raises an error" do
+        subscription = build(:subscription, id: 9999)
+        expect {subscription.invoice(invoice_id)}.to raise_error(ActiveResource::ResourceNotFound)
+      end
+    end
+  end
+
 end
