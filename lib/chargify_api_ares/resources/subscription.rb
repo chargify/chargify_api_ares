@@ -123,6 +123,17 @@ module Chargify
       Statement.find(:all, :params => params)
     end
 
+    def invoices(params = {})
+      params.merge!(subscription_id: self.id)
+      Invoice.find(:all, params: params)
+    end
+
+    def invoice(id)
+      invoice = Chargify::Invoice.find(id)
+      raise ActiveResource::ResourceNotFound.new(nil) if (invoice.subscription_id != self.id)
+      invoice
+    end
+
     def transactions(params = {})
       params.merge!(:subscription_id => self.id)
       Transaction.find(:all, :params => params)
