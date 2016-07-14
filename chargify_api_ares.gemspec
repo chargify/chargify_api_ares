@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.specification_version = 3 if s.respond_to? :specification_version=
-  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version= 
+  s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.rubygems_version          = '1.3.7'
 
   s.name        = 'chargify_api_ares'
-  s.version     = '1.4.4'
-  s.date        = '2016-06-03'
+  s.version     = '1.4.5'
+  s.date        = '2016-07-14'
   s.summary     = 'A Chargify API wrapper for Ruby using ActiveResource'
   s.description = ''
   s.authors     = ["Chargify Development Team"]

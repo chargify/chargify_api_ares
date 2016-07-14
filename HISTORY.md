@@ -1,3 +1,8 @@
+## 1.4.5 / July 14 2016
+
+* Adds ability to find pdfs from invoices, show subscription invoices [PR 135] (https://github.com/chargify/chargify_api_ares/pull/135)
+
+
 ## 1.4.4 / Jun 3 2016
 
 * Adds support for External Payments [PR 128](https://github.com/chargify/chargify_api_ares/pull/128)
