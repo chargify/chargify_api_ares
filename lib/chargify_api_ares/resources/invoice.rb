@@ -10,11 +10,19 @@ module Chargify
     end
 
     def self.unpaid_from_subscription(subscription_id)
-      find(:all, {:params => {:subscription_id => subscription_id, :state => "unpaid"}})
+      status_from_subscription(subscription_id, "unpaid")
+    end
+
+    def self.status_from_subscription(subscription_id, status)
+      find(:all, {:params => {:subscription_id => subscription_id, :status => status}})
     end
 
     def self.unpaid
-      find(:all, {:params => {:state => "unpaid"}})
+      find_by_status("unpaid")
+    end
+
+    def self.find_by_status(status)
+      find(:all, {:params => {:status => status}})
     end
 
     # Returns raw PDF data. Usage example:
