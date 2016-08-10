@@ -1,7 +1,10 @@
+## 1.4.6 / August 10 2016
+
+* Allow filtering Invoices by status [PR 139] (https://github.com/chargify/chargify_api_ares/pull/139) by @speric
+
 ## 1.4.5 / July 14 2016
 
 * Adds ability to find pdfs from invoices, show subscription invoices [PR 135] (https://github.com/chargify/chargify_api_ares/pull/135)
-
 
 ## 1.4.4 / Jun 3 2016
 
