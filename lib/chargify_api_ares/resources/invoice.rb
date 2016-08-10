@@ -1,6 +1,12 @@
 module Chargify
   class Invoice < Base
 
+    class Payment < Base
+      include ResponseHelper
+
+      self.prefix = '/invoices/:invoice_id/'
+    end
+
     def self.find_by_invoice_id(id)
       find(:first, {:params => {:id => id}})
     end
@@ -31,6 +37,10 @@ module Chargify
       prefix_options, query_options = split_options(options[:params])
       path = element_path(scope, prefix_options, query_options).gsub(/\.\w+$/, ".pdf")
       connection.get(path, headers).body
+    end
+
+    def payment(attrs = {})
+      Payment.create(attrs.merge({:invoice_id => self.id}))
     end
   end
 end
