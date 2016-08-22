@@ -1,3 +1,7 @@
+## 1.4.7 / August 22 2016
+
+* Adding Invoice Payment creation [PR 138] (https://github.com/chargify/chargify_api_ares/pull/138) by @carsonreinke
+
 ## 1.4.6 / August 10 2016
 
 * Allow filtering Invoices by status [PR 139] (https://github.com/chargify/chargify_api_ares/pull/139) by @speric
