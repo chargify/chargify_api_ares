@@ -114,3 +114,14 @@ describe Chargify::Invoice, "#find_by_status", :fake_resource do
     expect(invoice.attributes).to eql({ "id" => 99, "subscription_id" => 1, "state" => "partial" })
   end
 end
+
+describe Chargify::Invoice, '#payment', :fake_resource do
+  let(:invoice_id) {1}
+  let(:invoice) { Chargify::Invoice.create(:id => invoice_id) }
+  let(:invoice_payment) { Chargify::Invoice::Payment.create(:invoice_id => invoice_id, :amount_in_cents => 10000, :memo => 'lorem ipsum') }
+
+  it 'creates payment' do
+    payment = invoice.payment(:amount_in_cents => 10000, :memo => 'lorem ipsum')
+    payment.amount_in_cents.should == 10000
+  end
+end
