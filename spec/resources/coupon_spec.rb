@@ -5,7 +5,7 @@ describe Chargify::Coupon, :fake_resource do
     let(:existing_coupon) { build(:coupon, :code => '20OFF') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/coupons/lookup.xml?code=#{existing_coupon.code}&product_family_id=10", :body => existing_coupon.attributes.to_xml)
+      FakeWeb.register_uri(:get, "#{test_domain}/coupons/find.xml?code=#{existing_coupon.code}&product_family_id=10", :body => existing_coupon.attributes.to_xml)
     end
     
     it "finds the correct coupon by product family and code" do
