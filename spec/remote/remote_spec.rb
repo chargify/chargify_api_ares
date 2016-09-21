@@ -388,6 +388,24 @@ describe "Remote" do
     end
   end
 
+  describe "retrying a payment" do
+    before(:all) do
+      @subscription = Chargify::Subscription.create(
+        :product_handle => pro_plan.handle,
+        :customer_reference => johnadoe.reference,
+        :payment_profile_attributes => good_payment_profile_attributes)
+    end
+
+    it "puts it in the active state" do
+      lambda{
+          @subscription.retry
+        }.should change{@subscription.reload.transactions.size}.by(1)
+
+        tx = most_recent_transaction(@subscription)
+        tx.transaction_type.should == 'retry'
+    end
+  end
+
   describe "adding a one time charge" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
