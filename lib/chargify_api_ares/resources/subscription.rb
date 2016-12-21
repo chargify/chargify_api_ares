@@ -187,6 +187,11 @@ module Chargify
       def id
         self.component_id
       end
+
+      def allocations(params = {})
+        params.merge!({:subscription_id => self.prefix_options[:subscription_id], :component_id => self.component_id})
+        Allocation.find(:all, :params => params)
+      end
     end
 
     class Event < Base
