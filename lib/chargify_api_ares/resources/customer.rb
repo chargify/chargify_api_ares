@@ -15,6 +15,11 @@ module Chargify
       Subscription.find(:all, :params => params)
     end
 
+    def management_link(params = {})
+      params.merge!(:from => "/portal/customers/#{self.id}/management_link")
+      ManagementLink.find(:one, params)
+    end
+
     def payment_profiles(params = {})
       params.merge!({:customer_id => self.id})
       PaymentProfile.find(:all, :params => params)

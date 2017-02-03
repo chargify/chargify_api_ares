@@ -38,4 +38,16 @@ describe Chargify::Customer, :fake_resource do
     end
   end
 
+  context '#management_link' do
+    let(:customer)        { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
+    let(:management_link) { Chargify::ManagementLink.create(:customer_id => customer.id, :url => 'https://www.billingportal.com/manage/1/2/3') }
+
+    before(:each) do
+      FakeWeb.register_uri(:get, "#{test_domain}/portal/customers/#{customer.id}/management_link", :body => management_link.attributes.to_xml)
+    end
+
+    it "returns the management link belonging to the customer" do
+      expect(customer.management_link.attributes).to eq(management_link.attributes)
+    end
+  end
 end
