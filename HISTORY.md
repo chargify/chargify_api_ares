@@ -1,3 +1,7 @@
+## 1.4.11 / May 12, 2017
+
+* Add Subscription Retry [PR 155](https://github.com/chargify/chargify_api_ares/pull/155) and [PR 145](https://github.com/chargify/chargify_api_ares/pull/145) by @gotchahn
+
 ## 1.4.7 / August 22 2016
 
 * Adding Invoice Payment creation [PR 138] (https://github.com/chargify/chargify_api_ares/pull/138) by @carsonreinke
