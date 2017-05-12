@@ -68,3 +68,6 @@ subscription.product_change('new-handle', true)
 
 # Cancel a delayed product change
 subscription.cancel_delayed_product_change
+
+# List most recent 50 allocations for a subscription's component
+subscription.component(12345).allocations
