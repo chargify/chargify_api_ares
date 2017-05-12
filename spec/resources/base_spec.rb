@@ -7,6 +7,10 @@ describe Chargify::Base do
     Chargify::Base.element_name.should eql('element_name')
   end
 
+  it 'uses tls v1.2' do
+    Chargify::Base.ssl_options[:ssl_version].should eql(:TLSv1_2)
+  end
+
   context 'configuration changes' do
     before do
       @original_subdomain = Chargify.subdomain
