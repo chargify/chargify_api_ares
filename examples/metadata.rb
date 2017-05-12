@@ -5,6 +5,8 @@ Chargify.configure do |c|
   c.api_key   = ENV['CHARGIFY_API_KEY']
 end
 
+##### Subscription Metadata
+
 subscription = Chargify::Subscription.last
 
 ## Listing all of this subscription's metadata
