@@ -1,3 +1,12 @@
+## 1.4.13 / July 21, 2017
+
+* Note: No changes from 1.4.12, previous release was not officially published
+* Adds ability to get ReasonCodes [PR 154](https://github.com/chargify/chargify_api_ares/pull/154)
+
+## 1.4.12 / July 18, 2017
+
+* Adds ability to get ReasonCodes [PR 154](https://github.com/chargify/chargify_api_ares/pull/154)
+
 ## 1.4.11 / May 12, 2017
 
 * Add Subscription Retry [PR 155](https://github.com/chargify/chargify_api_ares/pull/155) and [PR 145](https://github.com/chargify/chargify_api_ares/pull/145) by @gotchahn
