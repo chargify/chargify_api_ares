@@ -1,3 +1,7 @@
+## 1.4.14 / December 7, 2017
+
+* Allows canceling a subscription with all supported attributes [PR 161](https://github.com/chargify/chargify_api_ares/pull/161)
+
 ## 1.4.13 / July 21, 2017
 
 * Note: No changes from 1.4.12, previous release was not officially published
