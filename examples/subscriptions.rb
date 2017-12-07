@@ -53,6 +53,12 @@ subscription.cancel
 subscription.reload
 # => #<Chargify::Subscription:0x1020ed4b0 @prefix_options={}, @attributes={"cancellation_message"=>nil, "activated_at"=>Tue Nov 17 16:00:17 UTC 2009, "expires_at"=>nil, "updated_at"=>Tue Nov 17 16:00:17 UTC 2009, "credit_card"=>#<Chargify::Subscription::CreditCard:0x10234f168 @prefix_options={}, @attributes={"card_type"=>"bogus", "expiration_year"=>2015, "masked_card_number"=>"XXXX-XXXX-XXXX-2", "first_name"=>"Michael", "expiration_month"=>1, "last_name"=>"Klett"}>, "product"=>#<Chargify::Product:0x10234f370 @prefix_options={}, @attributes={"price_in_cents"=>0, "name"=>"Chargify API Ares Test", "handle"=>"chargify-api-ares-test", "product_family"=>#<Chargify::Product::ProductFamily:0x102354708 @prefix_options={}, @attributes={"name"=>"Chargify API ARes Test", "handle"=>"chargify-api-ares-test", "id"=>79, "accounting_code"=>nil}>, "id"=>153, "accounting_code"=>nil, "interval_unit"=>"month", "interval"=>1}>, "credit_card_attributes"=>{:full_number=>"2", :expiration_year=>"2015"}, "trial_ended_at"=>nil, "id"=>331, "current_period_ends_at"=>Thu Dec 17 16:00:17 UTC 2009, "product_handle"=>"chargify-api-ares-test", "customer"=>#<Chargify::Customer:0x10234f730 @prefix_options={}, @attributes={"reference"=>"moklett", "updated_at"=>Tue Nov 17 15:51:02 UTC 2009, "id"=>331, "first_name"=>"Michael", "organization"=>"Chargify", "last_name"=>"Klett", "email"=>"moklett@example.com", "created_at"=>Tue Nov 17 15:51:02 UTC 2009}>, "trial_started_at"=>nil, "balance_in_cents"=>0, "current_period_started_at"=>Tue Nov 17 16:00:17 UTC 2009, "state"=>"canceled", "created_at"=>Tue Nov 17 16:00:17 UTC 2009, "customer_reference"=>"moklett"}>
 
+# Cancel a subscription with key/value options (Omitted options remain nil)
+subscription.cancel(
+  :cancellation_message => "Some cancellation message",
+  :reason_code => "Some reason code"
+)
+
 # Schedule a delayed cancellation
 subscription.delayed_cancel
 subscription.delayed_cancel(true)

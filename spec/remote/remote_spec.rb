@@ -330,6 +330,30 @@ describe "Remote" do
       @subscription.cancel
       Chargify::Subscription.find(@subscription.id).state.should == 'canceled'
     end
+
+    it "does not set optional attributes" do
+      @subscription.cancel
+      @subscription.reload.cancellation_message.should be_nil
+      @subscription.reload.reason_code.should be_nil
+    end
+
+    it "only sets optional cancellation_message attribute" do
+      @subscription.cancel(cancellation_message: "This is a cancellation message.")
+      @subscription.reload.cancellation_message.should == "This is a cancellation message."
+      @subscription.reload.reason_code.should be_nil
+    end
+
+    it "only sets optional reason_code attribute" do
+      @subscription.cancel(reason_code: "This is a reason code.")
+      @subscription.reload.cancellation_message.should be_nil
+      @subscription.reload.reason_code.should == "This is a reason code."
+    end
+
+    it "sets multiple optional attributes" do
+      @subscription.cancel(cancellation_message: "This is a cancellation message.", reason_code: "This is a reason code.")
+      @subscription.reload.cancellation_message.should == "This is a cancellation message."
+      @subscription.reload.reason_code.should == "This is a reason code."
+    end
   end
 
   describe "scheduling a subscription cancellation" do
