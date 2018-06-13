@@ -681,6 +681,13 @@ describe "Remote" do
 
         expect(subscription.coupon_code).to be_nil
       end
+
+      it 'does not remove the coupon given a mismatched code' do
+        subscription.remove_coupon('NOT_A_CODE')
+        subscription.reload
+
+        expect(subscription.coupon_code).to eq 'CODE1'
+      end
     end
 
     context 'when a subscription has multiple coupons' do
