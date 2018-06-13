@@ -170,7 +170,7 @@ module Chargify
         if code.nil?
           delete :remove_coupon
         else
-          delete :remove_coupon, :code => code
+          delete :remove_coupon, :coupon_code => code
         end
       end
     end
