@@ -645,6 +645,88 @@ describe "Remote" do
     end
   end
 
+  describe "removing a coupon" do
+    let(:coupon1) do
+      Chargify::Coupon.create(
+        product_family_id: acme_projects.id,
+        name: 'CODE 1',
+        code: 'CODE1',
+        description: 'a coupon',
+        percentage: 10,
+        stackable: true
+      )
+    end
+
+    context 'when a subscription has a single coupon' do
+
+      let(:subscription) do
+        Chargify::Subscription.create(
+          :product_handle => pro_plan.handle,
+          :customer_reference => johnadoe.reference,
+          :payment_profile_attributes => good_payment_profile_attributes,
+          :coupon_codes => coupon1.code
+        )
+      end
+
+      it 'removes the coupon when a code is provided' do
+        subscription.remove_coupon('CODE1')
+        subscription.reload
+
+        expect(subscription.coupon_code).to be_nil
+      end
+
+      it 'removes the coupon without a code' do
+        subscription.remove_coupon
+        subscription.reload
+
+        expect(subscription.coupon_code).to be_nil
+      end
+
+      it 'does not remove the coupon given a mismatched code' do
+        subscription.remove_coupon('NOT_A_CODE')
+        subscription.reload
+
+        expect(subscription.coupon_code).to eq 'CODE1'
+      end
+    end
+
+    context 'when a subscription has multiple coupons' do
+      let(:coupon2) do
+        Chargify::Coupon.create(
+          product_family_id: acme_projects.id,
+          name: 'CODE 2',
+          code: 'CODE2',
+          description: 'another coupon',
+          percentage: 10,
+          stackable: true
+        )
+      end
+
+      let(:subscription) do
+        Chargify::Subscription.create(
+          :product_handle => pro_plan.handle,
+          :customer_reference => johnadoe.reference,
+          :payment_profile_attributes => good_payment_profile_attributes,
+          :coupon_codes => [coupon1.code, coupon2.code]
+        )
+      end
+
+      it 'does not remove any coupons without a code' do
+        subscription.remove_coupon
+        subscription.reload
+
+        expect(subscription.coupon_codes).to eq ['CODE1', 'CODE2']
+      end
+
+      it 'removes the specified coupon when a code is given' do
+        subscription.remove_coupon('CODE1')
+        subscription.reload
+
+        expect(subscription.coupon_codes).to eq ['CODE2']
+      end
+    end
+  end
+
   describe "adding a refund" do
     before(:all) do
       @subscription = Chargify::Subscription.create(
