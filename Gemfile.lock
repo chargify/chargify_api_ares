@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    chargify_api_ares (1.4.14)
+    chargify_api_ares (1.4.15)
       activeresource (>= 3.2.16)
 
 GEM
@@ -67,4 +67,4 @@ DEPENDENCIES
   vcr
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
