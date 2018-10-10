@@ -21,5 +21,8 @@ module Chargify
         load_attributes_from_response(response)
       end
     end
+
+    class PublicSignupPage < Base
+    end
   end
 end
