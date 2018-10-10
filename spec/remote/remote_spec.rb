@@ -1,7 +1,7 @@
 require 'remote/remote_helper'
 require 'securerandom'
 
-describe "Remote - Customer" do
+describe "Remote - Customer", :remote => true do
   before { Chargify::Site.clear_data! }
 
   it "creates with duplicate protection" do
@@ -27,7 +27,7 @@ describe "Remote - Customer" do
   end
 end
 
-describe "Remote - ProductFamily" do
+describe "Remote - ProductFamily", :remote => true do
   before { Chargify::Site.clear_data! }
 
   it "creates with duplicate protection" do
@@ -49,7 +49,7 @@ describe "Remote - ProductFamily" do
   end
 end
 
-describe "Remote" do
+describe "Remote", :remote => true do
   let(:acme_projects) { Chargify::ProductFamily.create(:name => "Acme Projects") }
 
   let(:basic_plan) do
