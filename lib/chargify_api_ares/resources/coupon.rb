@@ -31,5 +31,8 @@ module Chargify
     def archive
       self.destroy
     end
+
+    class CouponRestriction < Base
+    end
   end
 end
