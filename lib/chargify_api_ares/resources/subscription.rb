@@ -193,12 +193,20 @@ module Chargify
 
     private
 
+    class PricePoint < Base
+      self.prefix = '/components/:component_id/'
+    end
+
     class Component < Base
       self.prefix = "/subscriptions/:subscription_id/"
 
       # All Subscription Components are considered already existing records, but the id isn't used
       def id
         self.component_id
+      end
+
+      def price_points
+        PricePoint.find(:all, params: { component_id: id })
       end
     end
 
