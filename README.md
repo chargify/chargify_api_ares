@@ -1,3 +1,5 @@
+# Notice: As of Aug 30, 2022, this wrapper is no longer updated or maintained.
+
 Chargify API wrapper for Ruby (using ActiveResource)
 ====================================================
 [![build status](https://secure.travis-ci.org/chargify/chargify_api_ares.png)](http://travis-ci.org/chargify/chargify_api_ares) [![Code Climate](https://codeclimate.com/github/chargify/chargify_api_ares/badges/gpa.svg)](https://codeclimate.com/github/chargify/chargify_api_ares)
