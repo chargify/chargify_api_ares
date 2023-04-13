@@ -4,7 +4,7 @@ describe Chargify::Statement, :fake_resource do
 
   context '.find_pdf' do
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/statements/1.pdf", :body => 'fake_pdf')
+      stub_request(:get, "#{test_domain}/statements/1.pdf").to_return(body: 'fake_pdf')
     end
 
     it 'downloads pdf statement' do

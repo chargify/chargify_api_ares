@@ -58,23 +58,14 @@ describe Chargify::Allocation do
       end
 
       before do
-        FakeWeb.clean_registry
         Chargify::Allocation.format = :json
-        FakeWeb.register_uri(
-          :post,
-          URI.join(
-            test_domain,
-            Chargify::Allocation.bulk_create_prefix(
-              subscription_id: subscription_id
-            )
-          ),
-          body: json_body,
-          content_type: 'application/json'
-        )
-      end
-
-      after do
-        FakeWeb.clean_registry
+        stub_request(:post, URI.join(
+          test_domain,
+          Chargify::Allocation.bulk_create_prefix(
+            subscription_id: subscription_id
+          )
+        )).
+          to_return(body: json_body, headers: { 'Content-Type' => 'application/json' })
       end
 
       it 'returns a collection of allocations' do

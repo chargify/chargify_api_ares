@@ -1,11 +1,12 @@
 require 'spec_helper'
 
-describe Chargify::Coupon, :fake_resource do
+describe Chargify::Coupon do
   context '.find_by_product_family_id_and_code' do
     let(:existing_coupon) { build(:coupon, :code => '20OFF') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/coupons/find.xml?code=#{existing_coupon.code}&product_family_id=10", :body => existing_coupon.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/coupons/find.xml?code=#{existing_coupon.code}&product_family_id=10").
+        to_return(body: existing_coupon.attributes.to_xml)
     end
     
     it "finds the correct coupon by product family and code" do
@@ -28,7 +29,8 @@ describe Chargify::Coupon, :fake_resource do
     let(:coupon_2) { build(:coupon, :product_family_id => 5) }
     
     before do
-      FakeWeb.register_uri(:get, "#{test_domain}/coupons.xml?product_family_id=5", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)
+      stub_request(:get, "#{test_domain}/coupons.xml?product_family_id=5").
+        to_return(body: [coupon_1.attributes, coupon_2.attributes].to_xml)
     end
     
     it "returns all of the coupons for a product family" do
@@ -42,8 +44,10 @@ describe Chargify::Coupon, :fake_resource do
     let(:coupon_1) { build(:coupon, :product_family_id => 6) }
 
     before do
-      FakeWeb.register_uri(:get, "#{test_domain}/coupons/validate.xml?product_family_id=6&coupon_code=foobar123", :body => coupon_1.attributes.to_xml)
-      FakeWeb.register_uri(:get, "#{test_domain}/coupons/validate.xml?coupon_code=foobar123", :body => coupon_1.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/coupons/validate.xml?product_family_id=6&coupon_code=foobar123").
+        to_return(body: coupon_1.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/coupons/validate.xml?coupon_code=foobar123").
+        to_return(body: coupon_1.attributes.to_xml)
     end
 
     it 'returns the coupon that matches the coupon code' do

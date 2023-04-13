@@ -6,7 +6,8 @@ describe Chargify::Product, :fake_resource do
     let(:existing_product) { Chargify::Product.create(:id => 2, :handle => 'green-money') }
 
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/products/lookup.xml?handle=#{existing_product.handle}", :body => existing_product.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/products/lookup.xml?handle=#{existing_product.handle}").
+        to_return(body: existing_product.attributes.to_xml)
     end
 
     it 'finds the correct product by handle' do

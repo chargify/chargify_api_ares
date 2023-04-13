@@ -39,7 +39,7 @@ FactoryGirl.define do
 
   factory :subscription, :class => Chargify::Subscription do |f|
     f.balance_in_cents 500
-    f.current_period_ends_at 3.days.from_now
+    f.current_period_ends_at 3.days.from_now.utc.change(:usec => 0)
   end
 
   factory :subscription_with_extra_attrs, :parent => :subscription do |f|

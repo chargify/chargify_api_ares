@@ -10,5 +10,13 @@ module Chargify
       options.merge!(:dasherize => false)
       super
     end
+
+    class << self
+      def create(attributes = {})
+        resource = self.new(attributes)
+        resource.save
+        resource
+      end
+    end
   end
 end

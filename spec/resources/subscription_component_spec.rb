@@ -25,8 +25,10 @@ describe Chargify::Subscription::Component, :fake_resource do
 
   describe "listing subscription components" do
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml", :body => @subscription.to_xml)
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components.xml", :body => @subscriptions_components.to_xml(:root => 'components'))
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml").
+        to_return(body: @subscription.to_xml)
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components.xml").
+        to_return(body: @subscriptions_components.to_xml(:root => 'components'))
     end
 
     it "returns an array of components from Chargify::Subscription::Component.find(:all, :params => {:subscription_id => @subscription.id})" do
@@ -47,8 +49,10 @@ describe Chargify::Subscription::Component, :fake_resource do
 
   describe "reading a subscription component" do
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml", :body => @subscription.to_xml)
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml", :body => @sc1.to_xml)
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml").
+        to_return(body: @subscription.to_xml)
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml").
+        to_return(body: @sc1.to_xml)
     end
 
     it "returns the subscription's component resource from Chargify::Subscription::Component.find(1, :params => {:subscription_id => 1})" do
@@ -64,15 +68,14 @@ describe Chargify::Subscription::Component, :fake_resource do
   describe "updating a subscription component" do
     before(:each) do
       @new_allocated_quantity = @sc1.allocated_quantity + 5
-
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml", :body => @subscription.to_xml)
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml", :body => @sc1.to_xml)
-
-      @sc1_prime = @sc1
+      @sc1_prime = @sc1.dup
       @sc1_prime.allocated_quantity = @new_allocated_quantity
-
-      FakeWeb.register_uri(:put, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml", :body => @sc1_prime.to_xml)
-      FakeWeb.register_uri(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml", :body => @sc1_prime.to_xml)
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}.xml").
+        to_return(body: @subscription.to_xml)
+      stub_request(:get, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml").
+        to_return({body: @sc1.to_xml}, {body: @sc1_prime.to_xml})
+      stub_request(:put, "#{test_domain}/subscriptions/#{@subscription.id}/components/#{@sc1.component_id}.xml").
+        to_return({body: @sc1_prime.to_xml})
     end
 
     it "updates the subscription's component allocated quantity" do

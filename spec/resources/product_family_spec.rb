@@ -5,7 +5,8 @@ describe Chargify::ProductFamily, :fake_resource do
     let(:product_family) { Chargify::ProductFamily.create(:id => 1, :handle => 'farming') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/lookup.xml?handle=#{product_family.handle}", :body => product_family.to_xml)
+      stub_request(:get, "#{test_domain}/product_families/lookup.xml?handle=#{product_family.handle}").
+        to_return(body: product_family.to_xml)
     end
     
     it "returns a product family" do
@@ -19,7 +20,8 @@ describe Chargify::ProductFamily, :fake_resource do
     let(:product_2) { Chargify::ProductFamily::Product.create(:product_family_id => product_family.id, :name => 'bar') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/#{product_family.id}/products.xml", :body => [product_1.attributes, product_2.attributes].to_xml)
+      stub_request(:get, "#{test_domain}/product_families/#{product_family.id}/products.xml").
+        to_return(body: [product_1.attributes, product_2.attributes].to_xml)
     end
     
     it "returns the products belonging to the product family" do
@@ -33,7 +35,8 @@ describe Chargify::ProductFamily, :fake_resource do
     let(:coupon_2) { Chargify::ProductFamily::Coupon.create(:product_family_id => product_family.id, :name => '25 percent off') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/#{product_family.id}/coupons.xml", :body => [coupon_1.attributes, coupon_2.attributes].to_xml)
+      stub_request(:get, "#{test_domain}/product_families/#{product_family.id}/coupons.xml").
+        to_return(body: [coupon_1.attributes, coupon_2.attributes].to_xml)
     end
     
     it "returns the coupons belonging to the product family" do
@@ -47,7 +50,8 @@ describe Chargify::ProductFamily, :fake_resource do
     let(:component_2) { Chargify::ProductFamily::Component.create(:product_family_id => product_family.id, :name => 'Flywheel Component') }
     
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/product_families/#{product_family.id}/components.xml", :body => [component_1.attributes, component_2.attributes].to_xml)
+      stub_request(:get, "#{test_domain}/product_families/#{product_family.id}/components.xml").
+        to_return(body: [component_1.attributes, component_2.attributes].to_xml)
     end
     
     it "returns the components belonging to the product family" do

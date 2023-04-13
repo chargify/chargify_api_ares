@@ -5,7 +5,8 @@ describe Chargify::Customer, :fake_resource do
     let(:existing_customer) { Chargify::Customer.create(:id => 5, :reference => 'sigma') }
 
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/customers/lookup.xml?reference=sigma", :body => existing_customer.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/customers/lookup.xml?reference=sigma").
+        to_return(body: existing_customer.attributes.to_xml)
     end
 
     it 'finds the correct customer by reference' do
@@ -30,7 +31,8 @@ describe Chargify::Customer, :fake_resource do
     let(:subscription_2) { Chargify::Customer::Subscription.create(:customer_id => customer.id, :balance_in_cents => 2499) }
 
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/customers/#{customer.id}/subscriptions.xml", :body => [subscription_1.attributes, subscription_2.attributes].to_xml)
+      stub_request(:get, "#{test_domain}/customers/#{customer.id}/subscriptions.xml").
+        to_return(body: [subscription_1.attributes, subscription_2.attributes].to_xml)
     end
 
     it "returns the subscriptions belonging to the customer" do
@@ -43,7 +45,8 @@ describe Chargify::Customer, :fake_resource do
     let(:management_link) { Chargify::ManagementLink.create(:customer_id => customer.id, :url => 'https://www.billingportal.com/manage/1/2/3') }
 
     before(:each) do
-      FakeWeb.register_uri(:get, "#{test_domain}/portal/customers/#{customer.id}/management_link", :body => management_link.attributes.to_xml)
+      stub_request(:get, "#{test_domain}/portal/customers/#{customer.id}/management_link").
+        to_return(body: management_link.attributes.to_xml)
     end
 
     it "returns the management link belonging to the customer" do

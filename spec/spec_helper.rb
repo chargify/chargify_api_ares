@@ -6,17 +6,22 @@ Bundler.require(:default, :development)
 require 'support/fake_resource'
 require 'pry'
 require 'dotenv'
+require 'webmock/rspec'
 
 Dotenv.load
 
 FactoryGirl.find_definitions
 ActiveResource::Base.send :include, ActiveResource::FakeResource
-FakeWeb.allow_net_connect = false
+
+WebMock.after_request do |request_signature, response|
+  # puts request_signature.query
+  puts "Request #{request_signature} was made and #{response.body} was returned"
+end
 
 VCR.configure do |c|
   c.allow_http_connections_when_no_cassette = true
   c.cassette_library_dir = 'spec/cassettes'
-  c.hook_into :fakeweb
+  c.hook_into :webmock
 end
 
 RSpec.configure do |config|
@@ -38,10 +43,11 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
+    WebMock.enable!
     Chargify.configure {}
   end
 end
 
 def test_domain
-  "#{Chargify::Base.connection.site.scheme}://#{Chargify::Base.connection.user}:#{Chargify::Base.connection.password}@#{Chargify::Base.connection.site.host}:#{Chargify::Base.connection.site.port}"
+  "#{Chargify::Base.connection.site.scheme}://#{Chargify::Base.connection.site.host}"
 end

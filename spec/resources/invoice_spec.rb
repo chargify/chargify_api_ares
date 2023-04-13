@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe Chargify::Invoice, :fake_resource do
+describe Chargify::Invoice do
 
   describe '.find_pdf' do
     before do
-      FakeWeb.register_uri(:get, "#{test_domain}/invoices/1.pdf", body: 'fake_pdf')
+      stub_request(:get, "#{test_domain}/invoices/1.pdf").to_return(body: 'fake_pdf')
     end
 
     it 'downloads pdf statement' do
@@ -25,11 +25,8 @@ describe Chargify::Invoice, "#unpaid_from_subscription", :fake_resource do
   end
 
   before do
-    FakeWeb.register_uri(
-      :get,
-      "#{test_domain}/invoices.xml?subscription_id=1&status=unpaid",
-      body: invoices.to_xml(root: "invoices")
-    )
+    stub_request(:get, "#{test_domain}/invoices.xml?subscription_id=1&status=unpaid").
+      to_return(body: invoices.to_xml(root: "invoices"))
   end
 
   it 'sends the correct params to the Chargify Invoices API endpoint' do
@@ -50,11 +47,8 @@ describe Chargify::Invoice, "#status_from_subscription", :fake_resource do
   end
 
   before do
-    FakeWeb.register_uri(
-      :get,
-      "#{test_domain}/invoices.xml?subscription_id=1&status=paid",
-      body: invoices.to_xml(root: "invoices")
-    )
+    stub_request(:get, "#{test_domain}/invoices.xml?subscription_id=1&status=paid").
+      to_return(body: invoices.to_xml(root: "invoices"))
   end
 
   it 'sends the correct params to the Chargify Invoices API endpoint' do
@@ -75,11 +69,8 @@ describe Chargify::Invoice, "#unpaid", :fake_resource do
   end
 
   before do
-    FakeWeb.register_uri(
-      :get,
-      "#{test_domain}/invoices.xml?status=unpaid",
-      body: invoices.to_xml(root: "invoices")
-    )
+    stub_request(:get, "#{test_domain}/invoices.xml?status=unpaid").
+      to_return(body: invoices.to_xml(root: "invoices"))
   end
 
   it 'sends the correct params to the Chargify Invoices API endpoint' do
@@ -100,11 +91,8 @@ describe Chargify::Invoice, "#find_by_status", :fake_resource do
   end
 
   before do
-    FakeWeb.register_uri(
-      :get,
-      "#{test_domain}/invoices.xml?status=partial",
-      body: invoices.to_xml(root: "invoices")
-    )
+    stub_request(:get, "#{test_domain}/invoices.xml?status=partial").
+      to_return(body: invoices.to_xml(root: "invoices"))
   end
 
   it 'sends the correct params to the Chargify Invoices API endpoint' do

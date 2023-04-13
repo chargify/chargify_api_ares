@@ -28,7 +28,8 @@ describe Chargify::Renewal::Preview, :fake_resource do
         }
       }.to_xml
 
-      FakeWeb.register_uri(:post, "#{test_domain}/subscriptions/#{id}/renewals/preview.xml", :status => 201, :body => expected_response)
+      stub_request(:post, "#{test_domain}/subscriptions/#{id}/renewals/preview.xml").
+        to_return(status: 201, body: expected_response)
 
       response = Chargify::Renewal::Preview.create(:subscription_id => subscription.id)
 

@@ -9,11 +9,21 @@ module ActiveResource
   # Additionally it adds a save! method and can be used in conjunction with Cucumber/Pickle/FactoryGirl to fully
   # fake a back end service in the BDD cycle
   #
+
   module FakeResource
     extend ActiveSupport::Concern
 
     @@fake_resources = []
     @@enabled = false
+
+    def self.included(base)
+      base.class_eval do
+        alias_method :save_without_fake_resource, :save
+        alias_method :save, :save_with_fake_resource
+        alias_method :destroy_without_fake_resource, :destroy
+        alias_method :destroy, :destroy_with_fake_resource
+      end
+    end
 
     def self.enable
       @@enabled = true
@@ -25,46 +35,38 @@ module ActiveResource
     end
 
     def self.clean
-      FakeWeb.clean_registry
       @@fake_resources = []
     end
 
-    included do
-      def save_with_fake_resource
-        if @@enabled
-          @@fake_resources << self
-          update_fake_responses
-        else
-          save_without_fake_resource
-        end
+    def save_with_fake_resource
+      if @@enabled
+        @@fake_resources << self
+      else
+        save_without_fake_resource
       end
-      alias_method_chain :save, :fake_resource
+    end
 
-      def destroy_with_fake_resource
-        if @@enabled
-          @@fake_resources.delete(self)
-          update_fake_responses
-        else
-          destroy_without_fake_resource
-        end
+    def destroy_with_fake_resource
+      if @@enabled
+        @@fake_resources.delete(self)
+      else
+        destroy_without_fake_resource
       end
-      alias_method_chain :destroy, :fake_resource
+    end
 
-      def self.delete(id, options = {})
-        if @@enabled
-          @@fake_resources.delete_if {|r| r.id == id }
-          #update_fake_responses
-        else
-          super
-        end
+    def self.delete(id, options = {})
+      if @@enabled
+        @@fake_resources.delete_if {|r| r.id == id }
+      else
+        super
       end
+    end
 
-      def self.exists?(id, options = {})
-        if @@enabled
-          not @@fake_resources.select {|r| r.id == id}.blank?
-        else
-          super
-        end
+    def self.exists?(id, options = {})
+      if @@enabled
+        not @@fake_resources.select {|r| r.id == id}.blank?
+      else
+        super
       end
     end
 
@@ -78,15 +80,6 @@ module ActiveResource
 
     private
 
-    def update_fake_responses
-      FakeWeb.clean_registry
-
-      @@fake_resources.each do |r|
-        FakeWeb.register_uri(:get, element_uri, :body => r.to_xml)
-      end
-
-      FakeWeb.register_uri(:get, collection_uri, :body => @@fake_resources.to_xml)
-    end
 
     def element_uri
       "#{base_uri}#{element_path}"
@@ -97,7 +90,7 @@ module ActiveResource
     end
 
     def base_uri
-      "#{connection.site.scheme}://#{connection.user}:#{connection.password}@#{connection.site.host}:#{connection.site.port}"
+      "#{connection.site.scheme}://#{connection.site.host}:#{connection.site.port}"
     end
 
   end
