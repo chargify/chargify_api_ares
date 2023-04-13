@@ -1,7 +1,6 @@
 module Chargify
   module ResponseHelper
     def save
-      puts "saving!!!"
       self.attributes, options = extract_uniqueness_token(attributes)
       self.prefix_options.merge!(options)
       super
