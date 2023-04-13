@@ -1,7 +1,5 @@
 module Chargify
   class Migration < Base
-    include ResponseHelper
-    
     self.prefix = "/subscriptions/:subscription_id/"
 
     def self.preview(attrs = {})
