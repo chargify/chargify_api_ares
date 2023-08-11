@@ -11,7 +11,7 @@ module Chargify
 
       self.protocol  = protocol  || "https"
       self.domain    = domain    || "chargify.com"
-      self.format    = format    || :xml
+      self.format    = format    || :json
       self.subdomain = subdomain || "test"
       self.site      = site || "#{protocol}://#{subdomain}.#{domain}"
 

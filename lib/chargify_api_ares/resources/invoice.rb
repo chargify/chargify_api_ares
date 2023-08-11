@@ -1,5 +1,6 @@
 module Chargify
   class Invoice < Base
+    self.collection_parser = ::InvoiceCollection
 
     class Payment < Base
       include ResponseHelper
