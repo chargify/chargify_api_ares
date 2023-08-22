@@ -9,11 +9,18 @@ module Chargify
     end
 
     def self.find_by_invoice_id(id)
-      find(:first, {:params => {:id => id}})
+      find(:first, { params:  { id: } })
     end
 
-    def self.find_by_subscription_id(id)
-      find(:all, {:params => {:subscription_id => id}})
+    def self.find_by_subscription_id(subscription_id)
+      find(:all, { params:  { subscription_id: } })
+    end
+
+    def self.find_by_subscription_and_date_period(subscription_id, start_date, end_date, extra_params = {})
+      find(
+        :all,
+        { params:  { subscription_id:, start_date:, end_date:, date_field: 'issue_date' }.merge(extra_params) },
+      )
     end
 
     def self.unpaid_from_subscription(subscription_id)
@@ -21,7 +28,7 @@ module Chargify
     end
 
     def self.status_from_subscription(subscription_id, status)
-      find(:all, {:params => {:subscription_id => subscription_id, :status => status}})
+      find(:all, { params:  { subscription_id: , status: } })
     end
 
     def self.unpaid
@@ -29,7 +36,7 @@ module Chargify
     end
 
     def self.find_by_status(status)
-      find(:all, {:params => {:status => status}})
+      find(:all, { params: { status: } })
     end
 
     # Returns raw PDF data. Usage example:
@@ -41,7 +48,7 @@ module Chargify
     end
 
     def payment(attrs = {})
-      Payment.create(attrs.merge({:invoice_id => self.id}))
+      Payment.create(attrs.merge({ invoice_id: self.id }))
     end
   end
 end
