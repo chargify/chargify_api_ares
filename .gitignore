@@ -6,3 +6,4 @@ pkg
 .bundle/
 bin/
 tmp
+.idea/

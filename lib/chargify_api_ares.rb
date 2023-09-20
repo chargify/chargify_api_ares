@@ -3,6 +3,7 @@ require 'chargify_api_ares/config'
 require 'chargify_api_ares/behaviors/inspectable'
 require 'chargify_api_ares/behaviors/metadata'
 require 'chargify_api_ares/behaviors/metafield'
+require 'chargify_api_ares/collections/base_collection'
 require 'chargify_api_ares/collections/invoice_collection'
 require 'chargify_api_ares/response_helper'
 require 'chargify_api_ares/resources/base'
@@ -34,8 +35,8 @@ require 'chargify_api_ares/resources/allocation'
 
 require 'active_resource/version'
 if defined?(::ActiveResource::VERSION::MAJOR) &&
-      ::ActiveResource::VERSION::MAJOR == 3 &&
-      ::ActiveResource::VERSION::MINOR == 0 &&
-      ::ActiveResource::VERSION::TINY < 20
+  ::ActiveResource::VERSION::MAJOR == 3 &&
+  ::ActiveResource::VERSION::MINOR == 0 &&
+  ::ActiveResource::VERSION::TINY < 20
   require 'patches/activemodel_3_0_patch.rb'
 end
